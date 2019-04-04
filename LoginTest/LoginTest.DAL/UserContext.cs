@@ -8,7 +8,7 @@ namespace LoginTest.DAL
     public class UserContext : IUserContext
     {
         private readonly string connectionString =
-            "Data Source=(LocalDb)\\LoginTestProftaak;Initial Catalog=ProftaakTestDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            "Server=mssql.fhict.local;Database=dbi389621;User Id=dbi389621;Password=Ensar123;";
 
         public bool Login(string userName, string password)
         {
@@ -18,7 +18,7 @@ namespace LoginTest.DAL
             {
                 conn.Open();
 
-                SqlCommand command = new SqlCommand($"SELECT TOP 1 Username,Password from dbo.UserInfo WHERE Username = '{userName}' and Password = '{password}'", conn);
+                SqlCommand command = new SqlCommand($"SELECT TOP 1 Inlognaam,Wachtwoord from dbo.Gebruiker WHERE Inlognaam = '{userName}' and Wachtwoord = '{password}'", conn);
                 SqlDataReader reader = command.ExecuteReader();
 
                 while (reader.Read())
