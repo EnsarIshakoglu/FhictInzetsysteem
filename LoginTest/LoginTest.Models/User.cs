@@ -6,15 +6,10 @@ namespace LoginTest.Models
 {
     public class User
     {
-        public User(string password, string userName)
-        {
-            Password = password;
-            UserName = userName;
-        }
-
-        [Required(ErrorMessage = "Password is required!")]
+        [Required(ErrorMessage = "Password field is required!")]
         public string Password { get; set; }
-        [Required(ErrorMessage = "Username is required")]
-        public string UserName { get; set; }
+        [StringLength(60, MinimumLength = 3)]
+        [Required(ErrorMessage = "Username field is required!")]
+        public string Username { get; set; }
     }
 }

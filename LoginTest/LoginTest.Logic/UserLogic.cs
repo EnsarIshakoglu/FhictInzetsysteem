@@ -17,7 +17,7 @@ namespace LoginTest.Logic
 
         public bool Login(User user)
         {
-            return _userRepository.Login(user.UserName, user.Password);
+            return _userRepository.Login(user.Username, user.Password);
         }
     }
 }

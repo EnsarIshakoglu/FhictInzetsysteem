@@ -12,20 +12,21 @@ namespace LoginTest.Controllers
         {
             return View();
         }
+
         [HttpPost]
-        public IActionResult Index(string userName, string password)
+        [ValidateAntiForgeryToken]
+        public IActionResult Index([Bind("Password, Username")] User user)
         {
             var userLogic = new UserLogic();
-            var user = new User(password, userName);
 
-            if (userLogic.Login(user))
+            if (ModelState.IsValid)
             {
-                return View("Ingelogd");
+                if (userLogic.Login(user))
+                {
+                    return View("Ingelogd");
+                }
             }
-            else
-            {
                 return View();
-            }
         }
 
         public IActionResult Privacy()
