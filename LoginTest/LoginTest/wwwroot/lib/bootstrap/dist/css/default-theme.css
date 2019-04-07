@@ -1,0 +1,208 @@
+﻿a {
+    color: #663366;
+}
+
+.navbar-fixed nav {
+    background-color: #663366;
+}
+
+
+.side-nav li:hover {
+    background-color: #663366;
+}
+
+.btn, .btn-large {
+    background-color: #663366;
+}
+
+    .btn:hover, .btn-large:hover {
+        background-color: #663366;
+    }
+
+.home-title span {
+    color: #663366;
+}
+
+.about-inner-right > h3 {
+    color: #663366;
+}
+
+.personal-information > h3 {
+    color: #663366;
+}
+
+.title {
+    color: #663366;
+}
+
+.card-subtitle {
+    color: #663366;
+}
+
+.portfolio-top {
+    background-color: #663366;
+}
+
+.filter {
+    color: #663366;
+}
+
+    .filter:focus {
+        background-color: #663366;
+    }
+
+#portfolio-list .mix:hover > a::before {
+    background-color: #663366;
+}
+
+.counter {
+    color: #663366;
+}
+
+.pro-bar-container.color-wisteria {
+    border-color: #663366;
+}
+
+.pro-bar.color-amethyst {
+    background-color: #663366;
+}
+
+.call-to-about i {
+    color: #663366;
+}
+
+.blog-post .card-action a {
+    color: #663366;
+}
+
+.post-comment:hover {
+    color: #663366 !important;
+}
+
+.readmore-btn:hover {
+    background-color: #663366;
+}
+
+#experience {
+    background-color: #663366;
+}
+
+.card-title i {
+    color: #663366;
+}
+
+.customNavigation i {
+    color: #663366;
+}
+
+#testimonial {
+    background-color: #663366;
+}
+
+.testimonial-content h3 {
+    color: #663366;
+}
+
+.footer-top {
+    background-color: #fff;
+}
+
+input[type="text"]:focus:not([readonly]) + label,
+input[type="password"]:focus:not([readonly]) + label,
+input[type="email"]:focus:not([readonly]) + label,
+input[type="url"]:focus:not([readonly]) + label,
+input[type="time"]:focus:not([readonly]) + label,
+input[type="date"]:focus:not([readonly]) + label,
+input[type="datetime-local"]:focus:not([readonly]) + label,
+input[type="tel"]:focus:not([readonly]) + label,
+input[type="number"]:focus:not([readonly]) + label,
+input[type="search"]:focus:not([readonly]) + label,
+textarea.materialize-textarea:focus:not([readonly]) + label {
+    color: #ba68c8;
+}
+
+input[type="text"]:focus:not([readonly]),
+input[type="password"]:focus:not([readonly]),
+input[type="email"]:focus:not([readonly]),
+input[type="url"]:focus:not([readonly]),
+input[type="time"]:focus:not([readonly]),
+input[type="date"]:focus:not([readonly]),
+input[type="datetime-local"]:focus:not([readonly]),
+input[type="tel"]:focus:not([readonly]),
+input[type="number"]:focus:not([readonly]),
+input[type="search"]:focus:not([readonly]),
+textarea.materialize-textarea:focus:not([readonly]) {
+    border-bottom: 1px solid #663366;
+    box-shadow: 0 1px 0 0 #663366;
+}
+
+.submit-btn {
+    color: #663366;
+}
+
+    .submit-btn:hover,
+    .submit-btn:focus {
+        background-color: #e40086;
+    }
+
+.overlay-header {
+    background-color: #663366;
+}
+
+.blog-content blockquote {
+    border-left: 5px solid #663366;
+}
+
+.share-area h4 i,
+.tag-area h4 i {
+    color: #663366;
+}
+
+.share-area a:hover,
+.share-area a:focus {
+    color: #663366;
+}
+
+.author-comments {
+    background-color: #663366 !important;
+}
+
+.reply-btn:hover {
+    background-color: #663366;
+}
+
+.pagination li.active {
+    background-color: #663366;
+}
+
+.card .card-action a {
+    color: #663366;
+}
+
+.tagcloud a:hover,
+.tagcloud a:focus {
+    color: #fff;
+    background-color: #663366;
+    border-color: #663366;
+}
+
+.prev-post:hover,
+.prev-post:focus,
+.next-post:hover,
+.next-post:focus {
+    background-color: #663366;
+}
+
+.submit-btn {
+    background-color: #e40086;
+    color: #fff;
+}
+
+.side-nav li:hover,
+.side-nav li.active {
+    background-color: #663366;
+}
+
+.progress .indeterminate {
+    background-color: #663366;
+}

@@ -1,7 +1,12 @@
-﻿using System.Diagnostics;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net;
+using System.Security.Claims;
 using LoginTest.Logic;
 using Microsoft.AspNetCore.Mvc;
 using LoginTest.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LoginTest.Controllers
 {
@@ -10,23 +15,29 @@ namespace LoginTest.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+
             return View();
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult Index([Bind("Password, Username")] User user)
         {
             var userLogic = new UserLogic();
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                if (userLogic.Login(user))
-                {
-                    return View("Ingelogd");
-                }
-            }
                 return View();
+            }
+
+            if (userLogic.Login(user))
+            {
+                userLogic.InitUser(user, User);
+
+                return View("Ingelogd");
+            }
+
+            return View();
+
         }
 
         public IActionResult Privacy()

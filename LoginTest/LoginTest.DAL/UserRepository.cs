@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using LoginTest.Models;
 
 namespace LoginTest.DAL
 {
@@ -13,9 +14,14 @@ namespace LoginTest.DAL
             _context = new UserContext();
         }
 
-        public bool Login(string userName, string password)
+        public bool Login(User user)
         {
-            return _context.Login(userName, password);
+            return _context.Login(user);
+        }
+
+        public List<string> InitUser(User user)
+        {
+            return _context.InitUser(user);
         }
     }
 }
