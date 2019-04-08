@@ -7,5 +7,6 @@ namespace Inzetsysteem.Models
 {
     public class Teamleider : Rol
     {
+        //test
     }
 }
