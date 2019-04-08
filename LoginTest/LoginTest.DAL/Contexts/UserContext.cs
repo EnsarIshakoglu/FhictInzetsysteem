@@ -32,7 +32,7 @@ namespace LoginTest.DAL
             return loginSuccesfull;
         }
 
-        public List<string> InitUser(User user)
+        public List<string> GetUserRoles(User user)
         {
             var roles = new List<string>();
 

@@ -3,6 +3,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LoginTest.Models
 {

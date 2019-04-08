@@ -1,9 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Security.Claims;
-using System.Text;
 using LoginTest.DAL;
 using LoginTest.Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
+using System.Web;
 
 namespace LoginTest.Logic
 {
@@ -21,19 +23,9 @@ namespace LoginTest.Logic
             return _userRepository.Login(user);
         }
 
-        public void InitUser(User user, ClaimsPrincipal claimsPrincipal)
+        public IEnumerable<string> GetUserRoles(User user)
         {
-            var roles = new List<string>();
-            var claims = new List<Claim>();
-
-            roles = _userRepository.InitUser(user);
-
-            foreach (var role in roles)
-            {
-                claims.Add(new Claim(ClaimTypes.Role, role));
-            }
-
-            claimsPrincipal.AddIdentity(new ClaimsIdentity(claims));
+            return _userRepository.GetUserRoles(user);
         }
     }
 }

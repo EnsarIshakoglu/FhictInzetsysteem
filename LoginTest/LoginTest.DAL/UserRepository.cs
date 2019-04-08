@@ -19,9 +19,9 @@ namespace LoginTest.DAL
             return _context.Login(user);
         }
 
-        public List<string> InitUser(User user)
+        public List<string> GetUserRoles(User user)
         {
-            return _context.InitUser(user);
+            return _context.GetUserRoles(user);
         }
     }
 }
