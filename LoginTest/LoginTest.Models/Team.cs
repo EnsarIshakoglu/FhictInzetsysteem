@@ -4,7 +4,8 @@ using System.Text;
 
 namespace Inzetsysteem.Models
 {
-    class OnderwijsEenheid : Taak
+    class Team
     {
+        public int AantalMensen { get; private set; }
     }
 }

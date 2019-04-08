@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Inzetsysteem.Models
 {
-    class OnderwijsTraject
+    class OnderwijsTraject : Taak
     {
     }
 }
