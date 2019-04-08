@@ -48,7 +48,17 @@ namespace LoginTest.Controllers
 
         }
 
-        public IActionResult Privacy()
+        public IActionResult Profile()
+        {
+            return View();
+        }
+
+        public IActionResult MijnTaken()
+        {
+            return View();
+        }
+
+        public IActionResult VoorkeurInvoeren()
         {
             return View();
         }

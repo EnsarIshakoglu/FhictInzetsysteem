@@ -33,13 +33,13 @@
                             @if (User.IsInRole(Roles.Docent.ToString()))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Profiel</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Profile">Profiel</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Voorkeur invoeren</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="VoorkeurInvoeren">Voorkeur invoeren</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Mijn taken</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="MijnTaken">Mijn taken</a>
                                 </li>
                             }
                             @if (User.IsInRole(Roles.Teamleider.ToString()))
