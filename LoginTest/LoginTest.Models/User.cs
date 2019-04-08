@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 
-namespace LoginTest.Models
+namespace Inzetsysteem.Models
 {
     public class User
     {

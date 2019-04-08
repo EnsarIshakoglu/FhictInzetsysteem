@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Security.Claims;
-using LoginTest.Logic;
+using Inzetsysteem.Logic;
 using Microsoft.AspNetCore.Mvc;
-using LoginTest.Models;
+using Inzetsysteem.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 
-namespace LoginTest.Controllers
+namespace Inzetsysteem.Controllers
 {
     public class HomeController : Controller
     {

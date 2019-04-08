@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using LoginTest.Models;
+using Inzetsysteem.Models;
 
-namespace LoginTest.DAL
+namespace Inzetsysteem.DAL
 {
     public interface IUserContext
     {

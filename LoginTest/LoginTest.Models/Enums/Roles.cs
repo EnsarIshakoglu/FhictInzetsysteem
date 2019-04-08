@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LoginTest.Models
+namespace Inzetsysteem.Models
 {
     public enum Roles
     {

@@ -1,8 +1,8 @@
-﻿using LoginTest.Models;
+﻿using Inzetsysteem.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace LoginTest.Controllers
+namespace Inzetsysteem.Controllers
 {
     [Authorize(Roles = "Teamleider")]
     [Route("Home/Index")]

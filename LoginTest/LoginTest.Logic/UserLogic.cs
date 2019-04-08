@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Security.Claims;
-using LoginTest.DAL;
-using LoginTest.Models;
+using Inzetsysteem.DAL;
+using Inzetsysteem.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using System.Web;
 
-namespace LoginTest.Logic
+namespace Inzetsysteem.Logic
 {
     public class UserLogic
     {

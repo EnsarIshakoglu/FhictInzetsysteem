@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.489
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoginTest", "LoginTest\LoginTest.csproj", "{60155E56-47BA-4F96-9341-1EFC0799B142}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inzetsysteem", "LoginTest\Inzetsysteem.csproj", "{60155E56-47BA-4F96-9341-1EFC0799B142}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoginTest.DAL", "LoginTest.DAL\LoginTest.DAL.csproj", "{931D21A6-784B-4FE1-96A9-C5FDEA6154C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inzetsysteem.DAL", "LoginTest.DAL\Inzetsysteem.DAL.csproj", "{931D21A6-784B-4FE1-96A9-C5FDEA6154C0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoginTest.Interfaces", "LoginTest.Interfaces\LoginTest.Interfaces.csproj", "{DBFE3A7D-BC9A-45BB-804F-E8CDF99FA2DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inzetsysteem.Interfaces", "LoginTest.Interfaces\Inzetsysteem.Interfaces.csproj", "{DBFE3A7D-BC9A-45BB-804F-E8CDF99FA2DF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoginTest.Logic", "LoginTest.Logic\LoginTest.Logic.csproj", "{13762C3E-4DE7-41A0-8790-B54D24A0AC26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inzetsysteem.Logic", "LoginTest.Logic\Inzetsysteem.Logic.csproj", "{13762C3E-4DE7-41A0-8790-B54D24A0AC26}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoginTest.Models", "LoginTest.Models\LoginTest.Models.csproj", "{37B23416-B3D0-4744-A236-CA9F3D50FD48}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inzetsysteem.Models", "LoginTest.Models\Inzetsysteem.Models.csproj", "{37B23416-B3D0-4744-A236-CA9F3D50FD48}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

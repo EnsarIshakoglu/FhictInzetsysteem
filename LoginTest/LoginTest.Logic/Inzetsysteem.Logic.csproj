@@ -14,7 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LoginTest.Models\LoginTest.Models.csproj" />
+    <ProjectReference Include="..\LoginTest.DAL\Inzetsysteem.DAL.csproj" />
+    <ProjectReference Include="..\LoginTest.Models\Inzetsysteem.Models.csproj" />
   </ItemGroup>
 
 </Project>
