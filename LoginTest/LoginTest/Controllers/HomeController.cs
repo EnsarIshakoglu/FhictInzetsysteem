@@ -25,7 +25,6 @@ namespace LoginTest.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-
             return View();
         }
 
