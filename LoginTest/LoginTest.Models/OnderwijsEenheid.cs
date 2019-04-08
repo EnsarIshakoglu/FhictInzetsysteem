@@ -6,5 +6,6 @@ namespace Inzetsysteem.Models
 {
     class OnderwijsEenheid
     {
+        public OnderwijsEenheid Blok { get; private set; }
     }
 }
