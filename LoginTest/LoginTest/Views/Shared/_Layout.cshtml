@@ -26,28 +26,47 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">aaaaaaa</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        @if (User.IsInRole(Roles.Teamleider.ToString()))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Teamleider" asp-action="Index">Teamleider</a>
-                            </li>
-                        }
-                        @if (User.IsInRole(Roles.Blokeigenaar.ToString()))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Movies">Blokeigenaar</a>
-                            </li>
-                        }
-                    </ul>
-                </div>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                        <ul class="navbar-nav flex-grow-1">
+                            @if (User.IsInRole(Roles.Docent.ToString()))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Profiel</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Voorkeur invoeren</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Mijn taken</a>
+                                </li>
+                            }
+                            @if (User.IsInRole(Roles.Teamleider.ToString()))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Teamleider" asp-action="Index">Team beheren</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Teamleider" asp-action="Index">Docenten</a>
+                                </li>
+                            }
+                            @if (User.IsInRole(Roles.Blokeigenaar.ToString()) || User.IsInRole(Roles.Staflid.ToString()))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Movies">Taakverdeling</a>
+                                </li>
+                            }
+                            @if (User.IsInRole(Roles.Blokeigenaar.ToString()) || User.IsInRole(Roles.Curriculumeigenaar.ToString()))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Movies">Voeg taak toe</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
+                
             </div>
         </nav>
     </header>
