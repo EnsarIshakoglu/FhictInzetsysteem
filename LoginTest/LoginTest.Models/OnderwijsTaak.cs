@@ -4,7 +4,10 @@ using System.Text;
 
 namespace Inzetsysteem.Models
 {
-    class OnderwijsTaak
+    class OnderwijsTaak : Taak
     {
+        public string Periode { get; private set; }
+        public int BegroteUren { get; private set; }
+        public int Factor { get; private set; }
     }
 }

@@ -10,9 +10,9 @@ namespace Inzetsysteem.Models
     public class User
     {
         [Required(ErrorMessage = "Password field is required!")]
-        public string Password { get; set; }
+        public string Password { get; private set; }
         [StringLength(60, MinimumLength = 3)]
         [Required(ErrorMessage = "Username field is required!")]
-        public string Username { get; set; }
+        public string Username { get; private set; }
     }
 }

@@ -4,7 +4,9 @@ using System.Text;
 
 namespace Inzetsysteem.Models
 {
-    class OnderwijsTraject : Taak
+    class Voorkeur
     {
+        public Taak Taak { get; private set; }
+        public int Waarde { get; private set; }
     }
 }
