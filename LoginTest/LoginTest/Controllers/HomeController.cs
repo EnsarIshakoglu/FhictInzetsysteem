@@ -25,7 +25,7 @@ namespace Inzetsysteem.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View();
+            return User.Identity.IsAuthenticated ? View("Profile") : View();
         }
 
         [HttpPost]
@@ -40,7 +40,7 @@ namespace Inzetsysteem.Controllers
             if (_userLogic.Login(user))
             {
                 InitUser(user);
-                return RedirectToAction("Index", "Home");   //De cookies worden pas nadat je naar een nieuwe controller bent gegaan gerefreshed, hierdoor doe ik redirecten naar de index pag van homecontroller
+                return RedirectToAction("Profile", "Home");   //De cookies worden pas nadat je naar een nieuwe controller bent gegaan gerefreshed, hierdoor doe ik redirecten naar de index pag van homecontroller
             }
 
             return View();

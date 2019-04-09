@@ -3,13 +3,9 @@
     ViewData["Title"] = "Index";
 }
 
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap.css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <hr />
-@if (!User.Identity.IsAuthenticated)
-{
     <div class="row">
         <div class="container">
             <form asp-action="Index">
@@ -30,19 +26,6 @@
             </form>
         </div>
     </div>
-}
-else
-{
-    <a>Logged in</a>
-    <div class="form-group">
-        <input type="button" value="Log Out" onclick="location.href='@Url.Action("Logout", "Home")'" class="btn btn-primary"/>
-    </div>
-}
-
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
