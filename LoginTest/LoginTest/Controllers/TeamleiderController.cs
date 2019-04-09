@@ -8,7 +8,12 @@ namespace Inzetsysteem.Controllers
     [Route("Home/Index")]
     public class TeamleiderController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Docenten()
+        {
+            return View();
+        }
+
+        public IActionResult TeamBeheren()
         {
             return View();
         }
