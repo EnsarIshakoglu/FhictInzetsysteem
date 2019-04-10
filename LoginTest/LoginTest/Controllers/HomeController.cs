@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Inzetsysteem.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly UserLogic _userLogic;
@@ -23,12 +24,14 @@ namespace Inzetsysteem.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return User.Identity.IsAuthenticated ? View("Profile") : View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public IActionResult Index([Bind("Password, Username")] User user)
         {
 
@@ -39,14 +42,14 @@ namespace Inzetsysteem.Controllers
 
             if (_userLogic.Login(user))
             {
-                InitUser(user);
+                InitUser(user, _userLogic.GetUserID(user));
                 return RedirectToAction("Profile", "Home");   //De cookies worden pas nadat je naar een nieuwe controller bent gegaan gerefreshed, hierdoor doe ik redirecten naar de index pag van homecontroller
             }
 
             return View();
 
         }
-        [Authorize]
+        
         public IActionResult Profile()
         {
             return View();
@@ -56,10 +59,11 @@ namespace Inzetsysteem.Controllers
         {
             return View();
         }
-
+        [HttpGet]
         public IActionResult VoorkeurInvoeren()
         {
-            return View();
+
+            return RedirectToAction("Index", "Preference");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -75,7 +79,7 @@ namespace Inzetsysteem.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        private async void InitUser(User user)
+        private async void InitUser(User user, int userId)
         {
             var claims = new List<Claim>();
 
@@ -85,6 +89,8 @@ namespace Inzetsysteem.Controllers
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));
             }
+
+            claims.Add(new Claim(ClaimTypes.Name, userId.ToString()));
 
             ClaimsPrincipal principal = new ClaimsPrincipal(new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme));
             var authProp = new AuthenticationProperties

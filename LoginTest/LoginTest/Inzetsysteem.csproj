@@ -23,6 +23,7 @@
 
 
   <ItemGroup>
+    <Folder Include="Views\Shared\PartialViews\Preference\" />
     <Folder Include="wwwroot\Images\" />
   </ItemGroup>
 

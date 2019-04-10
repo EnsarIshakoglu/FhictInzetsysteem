@@ -27,5 +27,10 @@ namespace Inzetsysteem.Logic
         {
             return _userRepository.GetUserRoles(user);
         }
+
+        public int GetUserID(User user)
+        {
+            return _userRepository.GetUserID(user);
+        }
     }
 }

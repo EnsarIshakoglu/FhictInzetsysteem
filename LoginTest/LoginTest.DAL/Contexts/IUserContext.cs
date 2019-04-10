@@ -9,5 +9,6 @@ namespace Inzetsysteem.DAL
     {
         bool Login(User user);
         List<string> GetUserRoles(User user);
+        int GetUserID(User user);
     }
 }

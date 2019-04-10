@@ -6,7 +6,16 @@ namespace Inzetsysteem.Models
 {
     public class Voorkeur
     {
-        public Taak Taak { get; private set; }
-        public int Waarde { get; private set; }
+        public Voorkeur(Taak taak, int waarde)
+        {
+            Taak = taak;
+            Waarde = waarde;
+        }
+        public Voorkeur(Taak taak)
+        {
+            Taak = taak;
+        }
+        public Taak Taak { get; set; }
+        public int Waarde { get; set; } = -1;
     }
 }

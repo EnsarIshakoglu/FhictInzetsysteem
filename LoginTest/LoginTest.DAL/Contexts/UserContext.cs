@@ -8,18 +8,18 @@ namespace Inzetsysteem.DAL
 {
     public class UserContext : IUserContext
     {
-        private readonly string connectionString =
+        private readonly string _connectionString =
             "Server=mssql.fhict.local;Database=dbi389621;User Id=dbi389621;Password=Ensar123;";
 
         public bool Login(User user)
         {
             bool loginSuccesfull = false;
 
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 conn.Open();
 
-                SqlCommand command = new SqlCommand($"SELECT TOP 1 Inlognaam,Wachtwoord from dbo.Gebruiker WHERE Inlognaam = '{user.Username}' and Wachtwoord = '{user.Password}'", conn);
+                SqlCommand command = new SqlCommand($"SELECT TOP 1 Id, Inlognaam,Wachtwoord from dbo.Gebruiker WHERE Inlognaam = '{user.Username}' and Wachtwoord = '{user.Password}'", conn);
                 SqlDataReader reader = command.ExecuteReader();
 
                 while (reader.Read())
@@ -36,7 +36,7 @@ namespace Inzetsysteem.DAL
         {
             var roles = new List<string>();
 
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 conn.Open();
 
@@ -52,6 +52,28 @@ namespace Inzetsysteem.DAL
             }
 
             return roles;
+        }
+
+        public int GetUserID(User user)
+        {
+            int userId = 0;
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                SqlCommand command = new SqlCommand($"SELECT TOP 1 Id, Inlognaam,Wachtwoord from dbo.Gebruiker WHERE Inlognaam = '{user.Username}' and Wachtwoord = '{user.Password}'", conn);
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    userId = (int) reader["Id"];
+                }
+                reader.Close();
+                conn.Close();
+            }
+
+            return userId;
         }
     }
 }

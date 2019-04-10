@@ -23,5 +23,10 @@ namespace Inzetsysteem.DAL
         {
             return _context.GetUserRoles(user);
         }
+
+        public int GetUserID(User user)
+        {
+            return _context.GetUserID(user);
+        }
     }
 }

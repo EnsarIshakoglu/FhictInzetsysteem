@@ -6,6 +6,7 @@ namespace Inzetsysteem.Models
 {
     public abstract class Taak
     {
-        public string Naam { get; private set; }
+        public string Naam { get; set; }
+        public int Id { get; set; }
     }
 }

@@ -8311,9 +8311,9 @@ textarea {
 ***************/
 /* Remove default Radio Buttons */
 [type="radio"]:not(:checked), [type="radio"]:checked {
-    position: absolute;
-    left: -9999px;
-    visibility: hidden;
+    /*position: absolute;
+    left: -9999px;*/
+    visibility: visible;
 }
 
     [type="radio"]:not(:checked) + label, [type="radio"]:checked + label {
@@ -8562,7 +8562,7 @@ form p {
         top: 10px;
         -webkit-transform: rotateZ(37deg);
         transform: rotateZ(37deg);
-        -webkit-transform-origin: 20% 40%;
+        -webkit-transform-origin: 16.6666666666666666666667% 40%;
         transform-origin: 100% 100%;
     }
 
@@ -9931,7 +9931,7 @@ select {
 @media (min-height: 35.875em) {
     .picker--opened .picker__frame {
         top: 10%;
-        bottom: 20% auto;
+        bottom: 16.6666666666666666666667% auto;
     }
 }
 
