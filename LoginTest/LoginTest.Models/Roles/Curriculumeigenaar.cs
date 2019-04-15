@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Inzetsysteem.Models
 {
-    public class Curriculumeigenaar : Rol
+    public class Curriculumeigenaar : Role
     {
     }
 }

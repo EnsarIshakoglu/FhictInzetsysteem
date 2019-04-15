@@ -18,7 +18,7 @@ namespace Inzetsysteem.Controllers
         [HttpGet]
         public IActionResult OnderwijsTrajectPreference()
         {
-            var preferences = new List<Voorkeur>();
+            var preferences = new List<Preference>();
             var trajecten = _preferenceLogic.GetAllOnderwijsTrajecten();
 
             foreach (var onderwijsTraject in trajecten)
@@ -32,17 +32,17 @@ namespace Inzetsysteem.Controllers
         [HttpPost]
         public IActionResult GetTrajectPreferences()
         {
-            List<Voorkeur> voorkeuren = new List<Voorkeur>();
+            List<Preference> preferences = new List<Preference>();
 
             foreach (var traject in _preferenceLogic.GetAllOnderwijsTrajecten())
             {
-                var voorkeurWaarde = Request.Form[traject.Naam].ToString();
-                int waarde = Convert.ToInt16(voorkeurWaarde);
+                var preferenceValue = Request.Form[traject.Naam].ToString();
+                int value = Convert.ToInt16(preferenceValue);
 
-                voorkeuren.Add(new Voorkeur(traject, waarde));
+                preferences.Add(new Preference(traject, value));
             }
 
-            //sla voorkeuren op
+            _preferenceLogic.SaveTrajectPreferences(preferences);
 
             return View("OnderwijsTrajectPreference");
         }

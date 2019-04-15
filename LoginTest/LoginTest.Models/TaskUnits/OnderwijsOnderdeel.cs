@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Inzetsysteem.Models
 {
-    class OnderwijsOnderdeel : Taak
+    class OnderwijsOnderdeel : Task
     {
         public int BegroteUren { get; private set; }
         public int Factor { get; private set; }

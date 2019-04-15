@@ -4,18 +4,18 @@ using System.Text;
 
 namespace Inzetsysteem.Models
 {
-    public class Voorkeur
+    public class Preference
     {
-        public Voorkeur(Taak taak, int waarde)
+        public Preference(Task taak, int waarde)
         {
             Taak = taak;
             Waarde = waarde;
         }
-        public Voorkeur(Taak taak)
+        public Preference(Task taak)
         {
             Taak = taak;
         }
-        public Taak Taak { get; set; }
+        public Task Taak { get; set; }
         public int Waarde { get; set; } = -1;
     }
 }

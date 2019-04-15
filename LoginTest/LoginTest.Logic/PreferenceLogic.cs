@@ -17,7 +17,7 @@ namespace Inzetsysteem.Logic
             return _repo.GetAllOnderwijsTrajecten();
         }
 
-        public Voorkeur GetTrajectPreference(OnderwijsTraject traject, string userId)
+        public Preference GetTrajectPreference(OnderwijsTraject traject, string userId)
         {
             int IdUser = Convert.ToInt32(userId);
 
@@ -32,9 +32,14 @@ namespace Inzetsysteem.Logic
                 preferenceValue += preference.Waarde;
             }
 
-            var voorkeur = new Voorkeur(traject, (preferenceValue / valueToDivideBy));
+            var voorkeur = new Preference(traject, (preferenceValue / valueToDivideBy));
 
             return voorkeur;
+        }
+
+        public void SaveTrajectPreferences(List<Preference> preferences, int userId)
+        {
+            _repo.SaveTrajectPreferences(preferences, userId);
         }
     }
 }

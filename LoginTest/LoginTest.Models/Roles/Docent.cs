@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 namespace Inzetsysteem.Models
 {
-    public class Docent : Rol
+    public class Docent : Role
     {
         public Team Team { get; private set; }
         public int OpenInzet { get; private set; }
-        public List<Voorkeur> Voorkeuren { get; private set; }
-        public List<Taak> Bekwaamheden { get; private set; }
-        public List<Taak> toegewezenTaken { get; private set; }
+        public List<Preference> Voorkeuren { get; private set; }
+        public List<Task> Bekwaamheden { get; private set; }
+        public List<Task> toegewezenTaken { get; private set; }
     }
 }

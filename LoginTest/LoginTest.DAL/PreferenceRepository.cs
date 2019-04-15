@@ -19,9 +19,14 @@ namespace Inzetsysteem.DAL
             return _context.GetAllOnderwijsTrajecten();
         }
 
-        public IEnumerable<Voorkeur> GetAllTrajectPreferences(OnderwijsTraject traject, int IdUser)
+        public IEnumerable<Preference> GetAllTrajectPreferences(OnderwijsTraject traject, int IdUser)
         {
             return _context.GetPreferencesFromTraject(traject, IdUser);
+        }
+
+        public void SaveTrajecTPreferences(List<Preference> preferences)
+        {
+            return _context.SaveTrajectPreferences()
         }
     }
 }
