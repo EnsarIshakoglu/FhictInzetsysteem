@@ -6,6 +6,7 @@ namespace Inzetsysteem.Models
 {
     public class Team
     {
-        public int AantalMensen { get; private set; }
+        public string Naam { get; set; }
+        public int Id { get; set; }
     }
 }

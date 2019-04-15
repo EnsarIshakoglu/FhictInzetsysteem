@@ -25,7 +25,10 @@ namespace Inzetsysteem.DAL.Contexts
 
                 while (reader.Read())
                 {
-                    trajecten.Add(new OnderwijsTraject(reader["Naam"]?.ToString(), (int)reader["Id"]));
+                    trajecten.Add(new OnderwijsTraject{
+                        Id = (int)reader["Id"],
+                        Naam = (string)reader["Naam"]
+                    });
                 }
 
                 connection.Close();

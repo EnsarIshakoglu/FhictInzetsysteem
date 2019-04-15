@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Inzetsysteem.Models
 {
-    class OnderwijsOnderdeel : Taak
+    public class OnderwijsOnderdeel : Taak
     {
-        public int BegroteUren { get; private set; }
-        public int Factor { get; private set; }
+        public int BegroteUren { get; set; }
+        public int Factor { get; set; }
     }
 }

@@ -6,8 +6,8 @@ namespace Inzetsysteem.Models
 {
     public class OnderwijsTaak : Taak
     {
-        public string Periode { get; private set; }
-        public int BegroteUren { get; private set; }
-        public int Factor { get; private set; }
+        public string Periode { get; set; }
+        public int BegroteUren { get; set; }
+        public int Factor { get; set; }
     }
 }

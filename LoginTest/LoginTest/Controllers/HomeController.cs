@@ -32,12 +32,12 @@ namespace Inzetsysteem.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult Index([Bind("Password, Username")] User user)
+        public IActionResult Login([Bind("Password, Username")] User user)
         {
 
             if (!ModelState.IsValid)
             {
-                return View();
+                return View("Index");
             }
 
             if (_userLogic.Login(user))
@@ -46,7 +46,7 @@ namespace Inzetsysteem.Controllers
                 return RedirectToAction("Profile", "Home");   //De cookies worden pas nadat je naar een nieuwe controller bent gegaan gerefreshed, hierdoor doe ik redirecten naar de index pag van homecontroller
             }
 
-            return View();
+            return View("Index");
 
         }
         
