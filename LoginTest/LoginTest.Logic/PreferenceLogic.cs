@@ -70,5 +70,29 @@ namespace Inzetsysteem.Logic
         {
             return _repo.CheckTaakPreference(taak, userId);
         }
+        public IEnumerable<OnderwijsEenheid> GetAllOnderwijsEenheden(int trajectId)
+        {
+            return _repo.GetAllOnderwijsEenheden(trajectId);
+        }
+
+        public IEnumerable<OnderwijsOnderdeel> GetAllOnderwijsOnderdelen(int eenheidId)
+        {
+            return _repo.GetAllOnderwijsOnderdelen(eenheidId);
+        }
+
+        public IEnumerable<OnderwijsTaak> GetAllOnderwijsTaken(int onderdeelId)
+        {
+            return _repo.GetAllOnderwijsTaken(onderdeelId);
+        }
+
+        public IEnumerable<OnderwijsTaak> GetOnderdeelFromTraject(OnderwijsTraject onderwijsTraject)
+        {
+            return _repo.GetOnderdeelFromTraject(onderwijsTraject);
+        }
+
+        public IEnumerable<OnderwijsTaak> GetTasksFromEenheid(OnderwijsEenheid onderwijsEenheid)
+        {
+            return _repo.GetTasksFromEenheid(onderwijsEenheid);
+        }
     }
 }

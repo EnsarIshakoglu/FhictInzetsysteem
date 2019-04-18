@@ -14,6 +14,11 @@ namespace Inzetsysteem.DAL.Contexts
         void AddOnderdeelPreference(OnderwijsOnderdeel onderdeel, int voorkeurWaarde, int userId);
         void UpdateOnderdeelPreference(OnderwijsOnderdeel onderdeel, int voorkeurWaarde, int userId);
         Preference CheckTaakPreference(OnderwijsTaak taak, int userId);
+        IEnumerable<OnderwijsEenheid> GetAllOnderwijsEenheden(int trajectId);
+        IEnumerable<OnderwijsOnderdeel> GetAllOnderwijsOnderdelen(int EenheidId);
+        IEnumerable<OnderwijsTaak> GetAllOnderwijsTaken(int OnderdeelId);
+        IEnumerable<OnderwijsTaak> GetOnderdeelFromTraject(OnderwijsTraject onderwijsTraject);
+        IEnumerable<OnderwijsTaak> GetTasksFromEenheid(OnderwijsEenheid onderwijsEenheid);
 
     }
 }

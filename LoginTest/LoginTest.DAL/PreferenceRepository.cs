@@ -58,5 +58,30 @@ namespace Inzetsysteem.DAL
         {
             _context.SaveTrajectPreferences(preferences, userId);
         }
+
+        public IEnumerable<OnderwijsEenheid> GetAllOnderwijsEenheden(int trajectId)
+        {
+            return _context.GetAllOnderwijsEenheden(trajectId);
+        }
+
+        public IEnumerable<OnderwijsOnderdeel> GetAllOnderwijsOnderdelen(int eenheidId)
+        {
+            return _context.GetAllOnderwijsOnderdelen(eenheidId);
+        }
+
+        public IEnumerable<OnderwijsTaak> GetAllOnderwijsTaken(int onderdeelId)
+        {
+            return _context.GetAllOnderwijsTaken(onderdeelId);
+        }
+
+        public IEnumerable<OnderwijsTaak> GetOnderdeelFromTraject(OnderwijsTraject onderwijsTraject)
+        {
+            return _context.GetOnderdeelFromTraject(onderwijsTraject);
+        }
+
+        public IEnumerable<OnderwijsTaak> GetTasksFromEenheid(OnderwijsEenheid onderwijsEenheid)
+        {
+            return _context.GetTasksFromEenheid(onderwijsEenheid);
+        }
     }
 }
