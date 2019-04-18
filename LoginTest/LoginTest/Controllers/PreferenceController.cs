@@ -44,7 +44,7 @@ namespace Inzetsysteem.Controllers
 
             _preferenceLogic.SaveTrajectPreferences(preferences, Convert.ToInt32(User.Identity.Name));
 
-            return View("OnderwijsTrajectPreference");
+            return RedirectToAction("OnderwijsTrajectPreference", "Preference");
         }
     }
 }
