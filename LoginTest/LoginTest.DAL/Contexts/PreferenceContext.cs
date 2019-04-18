@@ -182,7 +182,7 @@ namespace Inzetsysteem.DAL.Contexts
             {
                 connection.Open();
 
-                SqlCommand cmd = new SqlCommand("AddTaakVoorkeur", connection);
+                SqlCommand cmd = new SqlCommand("UpdateTaakVoorkeur", connection);
 
                 cmd.CommandType = CommandType.StoredProcedure;
 
