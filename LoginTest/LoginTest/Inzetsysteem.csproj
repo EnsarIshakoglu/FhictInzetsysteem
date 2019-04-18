@@ -18,7 +18,6 @@
 
 
   <ItemGroup>
-    <ProjectReference Include="..\LoginTest.DAL\Inzetsysteem.DAL.csproj" />
     <ProjectReference Include="..\LoginTest.Logic\Inzetsysteem.Logic.csproj" />
     <ProjectReference Include="..\LoginTest.Models\Inzetsysteem.Models.csproj" />
   </ItemGroup>

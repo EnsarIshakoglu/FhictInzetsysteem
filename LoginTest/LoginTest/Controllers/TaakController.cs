@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Inzetsysteem.Logic;
 using Inzetsysteem.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,8 +12,10 @@ namespace Inzetsysteem.Controllers
     {
         public IActionResult Index()
         {
-            //get list with trajecten
-            return View();
+            OnderwijsLogic onderwijsLogic = new OnderwijsLogic();
+            List<OnderwijsTraject> onderwijsTrajects = onderwijsLogic.GetAllTrajects();
+            List<Taak> parentList = onderwijsTrajects.Cast<Taak>().ToList();
+            return View(parentList);
         }
 
         public IActionResult taskView()
@@ -28,11 +31,6 @@ namespace Inzetsysteem.Controllers
         public IActionResult AddTaskPart()
         {
             return RedirectToAction("Index", "Taak");
-        }
-
-        private List<OnderwijsTraject> getAllTrajects()
-        {
-            return null;
         }
     }
 }

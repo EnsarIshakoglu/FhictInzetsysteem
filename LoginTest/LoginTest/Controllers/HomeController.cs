@@ -27,6 +27,7 @@ namespace Inzetsysteem.Controllers
         [AllowAnonymous]
         public IActionResult Index()
         {
+            //return RedirectToAction("Login", "Home");
             return User.Identity.IsAuthenticated ? View("Profile") : View();
         }
 
@@ -34,20 +35,16 @@ namespace Inzetsysteem.Controllers
         [AllowAnonymous]
         public IActionResult Login([Bind("Password, Username")] User user)
         {
-
             if (!ModelState.IsValid)
             {
                 return View("Index");
             }
-
             if (_userLogic.Login(user))
             {
                 InitUser(user, _userLogic.GetUserID(user));
                 return RedirectToAction("Profile", "Home");   //De cookies worden pas nadat je naar een nieuwe controller bent gegaan gerefreshed, hierdoor doe ik redirecten naar de index pag van homecontroller
             }
-
             return View("Index");
-
         }
         
         public IActionResult Profile()
@@ -59,10 +56,10 @@ namespace Inzetsysteem.Controllers
         {
             return View();
         }
+
         [HttpGet]
         public IActionResult VoorkeurInvoeren()
         {
-
             return RedirectToAction("Index", "Preference");
         }
 
@@ -74,8 +71,7 @@ namespace Inzetsysteem.Controllers
 
         public IActionResult Logout()
         {
-            LogOut(Request.Cookies.Keys);
-
+            LogOut();
             return RedirectToAction("Index", "Home");
         }
 
@@ -100,9 +96,9 @@ namespace Inzetsysteem.Controllers
 
             await this.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authProp);
         }
-        private async void LogOut(IEnumerable<string> keys)
-        {
 
+        private async void LogOut()
+        {
             await this.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         }
     }

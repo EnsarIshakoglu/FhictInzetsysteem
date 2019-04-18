@@ -6,7 +6,7 @@ using Inzetsysteem.Models;
 
 namespace Inzetsysteem.Logic
 {
-    class OnderwijsLogic
+    public class OnderwijsLogic
     {
         private readonly OnderwijsRepo onderwijsRepo;
 

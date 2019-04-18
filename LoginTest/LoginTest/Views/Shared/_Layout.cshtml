@@ -79,7 +79,7 @@
                             }
                             @if (User.IsInRole(Roles.Blokeigenaar.ToString()) || User.IsInRole(Roles.Curriculumeigenaar.ToString()))
                             {
-                                <li><a asp-area="" asp-controller="Home" asp-action="Movies">Voeg taak toe</a></li>
+                                <li><a asp-area="" asp-controller="Taak" asp-action="Index">Voeg taak toe</a></li>
                             }
                             <input type="button" value="Log Out" onclick="location.href = '@Url.Action("Logout", "Home")'" class="btn btn-primary"/>
                         </ul>
