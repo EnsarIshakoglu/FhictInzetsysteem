@@ -27,7 +27,11 @@ namespace Inzetsysteem.DAL.Contexts
 
                 while (reader.Read())
                 {
-                    trajecten.Add(new OnderwijsTraject(reader["Naam"]?.ToString(), (int)reader["Id"]));
+                    trajecten.Add(new OnderwijsTraject
+                    {
+                        Id = (int) reader["Id"],
+                        Naam = reader["Naam"]?.ToString()
+                    });
                 }
 
                 connection.Close();
@@ -78,7 +82,11 @@ namespace Inzetsysteem.DAL.Contexts
 
                     while (reader.Read())
                     {
-                        preferences.Add(new Preference(task, (int)reader["Voorkeur waarde"]));
+                        preferences.Add(new Preference
+                        {
+                            Taak = task,
+                            Waarde = (int) reader["Voorkeur waarde"]
+                        });
                     }
 
                     connection.Close();
@@ -109,9 +117,9 @@ namespace Inzetsysteem.DAL.Contexts
 
         }
 
-        public IEnumerable<OnderwijsTaak> CheckIfPreferencesExist(IEnumerable<OnderwijsTaak> tasks, int userId)
+        public IEnumerable<Preference> CheckIfPreferencesExist(IEnumerable<OnderwijsTaak> tasks, int userId)
         {
-            var existingTasks = new List<OnderwijsTaak>();
+            var existingTasks = new List<Preference>();
 
             foreach (var task in tasks)
             {
@@ -123,17 +131,17 @@ namespace Inzetsysteem.DAL.Contexts
 
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.Add(new SqlParameter("@TaakID", tasks));
+                    cmd.Parameters.Add(new SqlParameter("@TaakID", task.Id));
                     cmd.Parameters.Add(new SqlParameter("@GebruikersID", userId));
 
                     var reader = cmd.ExecuteReader();
 
                     while (reader.Read())
                     {
-                        existingTasks.Add(new OnderwijsTaak
+                        existingTasks.Add(new Preference
                         {
-                            Id = (int)reader["Id"],
-                            Naam = reader["Naam"]?.ToString()
+                            Taak = task,
+                            Waarde = (int)reader["Voorkeur waarde"]
                         });
                     }
 
