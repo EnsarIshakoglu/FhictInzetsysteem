@@ -187,7 +187,7 @@ namespace Inzetsysteem.DAL.Contexts
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.Add(new SqlParameter("@TaakID", taak.Id));
-                cmd.Parameters.Add(new SqlParameter("@@VoorkeurWaarde", voorkeurWaarde));
+                cmd.Parameters.Add(new SqlParameter("@VoorkeurWaarde", voorkeurWaarde));
                 cmd.Parameters.Add(new SqlParameter("@GebruikersID", userId));
 
                 cmd.ExecuteNonQuery();
