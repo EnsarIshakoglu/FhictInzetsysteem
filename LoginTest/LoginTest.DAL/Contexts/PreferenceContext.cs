@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Security.Claims;
@@ -100,33 +101,47 @@ namespace Inzetsysteem.DAL.Contexts
                 }));
             }
 
-            CheckIfPreferencesExist(preferences, userId);
+            var existingPreferences = CheckIfPreferencesExist(tasks, userId);
+            //voeg new preferences toe
+
+            //make new preference
+            //edit preference
 
         }
 
-        public IEnumerable<Preference> CheckIfPreferencesExist(IEnumerable<Preference> preferences, int userId)
+        public IEnumerable<OnderwijsTaak> CheckIfPreferencesExist(IEnumerable<OnderwijsTaak> tasks, int userId)
         {
-            var existingPreferences = new List<Preference>();
+            var existingTasks = new List<OnderwijsTaak>();
 
-            foreach (var preference in preferences)
+            foreach (var task in tasks)
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
 
-                    var sqlCommand = new SqlCommand($"SELECT [Voorkeur waarde] FROM Voorkeuren WHERE OnderwijstaakID = @TaakID AND GebruikerID = (SELECT ID FROM Gebruiker WHERE Inlognaam = {User})", connection);
-                    var reader = sqlCommand.ExecuteReader();
+                    SqlCommand cmd = new SqlCommand("CheckTaakVoorkeur", connection);
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add(new SqlParameter("@TaakID", tasks));
+                    cmd.Parameters.Add(new SqlParameter("@GebruikersID", userId));
+
+                    var reader = cmd.ExecuteReader();
 
                     while (reader.Read())
                     {
-                        preferences.Add(new Preference(task, (int)reader["Voorkeur waarde"]));
+                        existingTasks.Add(new OnderwijsTaak
+                        {
+                            Id = (int)reader["Id"],
+                            Naam = reader["Naam"]?.ToString()
+                        });
                     }
 
                     connection.Close();
                 }
             }
 
-            return preferences;
+            return existingTasks;
         }
     }
 }
