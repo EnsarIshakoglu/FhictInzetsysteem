@@ -19,21 +19,40 @@ namespace Inzetsysteem.Logic
 
         public Preference GetTrajectPreference(OnderwijsTraject traject, string userId)
         {
-            int IdUser = Convert.ToInt32(userId);
+            int idUser = Convert.ToInt32(userId);
 
             int preferenceValue = 0;
-            var preferences = _repo.GetAllTrajectPreferences(traject, IdUser);
+            List<Preference> preferences = new List<Preference>();
 
+            var taken = _repo.GetTakenFromTraject(traject);
+            var onderdelen = _repo.GetOnderdeelFromTraject(traject);
+
+            foreach (var taak in taken)
+            {
+                var value = _repo.CheckTaakPreference(taak, idUser);
+                if (value.Waarde > 0)
+                {
+                    preferences.Add(value);
+                }
+            }
+            foreach (var onderdeel in onderdelen)
+            {
+                var value = _repo.CheckOnderdeelPreference(onderdeel, idUser);
+                if (value.Waarde > 0)
+                {
+                    preferences.Add(value);
+                }
+            }
             int valueToDivideBy = preferences.Count();
             if (valueToDivideBy == 0) valueToDivideBy = 1;
-
+            
             foreach (var preference in preferences)
             {
                 preferenceValue += preference.Waarde;
             }
-
+            
             var voorkeur = new Preference{Taak = traject, Waarde = preferenceValue / valueToDivideBy};
-
+            
             return voorkeur;
         }
 
@@ -41,6 +60,12 @@ namespace Inzetsysteem.Logic
         {
             _repo.SaveTrajectPreferences(preferences, userId);
         }
+
+        public Preference CheckTaakPreference(OnderwijsTaak taak, int userId)
+        {
+            return _repo.CheckTaakPreference(taak, userId);
+        }
+
         public void AddTaakPreference(OnderwijsTaak taak, int voorkeurWaarde, int userId)
         {
             _repo.AddTaakPreference(taak, voorkeurWaarde, userId);
@@ -66,10 +91,6 @@ namespace Inzetsysteem.Logic
             _repo.UpdateOnderdeelPreference(onderdeel, voorkeurWaarde, userId);
         }
 
-        public Preference CheckTaakPreference(OnderwijsTaak taak, int userId)
-        {
-            return _repo.CheckTaakPreference(taak, userId);
-        }
         public IEnumerable<OnderwijsEenheid> GetAllOnderwijsEenheden(int trajectId)
         {
             return _repo.GetAllOnderwijsEenheden(trajectId);
@@ -85,14 +106,19 @@ namespace Inzetsysteem.Logic
             return _repo.GetAllOnderwijsTaken(onderdeelId);
         }
 
-        public IEnumerable<OnderwijsTaak> GetOnderdeelFromTraject(OnderwijsTraject onderwijsTraject)
+        public IEnumerable<OnderwijsTaak> GetTasksFromTraject(OnderwijsTraject onderwijsTraject)
+        {
+            return _repo.GetTakenFromTraject(onderwijsTraject);
+        }
+
+        public IEnumerable<OnderwijsOnderdeel> GetOnderdeelFromTraject(OnderwijsTraject onderwijsTraject)
         {
             return _repo.GetOnderdeelFromTraject(onderwijsTraject);
         }
 
         public IEnumerable<OnderwijsTaak> GetTasksFromEenheid(OnderwijsEenheid onderwijsEenheid)
         {
-            return _repo.GetTasksFromEenheid(onderwijsEenheid);
+            return _repo.GetTakenFromEenheid(onderwijsEenheid);
         }
     }
 }

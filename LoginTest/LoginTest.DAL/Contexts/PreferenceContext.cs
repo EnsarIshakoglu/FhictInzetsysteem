@@ -20,7 +20,7 @@ namespace Inzetsysteem.DAL.Contexts
             {
                 List<OnderwijsTaak> tasks = new List<OnderwijsTaak>();
 
-                tasks.AddRange(GetTasksFromTraject(new OnderwijsTraject
+                tasks.AddRange(GetTakenFromTraject(new OnderwijsTraject
                 {
                     Id = trajectPreference.Taak.Id,
                     Naam = trajectPreference.Taak.Naam
@@ -41,44 +41,6 @@ namespace Inzetsysteem.DAL.Contexts
             }
 
         }
-
-        public IEnumerable<Preference> GetPreferencesFromTraject(OnderwijsTraject traject, int IdUser)
-        {
-            var preferences = new List<Preference>();
-            var tasks = GetTasksFromTraject(traject);
-
-            foreach (var task in tasks)
-            {
-                using (SqlConnection connection = new SqlConnection(_connectionString))
-                {
-                    connection.Open();
-
-                    var sqlCommand = new SqlCommand($"SELECT G.Naam, [Voorkeur waarde] FROM Voorkeuren\r\ninner join Gebruiker G on Voorkeuren.GebruikerID = G.ID\r\nWHERE OnderwijstaakID = {task.Id} \r\nand G.ID = {IdUser}", connection);
-                    var reader = sqlCommand.ExecuteReader();
-
-                    while (reader.Read())
-                    {
-                        preferences.Add(new Preference
-                        {
-                            Taak = task,
-                            Waarde = (int)reader["Voorkeur waarde"]
-                        });
-                    }
-
-                    connection.Close();
-                }
-            }
-
-            return preferences;
-        }
-
-
-
-
-
-
-
-
 
 
         public IEnumerable<OnderwijsTraject> GetAllOnderwijsTrajecten()
@@ -201,7 +163,7 @@ namespace Inzetsysteem.DAL.Contexts
             return taken;
         }
 
-        public IEnumerable<OnderwijsTaak> GetTasksFromTraject(OnderwijsTraject onderwijsTraject)
+        public IEnumerable<OnderwijsTaak> GetTakenFromTraject(OnderwijsTraject onderwijsTraject)
         {
             var tasks = new List<OnderwijsTaak>();
 
@@ -231,9 +193,9 @@ namespace Inzetsysteem.DAL.Contexts
             return tasks;
         }
 
-        public IEnumerable<OnderwijsTaak> GetOnderdeelFromTraject(OnderwijsTraject onderwijsTraject)
+        public IEnumerable<OnderwijsOnderdeel> GetOnderdeelFromTraject(OnderwijsTraject onderwijsTraject)
         {
-            var tasks = new List<OnderwijsTaak>();
+            var tasks = new List<OnderwijsOnderdeel>();
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -249,7 +211,7 @@ namespace Inzetsysteem.DAL.Contexts
 
                 while (reader.Read())
                 {
-                    tasks.Add(new OnderwijsTaak
+                    tasks.Add(new OnderwijsOnderdeel
                     {
                         Id = (int)reader["Id"],
                     });
@@ -261,7 +223,7 @@ namespace Inzetsysteem.DAL.Contexts
             return tasks;
         }
 
-        public IEnumerable<OnderwijsTaak> GetTasksFromEenheid(OnderwijsEenheid onderwijsEenheid)
+        public IEnumerable<OnderwijsTaak> GetTakenFromEenheid(OnderwijsEenheid onderwijsEenheid)
         {
             var tasks = new List<OnderwijsTaak>();
 

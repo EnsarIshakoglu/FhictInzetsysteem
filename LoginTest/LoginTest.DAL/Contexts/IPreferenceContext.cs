@@ -6,7 +6,6 @@ namespace Inzetsysteem.DAL.Contexts
     public interface IPreferenceContext
     {
         IEnumerable<OnderwijsTraject> GetAllOnderwijsTrajecten();
-        IEnumerable<Preference> GetPreferencesFromTraject(OnderwijsTraject traject, int userId);
         void SaveTrajectPreferences(IEnumerable<Preference> preferences, int userId);
         void AddTaakPreference(OnderwijsTaak taak, int voorkeurWaarde, int userId);
         void UpdateTaakPreference(OnderwijsTaak taak, int voorkeurWaarde, int userId);
@@ -17,8 +16,9 @@ namespace Inzetsysteem.DAL.Contexts
         IEnumerable<OnderwijsEenheid> GetAllOnderwijsEenheden(int trajectId);
         IEnumerable<OnderwijsOnderdeel> GetAllOnderwijsOnderdelen(int EenheidId);
         IEnumerable<OnderwijsTaak> GetAllOnderwijsTaken(int OnderdeelId);
-        IEnumerable<OnderwijsTaak> GetOnderdeelFromTraject(OnderwijsTraject onderwijsTraject);
-        IEnumerable<OnderwijsTaak> GetTasksFromEenheid(OnderwijsEenheid onderwijsEenheid);
+        IEnumerable<OnderwijsTaak> GetTakenFromTraject(OnderwijsTraject onderwijsTraject);
+        IEnumerable<OnderwijsOnderdeel> GetOnderdeelFromTraject(OnderwijsTraject onderwijsTraject);
+        IEnumerable<OnderwijsTaak> GetTakenFromEenheid(OnderwijsEenheid onderwijsEenheid);
 
     }
 }
