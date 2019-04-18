@@ -41,5 +41,34 @@ namespace Inzetsysteem.Logic
         {
             _repo.SaveTrajectPreferences(preferences, userId);
         }
+        public void AddTaakPreference(OnderwijsTaak taak, int voorkeurWaarde, int userId)
+        {
+            _repo.AddTaakPreference(taak, voorkeurWaarde, userId);
+        }
+
+        public void UpdateTaakPreference(OnderwijsTaak taak, int voorkeurWaarde, int userId)
+        {
+            _repo.UpdateTaakPreference(taak, voorkeurWaarde, userId);
+        }
+
+        public Preference CheckOnderdeelPreference(OnderwijsOnderdeel onderdeel, int userId)
+        {
+            return _repo.CheckOnderdeelPreference(onderdeel, userId);
+        }
+
+        public void AddOnderdeelPreference(OnderwijsOnderdeel onderdeel, int voorkeurWaarde, int userId)
+        {
+            _repo.AddOnderdeelPreference(onderdeel, voorkeurWaarde, userId);
+        }
+
+        public void UpdateOnderdeelPreference(OnderwijsOnderdeel onderdeel, int voorkeurWaarde, int userId)
+        {
+            _repo.UpdateOnderdeelPreference(onderdeel, voorkeurWaarde, userId);
+        }
+
+        public Preference CheckTaakPreference(OnderwijsTaak taak, int userId)
+        {
+            return _repo.CheckTaakPreference(taak, userId);
+        }
     }
 }
