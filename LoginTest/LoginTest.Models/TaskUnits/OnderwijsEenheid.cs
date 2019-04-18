@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Inzetsysteem.Models
 {
-    class OnderwijsEenheid : Task
+    public class OnderwijsEenheid : Task
     {
         public OnderwijsEenheid Blok { get; private set; }
     }

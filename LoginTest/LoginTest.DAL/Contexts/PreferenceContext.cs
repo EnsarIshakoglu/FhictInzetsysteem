@@ -117,11 +117,11 @@ namespace Inzetsysteem.DAL.Contexts
 
         }
 
-        public IEnumerable<Preference> CheckIfPreferencesExist(IEnumerable<OnderwijsTaak> tasks, int userId)
+        public IEnumerable<Preference> CheckTaskPreference(IEnumerable<OnderwijsTaak> taken, int userId)
         {
-            var existingTasks = new List<Preference>();
+            var existingTaken = new List<Preference>();
 
-            foreach (var task in tasks)
+            foreach (var taak in taken)
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
@@ -131,16 +131,16 @@ namespace Inzetsysteem.DAL.Contexts
 
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.Add(new SqlParameter("@TaakID", task.Id));
+                    cmd.Parameters.Add(new SqlParameter("@TaakID", taak.Id));
                     cmd.Parameters.Add(new SqlParameter("@GebruikersID", userId));
 
                     var reader = cmd.ExecuteReader();
 
                     while (reader.Read())
                     {
-                        existingTasks.Add(new Preference
+                        existingTaken.Add(new Preference
                         {
-                            Taak = task,
+                            Taak = taak,
                             Waarde = (int)reader["Voorkeur waarde"]
                         });
                     }
@@ -149,7 +149,42 @@ namespace Inzetsysteem.DAL.Contexts
                 }
             }
 
-            return existingTasks;
+            return existingTaken;
+        }
+
+        public IEnumerable<Preference> CheckPartPreference(IEnumerable<OnderwijsOnderdeel> onderdelen, int userId)
+        {
+            var existingOnderdelen = new List<Preference>();
+
+            foreach (var onderdeel in onderdelen)
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    connection.Open();
+
+                    SqlCommand cmd = new SqlCommand("CheckOnderdeelVoorkeur", connection);
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add(new SqlParameter("@OnderdeelID", onderdeel.Id));
+                    cmd.Parameters.Add(new SqlParameter("@GebruikersID", userId));
+
+                    var reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        existingOnderdelen.Add(new Preference
+                        {
+                            Taak = onderdeel,
+                            Waarde = (int)reader["Voorkeur waarde"]
+                        });
+                    }
+
+                    connection.Close();
+                }
+            }
+
+            return existingOnderdelen;
         }
     }
 }
