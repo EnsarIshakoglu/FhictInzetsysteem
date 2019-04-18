@@ -96,33 +96,42 @@ namespace Inzetsysteem.DAL.Contexts
             return preferences;
         }
 
-        public void SaveTrajectPreferences(IEnumerable<Preference> preferences, int userId)
+        public void SaveTrajectPreferences(IEnumerable<Preference> trajectPreferences, int userId)
         {
-            List<OnderwijsTaak> tasks = new List<OnderwijsTaak>();
-
-            foreach (var preference in preferences)
+            foreach (var trajectPreference in trajectPreferences)
             {
+                List<OnderwijsTaak> tasks = new List<OnderwijsTaak>();
+
                 tasks.AddRange(GetTasksFromTraject(new OnderwijsTraject
                 {
-                    Id = preference.Taak.Id,
-                    Naam = preference.Taak.Naam
+                    Id = trajectPreference.Taak.Id,
+                    Naam = trajectPreference.Taak.Naam
                 }));
+
+                foreach (var taak in tasks)
+                {
+                    var taakPreference = CheckTaakPreference(taak, userId);
+                    if (taakPreference.Waarde == -1)
+                    {
+                        AddTaakPreference(taak, trajectPreference.Waarde, userId);
+                    }
+                    else
+                    {
+                        UpdateTaakPreference(taak, trajectPreference.Waarde, userId);
+                    }
+                }
             }
-
-            var existingPreferences = CheckIfPreferencesExist(tasks, userId);
-            //voeg new preferences toe
-
-            //make new preference
-            //edit preference
 
         }
 
-        public IEnumerable<Preference> CheckTaskPreference(IEnumerable<OnderwijsTaak> taken, int userId)
+        public Preference CheckTaakPreference(OnderwijsTaak taak, int userId)
         {
-            var existingTaken = new List<Preference>();
-
-            foreach (var taak in taken)
+            var taakPreference = new Preference
             {
+                Taak = taak,
+                Waarde = -1
+            };
+
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
@@ -138,53 +147,84 @@ namespace Inzetsysteem.DAL.Contexts
 
                     while (reader.Read())
                     {
-                        existingTaken.Add(new Preference
-                        {
-                            Taak = taak,
-                            Waarde = (int)reader["Voorkeur waarde"]
-                        });
+                        taakPreference.Waarde = (int)reader["Voorkeur waarde"];
                     }
 
-                    connection.Close();
+                connection.Close();
                 }
-            }
 
-            return existingTaken;
+            return taakPreference;
         }
 
-        public IEnumerable<Preference> CheckPartPreference(IEnumerable<OnderwijsOnderdeel> onderdelen, int userId)
+        public void AddTaakPreference(OnderwijsTaak taak, int voorkeurWaarde, int userId)
         {
-            var existingOnderdelen = new List<Preference>();
-
-            foreach (var onderdeel in onderdelen)
-            {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
 
-                    SqlCommand cmd = new SqlCommand("CheckOnderdeelVoorkeur", connection);
+                    SqlCommand cmd = new SqlCommand("AddTaakVoorkeur", connection);
 
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.Add(new SqlParameter("@OnderdeelID", onderdeel.Id));
+                    cmd.Parameters.Add(new SqlParameter("@TaakID", taak.Id));
+                    cmd.Parameters.Add(new SqlParameter("@VoorkeurWaarde", voorkeurWaarde));
                     cmd.Parameters.Add(new SqlParameter("@GebruikersID", userId));
 
-                    var reader = cmd.ExecuteReader();
-
-                    while (reader.Read())
-                    {
-                        existingOnderdelen.Add(new Preference
-                        {
-                            Taak = onderdeel,
-                            Waarde = (int)reader["Voorkeur waarde"]
-                        });
-                    }
+                    cmd.ExecuteNonQuery();
 
                     connection.Close();
                 }
+        }
+
+        public void UpdateTaakPreference(OnderwijsTaak taak, int voorkeurWaarde, int userId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                SqlCommand cmd = new SqlCommand("AddTaakVoorkeur", connection);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add(new SqlParameter("@TaakID", taak.Id));
+                cmd.Parameters.Add(new SqlParameter("@@VoorkeurWaarde", voorkeurWaarde));
+                cmd.Parameters.Add(new SqlParameter("@GebruikersID", userId));
+
+                cmd.ExecuteNonQuery();
+
+                connection.Close();
+            }
+        }
+
+        public Preference CheckOnderdeelPreference(OnderwijsOnderdeel onderdeel, int userId)
+        {
+            var onderdeelPreference = new Preference
+            {
+                Taak = onderdeel
+            };
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                SqlCommand cmd = new SqlCommand("CheckOnderdeelVoorkeur", connection);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add(new SqlParameter("@OnderdeelID", onderdeel.Id));
+                cmd.Parameters.Add(new SqlParameter("@GebruikersID", userId));
+
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    onderdeelPreference.Waarde = (int)reader["Voorkeur waarde"];
+                }
+
+                connection.Close();
             }
 
-            return existingOnderdelen;
+            return onderdeelPreference;
         }
     }
 }

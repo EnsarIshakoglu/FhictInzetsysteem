@@ -39,10 +39,10 @@ namespace Inzetsysteem.Controllers
                 var preferenceValue = Request.Form[traject.Naam].ToString();
                 int value = Convert.ToInt16(preferenceValue);
 
-                preferences.Add(new Preference(traject, value));
+                preferences.Add(new Preference{Taak = traject, Waarde = value});
             }
 
-            _preferenceLogic.SaveTrajectPreferences(preferences);
+            _preferenceLogic.SaveTrajectPreferences(preferences, Convert.ToInt32(User.Identity.Name));
 
             return View("OnderwijsTrajectPreference");
         }

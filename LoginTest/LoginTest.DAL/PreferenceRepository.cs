@@ -24,9 +24,9 @@ namespace Inzetsysteem.DAL
             return _context.GetPreferencesFromTraject(traject, IdUser);
         }
 
-        public void SaveTrajecTPreferences(List<Preference> preferences)
+        public void SaveTrajectPreferences(List<Preference> preferences, int userId)
         {
-            return _context.SaveTrajectPreferences()
+            _context.SaveTrajectPreferences(preferences, userId);
         }
     }
 }

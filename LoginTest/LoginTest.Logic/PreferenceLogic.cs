@@ -32,7 +32,7 @@ namespace Inzetsysteem.Logic
                 preferenceValue += preference.Waarde;
             }
 
-            var voorkeur = new Preference(traject, (preferenceValue / valueToDivideBy));
+            var voorkeur = new Preference{Taak = traject, Waarde = preferenceValue / valueToDivideBy};
 
             return voorkeur;
         }
