@@ -226,5 +226,45 @@ namespace Inzetsysteem.DAL.Contexts
 
             return onderdeelPreference;
         }
+
+        public void AddOnderdeelPreference(OnderwijsOnderdeel onderdeel, int voorkeurWaarde, int userId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                SqlCommand cmd = new SqlCommand("AddOnderdeelVoorkeur", connection);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add(new SqlParameter("@OnderdeelID", onderdeel.Id));
+                cmd.Parameters.Add(new SqlParameter("@VoorkeurWaarde", voorkeurWaarde));
+                cmd.Parameters.Add(new SqlParameter("@GebruikersID", userId));
+
+                cmd.ExecuteNonQuery();
+
+                connection.Close();
+            }
+        }
+
+        public void UpdateOnderdeelPreference(OnderwijsOnderdeel onderdeel, int voorkeurWaarde, int userId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                SqlCommand cmd = new SqlCommand("UpdateOnderdeelVoorkeur", connection);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add(new SqlParameter("@OnderdeelID", onderdeel.Id));
+                cmd.Parameters.Add(new SqlParameter("@VoorkeurWaarde", voorkeurWaarde));
+                cmd.Parameters.Add(new SqlParameter("@GebruikersID", userId));
+
+                cmd.ExecuteNonQuery();
+
+                connection.Close();
+            }
+        }
     }
 }
