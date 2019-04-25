@@ -8,13 +8,8 @@ namespace Inzetsysteem.Controllers
 {
     public class PreferenceController : Controller
     {
-        private readonly int _userId;
         private readonly PreferenceLogic _preferenceLogic = new PreferenceLogic();
 
-        public PreferenceController()
-        {
-            _userId = Convert.ToInt32(User.Identity.Name);
-        }
 
         public IActionResult Index()
         {
@@ -30,7 +25,7 @@ namespace Inzetsysteem.Controllers
 
             foreach (var onderwijsTraject in trajecten)
             {
-                preferences.Add(_preferenceLogic.GetTrajectPreference(onderwijsTraject, _userId));
+                preferences.Add(_preferenceLogic.GetTrajectPreference(onderwijsTraject, Convert.ToInt32(User.Identity.Name)));
             }
 
             return View(preferences);
@@ -49,7 +44,7 @@ namespace Inzetsysteem.Controllers
                 preferences.Add(new Preference{Taak = traject, Waarde = value});
             }
 
-            _preferenceLogic.SaveTrajectPreferences(preferences, _userId);
+            _preferenceLogic.SaveTrajectPreferences(preferences, Convert.ToInt32(User.Identity.Name));
 
             return RedirectToAction("OnderwijsTrajectPreference", "Preference");
         }
