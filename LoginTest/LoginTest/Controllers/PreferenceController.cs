@@ -30,7 +30,7 @@ namespace Inzetsysteem.Controllers
 
             foreach (var onderwijsTraject in trajecten)
             {
-                preferences.Add(_preferenceLogic.GetTrajectPreference(onderwijsTraject, User.Identity.Name));
+                preferences.Add(_preferenceLogic.GetTrajectPreference(onderwijsTraject, _userId));
             }
 
             return View(preferences);
@@ -49,7 +49,7 @@ namespace Inzetsysteem.Controllers
                 preferences.Add(new Preference{Taak = traject, Waarde = value});
             }
 
-            _preferenceLogic.SaveTrajectPreferences(preferences, Convert.ToInt32(User.Identity.Name));
+            _preferenceLogic.SaveTrajectPreferences(preferences, _userId);
 
             return RedirectToAction("OnderwijsTrajectPreference", "Preference");
         }
