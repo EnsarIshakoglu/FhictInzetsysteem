@@ -8,7 +8,13 @@ namespace Inzetsysteem.Controllers
 {
     public class PreferenceController : Controller
     {
+        private readonly int _userId;
         private readonly PreferenceLogic _preferenceLogic = new PreferenceLogic();
+
+        public PreferenceController()
+        {
+            _userId = Convert.ToInt32(User.Identity.Name);
+        }
 
         public IActionResult Index()
         {
@@ -38,7 +44,7 @@ namespace Inzetsysteem.Controllers
             foreach (var traject in _preferenceLogic.GetAllOnderwijsTrajecten())
             {
                 var preferenceValue = Request.Form[traject.Naam].ToString();
-                int value = Convert.ToInt16(preferenceValue);
+                int value = Convert.ToInt16(preferenceValue);                               //todo convert.toint vervangen met iets netters
 
                 preferences.Add(new Preference{Taak = traject, Waarde = value});
             }
