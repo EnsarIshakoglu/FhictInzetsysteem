@@ -24,8 +24,8 @@ namespace Inzetsysteem.Logic
             var taken = _repo.GetTakenFromTraject(traject);
             var onderdelen = _repo.GetOnderdeelFromTraject(traject);
 
-            GetTakenPreference(taken, preferences, userId);
-            GetOnderdelenPreference(onderdelen, preferences, userId);
+            GetTakenPreferences(taken, preferences, userId);
+            GetOnderdelenPreferences(onderdelen, preferences, userId);
             var voorkeur = new Preference { Waarde = CalcAveragePreference(preferences), Taak = traject };
             return voorkeur;
         }
@@ -37,19 +37,38 @@ namespace Inzetsysteem.Logic
             var taken = _repo.GetTakenFromEenheid(eenheid);
             var onderdelen = _repo.GetAllOnderwijsOnderdelen(eenheid.Id);
 
-            GetTakenPreference(taken, preferences, userId);
-            GetOnderdelenPreference(onderdelen, preferences, userId);
+            GetTakenPreferences(taken, preferences, userId);
+            GetOnderdelenPreferences(onderdelen, preferences, userId);
 
             var voorkeur = new Preference {Waarde = CalcAveragePreference(preferences), Taak = eenheid};
             return voorkeur;
         }
 
-        public List<Preference> GetTakenPreference(IEnumerable<OnderwijsTaak> taken, List<Preference> preferences, string userId)
+        public Preference GetOnderdeelPreference(OnderwijsOnderdeel onderdeel, string userId)
+        {
+            List<Preference> preferences = new List<Preference>();
+
+            var taken = _repo.GetAllOnderwijsTaken(onderdeel.Id);
+
+            GetTakenPreferences(taken, preferences, userId);
+
+            var voorkeur = new Preference { Waarde = CalcAveragePreference(preferences), Taak = onderdeel };
+            return voorkeur;
+        }
+
+        public Preference GetTaakPreference(OnderwijsTaak taak, string userId)
         {
             int idUser = Convert.ToInt32(userId);
-            foreach (var taak in taken)
+            var voorkeur = new Preference{Waarde = _repo.CheckTaakPreference(taak, idUser).Waarde, Taak = taak};
+            return voorkeur;
+        }
+
+        public List<Preference> GetOnderdelenPreferences(IEnumerable<OnderwijsOnderdeel> onderdelen, List<Preference> preferences, string userId)
+        {
+            int idUser = Convert.ToInt32(userId);
+            foreach (var onderdeel in onderdelen)
             {
-                var value = _repo.CheckTaakPreference(taak, idUser);
+                var value = _repo.CheckOnderdeelPreference(onderdeel, idUser);
                 if (value.Waarde > 0)
                 {
                     preferences.Add(value);
@@ -58,12 +77,12 @@ namespace Inzetsysteem.Logic
             return preferences;
         }
 
-        public List<Preference> GetOnderdelenPreference(IEnumerable<OnderwijsOnderdeel> onderdelen, List<Preference> preferences, string userId)
+        public List<Preference> GetTakenPreferences(IEnumerable<OnderwijsTaak> taken, List<Preference> preferences, string userId)
         {
             int idUser = Convert.ToInt32(userId);
-            foreach (var onderdeel in onderdelen)
+            foreach (var taak in taken)
             {
-                var value = _repo.CheckOnderdeelPreference(onderdeel, idUser);
+                var value = _repo.CheckTaakPreference(taak, idUser);
                 if (value.Waarde > 0)
                 {
                     preferences.Add(value);
