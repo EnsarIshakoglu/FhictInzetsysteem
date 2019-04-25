@@ -9,6 +9,5 @@ namespace Inzetsysteem.Models
     {
         public int BegroteUren { get; private set; }
         public int Factor { get; private set; }
-        public bool HasTaken { get; set; }
     }
 }
