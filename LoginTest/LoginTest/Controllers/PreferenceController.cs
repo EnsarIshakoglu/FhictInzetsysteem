@@ -120,12 +120,6 @@ namespace Inzetsysteem.Controllers
             }
             else if (taakNaam == typeof(OnderwijsOnderdeel).Name)
             {
-                var taken = _preferenceLogic.GetAllOnderwijsTaken(id);
-
-                if (taken.Count() == 0)
-                {
-                    throw new Exception();
-                }
                 return OnderwijsTaakPreference(id);
             }
             else

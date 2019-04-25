@@ -26,7 +26,7 @@ namespace Inzetsysteem.Logic
 
             GetTakenPreferences(taken, preferences, userId);
             GetOnderdelenPreferences(onderdelen, preferences, userId);
-            var voorkeur = new Preference { Waarde = CalcAveragePreference(preferences), Taak = traject };
+            var voorkeur = new Preference { Waarde = CalcAveragePreference(preferences), Taak = traject, WaardeIsAverage = true };
             return voorkeur;
         }
 
@@ -40,19 +40,25 @@ namespace Inzetsysteem.Logic
             GetTakenPreferences(taken, preferences, userId);
             GetOnderdelenPreferences(onderdelen, preferences, userId);
 
-            var voorkeur = new Preference {Waarde = CalcAveragePreference(preferences), Taak = eenheid};
+            var voorkeur = new Preference {Waarde = CalcAveragePreference(preferences), Taak = eenheid, WaardeIsAverage = true };
             return voorkeur;
         }
 
         public Preference GetOnderdeelPreference(OnderwijsOnderdeel onderdeel, int userId)
         {
             List<Preference> preferences = new List<Preference>();
+            Preference voorkeur;
 
             var taken = _repo.GetAllOnderwijsTaken(onderdeel.Id);
-
-            GetTakenPreferences(taken, preferences, userId);
-
-            var voorkeur = new Preference { Waarde = CalcAveragePreference(preferences), Taak = onderdeel };
+            if (taken.Count() == 0)
+            {
+                voorkeur = CheckOnderdeelPreference(onderdeel, userId);
+            }
+            else
+            {
+                GetTakenPreferences(taken, preferences, userId);
+                voorkeur = new Preference { Waarde = CalcAveragePreference(preferences), Taak = onderdeel, WaardeIsAverage  = true};
+            }
             return voorkeur;
         }
 

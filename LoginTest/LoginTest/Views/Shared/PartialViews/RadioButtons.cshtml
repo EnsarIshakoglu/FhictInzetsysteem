@@ -1,14 +1,14 @@
 ﻿@using Inzetsysteem.Controllers
 @using Inzetsysteem.Logic
 @model Preference
-@{ PreferenceLogic test = new PreferenceLogic(); }
+
 <link href="~/lib/bootstrap/dist/css/radio-btn-bootstrap.css" rel="stylesheet" />
 
 <div class="container">
     <div class="row">
 
         <div class="col-md-5th-1 col-sm-4 ">
-            @if (Model.Taak.GetType() == typeof(OnderwijsTaak))
+            @if (!Model.WaardeIsAverage)
             {
                 <span>@Model.Taak.Naam</span>
             }
