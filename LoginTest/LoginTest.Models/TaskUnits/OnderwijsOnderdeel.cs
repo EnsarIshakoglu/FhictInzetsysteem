@@ -9,5 +9,6 @@ namespace Inzetsysteem.Models
     {
         public int BegroteUren { get; set; }
         public int Factor { get; set; }
+        public string OnderwijsEenheid { get; set; }
     }
 }

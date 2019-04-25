@@ -6,5 +6,6 @@ namespace Inzetsysteem.Models
 {
     public class OnderwijsEenheid : Taak
     {
+        public string Traject { get; set; }
     }
 }

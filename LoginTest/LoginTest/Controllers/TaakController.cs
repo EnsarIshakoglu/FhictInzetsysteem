@@ -10,25 +10,28 @@ namespace Inzetsysteem.Controllers
 {
     public class TaakController : Controller
     {
-        public IActionResult Index()
+        public IActionResult TaakToevoegen()
         {
             OnderwijsLogic onderwijsLogic = new OnderwijsLogic();
             List<OnderwijsTraject> onderwijsTrajects = onderwijsLogic.GetAllTrajects();
-            List<Taak> parentList = onderwijsTrajects.Cast<Taak>().ToList();
-            return View(parentList);
+            List<Taak> taakList = onderwijsTrajects.Cast<Taak>().ToList();
+            //taakList.AddRange();
+            return View(taakList);
         }
 
-        public IActionResult taskView()
+        public IActionResult OnderdeelToevoegen()
         {
-            //get list with trajecten
             return View();
         }
+
+        [HttpPost]
         public IActionResult AddTask()
         {
             return RedirectToAction("taskView", "Taak");
         }
 
-        public IActionResult AddTaskPart()
+        [HttpPost]
+        public IActionResult AddTaskPart([Bind("Periode, BegroteUren, Factor")] Taak taak)
         {
             return RedirectToAction("Index", "Taak");
         }

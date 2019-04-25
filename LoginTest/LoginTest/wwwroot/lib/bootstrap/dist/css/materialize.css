@@ -8697,6 +8697,7 @@ input[type=checkbox]:not(:disabled) ~ .lever:active:after {
 /***************
   Select Field
 ***************/
+/*
 .select-label {
     position: absolute;
 }
@@ -8755,11 +8756,11 @@ select {
     color: rgba(0, 0, 0, 0.3);
     cursor: default;
     -webkit-user-select: none;
-    /* webkit (safari, chrome) browsers */
+    /* webkit (safari, chrome) browsers !1!
     -moz-user-select: none;
-    /* mozilla browsers */
+    /* mozilla browsers !1!
     -ms-user-select: none;
-    /* IE10+ */
+    /* IE10+ !1!
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 }
 
@@ -8771,6 +8772,7 @@ select {
     color: rgba(0, 0, 0, 0.3);
     background-color: transparent;
 }
+*/
 
 /*********************
       File Input

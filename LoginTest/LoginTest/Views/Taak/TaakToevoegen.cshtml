@@ -1,0 +1,156 @@
+﻿@using Microsoft.CodeAnalysis.CSharp.Syntax
+@model List<Inzetsysteem.Models.Taak>
+@{
+    ViewData["Title"] = "Ingelogd";
+}
+
+<style type="text/css">
+    .form-style-5 {
+        max-width: 500px;
+        padding: 10px 20px;
+        background: #f4f7f8;
+        margin: 10px auto;
+        padding: 20px;
+        background: #f4f7f8;
+        border-radius: 8px;
+        font-family: Georgia, "Times New Roman", Times, serif;
+    }
+
+        .form-style-5 fieldset {
+            border: none;
+        }
+
+        .form-style-5 legend {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+        }
+
+        .form-style-5 label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .form-style-5 input[type="text"],
+        .form-style-5 input[type="date"],
+        .form-style-5 input[type="datetime"],
+        .form-style-5 input[type="email"],
+        .form-style-5 input[type="number"],
+        .form-style-5 input[type="search"],
+        .form-style-5 input[type="time"],
+        .form-style-5 input[type="url"],
+        .form-style-5 textarea,
+        .form-style-5 select {
+            font-family: Georgia, "Times New Roman", Times, serif;
+            background: rgba(255,255,255,.1);
+            border: none;
+            border-radius: 4px;
+            font-size: 15px;
+            margin: 0;
+            outline: 0;
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            background-color: #e8eeef;
+            color: #8a97a0;
+            -webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+            box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+            margin-bottom: 30px;
+        }
+
+            .form-style-5 input[type="text"]:focus,
+            .form-style-5 input[type="date"]:focus,
+            .form-style-5 input[type="datetime"]:focus,
+            .form-style-5 input[type="email"]:focus,
+            .form-style-5 input[type="number"]:focus,
+            .form-style-5 input[type="search"]:focus,
+            .form-style-5 input[type="time"]:focus,
+            .form-style-5 input[type="url"]:focus,
+            .form-style-5 textarea:focus,
+            .form-style-5 select:focus {
+                background: #d2d9dd;
+            }
+
+        .form-style-5 select {
+            -webkit-appearance: menulist-button;
+            height: 35px;
+        }
+
+        .form-style-5 input[type="submit"],
+        .form-style-5 input[type="button"] {
+            position: relative;
+            display: block;
+            padding: 19px 39px 18px 39px;
+            color: #FFF;
+            margin: 0 auto;
+            background: #663366;
+            font-size: 18px;
+            text-align: center;
+            font-style: normal;
+            width: 100%;
+            border: 1px solid #663366;
+            border-width: 1px 1px 3px;
+            margin-bottom: 10px;
+        }
+
+            .form-style-5 input[type="submit"]:hover,
+            .form-style-5 input[type="button"]:hover {
+                background: #e40086;
+            }
+</style>
+
+<div class="form-style-5">
+    <form>
+        <fieldset>
+            <center><legend>Titel taak</legend></center>
+            <input type="text" name="field1" placeholder="Code">
+            <input type="text" name="field2" placeholder="Uren">
+            <input type="text" name="field3" placeholder="Factor">
+            <input type="text" name="field4" placeholder="Onderwijseenheid">
+            <input type="text" name="field5" placeholder="Beheerder taak">
+            <label for="job">Traject:</label>
+
+            <select id="trajecten" change="myFunction()" type="text" name="field6" display="none">
+                @foreach (Taak taak in Model)
+                {
+                    if (taak.GetType() == typeof(OnderwijsTraject))
+                    {
+                        <option value="@taak.Naam">@taak.Naam</option>
+                        <a asp-area="" asp-controller="Taak" asp-action="TaakToevoegen"></a>
+                    }
+                }
+            </select>
+
+            <select id="eenheden" type="text" name="field6" ></select>
+
+            <button type="button" onclick="myFunction()">Insert option</button>
+
+        </fieldset>
+        <fieldset>
+            <textarea name="field7" placeholder="Omschrijving"></textarea>
+        </fieldset>
+        <input type="submit" value="Voeg toe" />
+    </form>
+</div>
+
+<!--CHECK DIT https://stackoverflow.com/questions/15679599/dropdown-option-and-action-->
+
+@section Scripts
+{
+    <script>
+        $('#trajecten').change(function() {
+            $('#eenheden').empty();
+            var x = document.getElementById("eenheden");
+            @for (var i = 0; i < Model.Count; i++)
+            {
+                <text>
+                    var text = "@Model[i].Naam";
+                    var option = document.createElement("option");
+                    option.text = text;
+                    x.add(option);
+                </text>
+            }
+        });
+    </script>
+}

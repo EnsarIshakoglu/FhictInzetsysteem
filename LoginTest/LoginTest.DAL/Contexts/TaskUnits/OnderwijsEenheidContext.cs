@@ -19,6 +19,7 @@ namespace Inzetsysteem.DAL.Contexts
                 conn.Open();
 
                 SqlCommand command = new SqlCommand($"SELECT * FROM dbo.OnderwijsTraject ", conn);                              //vervang met store procedure
+
                 SqlDataReader reader = command.ExecuteReader();
 
                 while (reader.Read())
