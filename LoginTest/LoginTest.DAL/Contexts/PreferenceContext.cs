@@ -253,7 +253,7 @@ namespace Inzetsysteem.DAL.Contexts
             return tasks;
         }
 
-        public Preference CheckTaakPreference(OnderwijsTaak taak, int userId)
+        public Preference CheckTaakPreference(OnderwijsTaak taak, int userId) //todo kijken of het generic kan gemaakt worden
         {
             var taakPreference = new Preference
             {

@@ -38,7 +38,7 @@ namespace Inzetsysteem.Controllers
             foreach (var traject in _preferenceLogic.GetAllOnderwijsTrajecten())
             {
                 var preferenceValue = Request.Form[traject.Naam].ToString();
-                int value = Convert.ToInt16(preferenceValue);
+                int value = Convert.ToInt16(preferenceValue);                               //todo convert.toint vervangen met iets netters
 
                 preferences.Add(new Preference{Taak = traject, Waarde = value});
             }
