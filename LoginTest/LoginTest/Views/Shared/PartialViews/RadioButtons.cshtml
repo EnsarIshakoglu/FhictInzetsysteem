@@ -1,12 +1,23 @@
-﻿@model Preference
-
+﻿@using Inzetsysteem.Controllers
+@using Inzetsysteem.Logic
+@model Preference
+@{ PreferenceLogic test = new PreferenceLogic(); }
 <link href="~/lib/bootstrap/dist/css/radio-btn-bootstrap.css" rel="stylesheet" />
 
 <div class="container">
     <div class="row">
 
         <div class="col-md-5th-1 col-sm-4 ">
-            <span>@Model.Taak.Naam</span>
+            @if (Model.Taak.GetType() == typeof(OnderwijsTaak))
+            {
+                <span>@Model.Taak.Naam</span>
+            }
+            else
+            {
+
+                <a href="@Url.Action("RedirectLayer", "Preference", new {taakNaam = @Model.Taak.GetType().Name, id = @Model.Taak.Id})"><span>@Model.Taak.Naam</span></a>
+            }
+            
         </div>
         @for (int x = 0; x < 5; x++)
         {
@@ -16,9 +27,9 @@
             {
                 defCheck = "checked";
             }
-                <div class="col-md-5th-1 col-sm-4 col-md-offset-0 col-sm-offset-2">
-                    <input id="Waarde" name=@Model.Taak.Naam type="radio" value=@x ; @defCheck><span>@x</span>
-                </div>
+            <div class="col-md-5th-1 col-sm-4 col-md-offset-0 col-sm-offset-2">
+                <input id="Waarde" name=@Model.Taak.Naam type="radio" value=@x ; @defCheck><span>@x</span>
+            </div>
 
         }
 
