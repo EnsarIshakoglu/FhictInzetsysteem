@@ -19,14 +19,34 @@ namespace Inzetsysteem.Logic
 
         public Preference GetTrajectPreference(OnderwijsTraject traject, string userId)
         {
-            int idUser = Convert.ToInt32(userId);
-
-            int preferenceValue = 0;
             List<Preference> preferences = new List<Preference>();
 
             var taken = _repo.GetTakenFromTraject(traject);
             var onderdelen = _repo.GetOnderdeelFromTraject(traject);
 
+            GetTakenPreference(taken, preferences, userId);
+            GetOnderdelenPreference(onderdelen, preferences, userId);
+            var voorkeur = new Preference { Waarde = CalcAveragePreference(preferences), Taak = traject };
+            return voorkeur;
+        }
+
+        public Preference GetEenheidPreference(OnderwijsEenheid eenheid, string userId)
+        {
+            List<Preference> preferences = new List<Preference>();
+
+            var taken = _repo.GetTakenFromEenheid(eenheid);
+            var onderdelen = _repo.GetAllOnderwijsOnderdelen(eenheid.Id);
+
+            GetTakenPreference(taken, preferences, userId);
+            GetOnderdelenPreference(onderdelen, preferences, userId);
+
+            var voorkeur = new Preference {Waarde = CalcAveragePreference(preferences), Taak = eenheid};
+            return voorkeur;
+        }
+
+        public List<Preference> GetTakenPreference(IEnumerable<OnderwijsTaak> taken, List<Preference> preferences, string userId)
+        {
+            int idUser = Convert.ToInt32(userId);
             foreach (var taak in taken)
             {
                 var value = _repo.CheckTaakPreference(taak, idUser);
@@ -35,6 +55,12 @@ namespace Inzetsysteem.Logic
                     preferences.Add(value);
                 }
             }
+            return preferences;
+        }
+
+        public List<Preference> GetOnderdelenPreference(IEnumerable<OnderwijsOnderdeel> onderdelen, List<Preference> preferences, string userId)
+        {
+            int idUser = Convert.ToInt32(userId);
             foreach (var onderdeel in onderdelen)
             {
                 var value = _repo.CheckOnderdeelPreference(onderdeel, idUser);
@@ -43,17 +69,23 @@ namespace Inzetsysteem.Logic
                     preferences.Add(value);
                 }
             }
+            return preferences;
+        }
+
+        public int CalcAveragePreference(List<Preference> preferences)
+        {
+            int preferenceValue = 0;
             int valueToDivideBy = preferences.Count();
             if (valueToDivideBy == 0) valueToDivideBy = 1;
-            
+
             foreach (var preference in preferences)
             {
                 preferenceValue += preference.Waarde;
             }
-            
-            var voorkeur = new Preference{Taak = traject, Waarde = preferenceValue / valueToDivideBy};
-            
-            return voorkeur;
+
+            preferenceValue = preferenceValue / valueToDivideBy;
+
+            return preferenceValue;
         }
 
         public void SaveTrajectPreferences(List<Preference> preferences, int userId)
