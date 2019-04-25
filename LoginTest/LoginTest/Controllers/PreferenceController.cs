@@ -8,7 +8,13 @@ namespace Inzetsysteem.Controllers
 {
     public class PreferenceController : Controller
     {
+        private readonly int _userId;
         private readonly PreferenceLogic _preferenceLogic = new PreferenceLogic();
+
+        public PreferenceController()
+        {
+            _userId = Convert.ToInt32(User.Identity.Name);
+        }
 
         public IActionResult Index()
         {
