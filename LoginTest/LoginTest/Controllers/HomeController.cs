@@ -78,14 +78,11 @@ namespace Inzetsysteem.Controllers
         private async void InitUser(User user, int userId)
         {
             var claims = new List<Claim>();
-
             var roles = _userLogic.GetUserRoles(user);
-
             foreach (string role in roles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));
             }
-
             claims.Add(new Claim(ClaimTypes.Name, userId.ToString()));
 
             ClaimsPrincipal principal = new ClaimsPrincipal(new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme));

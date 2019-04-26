@@ -1,6 +1,7 @@
 ﻿@using Microsoft.CodeAnalysis.CSharp.Syntax
-@model List<Inzetsysteem.Models.Taak>
+@model List<Inzetsysteem.Models.OnderwijsTraject>
 @{
+    bool lol = false;
     ViewData["Title"] = "Ingelogd";
 }
 
@@ -110,22 +111,16 @@
             <input type="text" name="field4" placeholder="Onderwijseenheid">
             <input type="text" name="field5" placeholder="Beheerder taak">
             <label for="job">Traject:</label>
-
-            <select id="trajecten" change="myFunction()" type="text" name="field6" display="none">
-                @foreach (Taak taak in Model)
+            <select id="trajecten" type="text" name="field6">
+                @foreach (OnderwijsTraject traject in Model)
                 {
-                    if (taak.GetType() == typeof(OnderwijsTraject))
-                    {
-                        <option value="@taak.Naam">@taak.Naam</option>
-                        <a asp-area="" asp-controller="Taak" asp-action="TaakToevoegen"></a>
-                    }
+                    <option value="@traject.Naam">@traject.Naam</option>
+                    <a asp-area="" asp-controller="Taak" asp-action="TaakToevoegen"></a>
                 }
             </select>
 
-            <select id="eenheden" type="text" name="field6" ></select>
-
-            <button type="button" onclick="myFunction()">Insert option</button>
-
+            <select id="eenheden" type="text" name="field7"></select>
+            <select id="onderdelen" type="text" name="field8"></select>
         </fieldset>
         <fieldset>
             <textarea name="field7" placeholder="Omschrijving"></textarea>
@@ -134,23 +129,102 @@
     </form>
 </div>
 
-<!--CHECK DIT https://stackoverflow.com/questions/15679599/dropdown-option-and-action-->
-
 @section Scripts
-{
-    <script>
-        $('#trajecten').change(function() {
+    {
+    @*<script>
+        $1$$('#trajecten').change(function () {
+
+            @if (!lol)
+            {
+                lol = true;
+            }
             $('#eenheden').empty();
-            var x = document.getElementById("eenheden");
             @for (var i = 0; i < Model.Count; i++)
             {
-                <text>
-                    var text = "@Model[i].Naam";
-                    var option = document.createElement("option");
-                    option.text = text;
-                    x.add(option);
-                </text>
+                if (Model[i].GetType() == typeof(OnderwijsEenheid))
+                {
+                    <text>
+                        var option = document.createElement("option");
+                        option.text = "@Model[i].Naam";
+                        $('#eenheden').add(option);
+                    </text>
+                }
             }
+        });#1#
+
+        /*$('#trajecten').change(function () {
+
+        var url = "Taak/GetEenheden";
+        var location = document.getElementById("eenheden");
+        var bae = Software;
+        $.post("Taak/GetEenheden",
+            {
+                 traject: bae
+            },
+            function (data) {
+                data.forEach(function(element) {
+                    $(location).add(element);
+                });
+            });
+        })*/
+
+        $('#trajecten').change(function () {
+
+            var url = '@Url.Action("GetEenheden", "Taak")';
+            //var value = $('#trajecten').getSelection.toString();
+            $.post(url,
+                {
+                    traject: 'value'
+                }, function (data) {
+                    // $.each(data, function () {
+
+                    for (var key in data) {
+                        for (var key1 in data[key]) {
+                            console.log(key1);
+                        }
+                    }
+
+                    console.log("----------------------------");
+                    /*for (var word in data) {
+                        var x = document.getElementById("eenheden");
+                        var option = document.createElement("option");
+                        option.text = word;
+                        x.add(option);
+                    }*/
+
+                    //  $("<option value='" + b.toString() + "'>" + b.toString() + "</option>").appendTo("#eenheden");
+
+
+                    // $("<option value='" + data + "'>" + data + "</option>").appendTo("#eenheden");
+
+
+
+                    // $('#eenheden').add(element);
+
+                    /*var x = document.getElementById("eenheden");
+                   var option = document.createElement("option");
+                   option.text = data;
+                   x.add(option);*/
+                    //  });
+                });
+        });
+    </script>*@
+    <script>
+        $('#trajecten').change(function () {
+
+            var url = '@Url.Action("GetEenheden", "Taak")';
+            $.post(url,
+            {
+                traject: 'value'
+            }, function (data) {
+                for (var key in data) {
+                    for (var thing in key) {
+                        console.log(thing.Naam);
+                        //console.log(key + " -> " + data[key]);
+                    }
+                }
+            console.log("----------------------------");
+            });
         });
     </script>
 }

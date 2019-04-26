@@ -18,7 +18,10 @@ namespace Inzetsysteem.DAL.Contexts
             {
                 conn.Open();
 
-                SqlCommand command = new SqlCommand($"SELECT * FROM dbo.OnderwijsTraject ", conn);                              //vervang met store procedure
+                SqlCommand command = new SqlCommand($"SELECT Onderwijseenheid.Naam, OnderwijsTraject.Naam as Onderwijstraject " +
+                                                    $"FROM Onderwijseenheid " +
+                                                    $"JOIN Onderwijstraject " +
+                                                    $"ON Onderwijstraject.ID = onderwijseenheid.OnderwijstrajectID", conn);                              //vervang met store procedure
 
                 SqlDataReader reader = command.ExecuteReader();
 
@@ -26,8 +29,8 @@ namespace Inzetsysteem.DAL.Contexts
                 {
                     result.Add(new OnderwijsEenheid
                     {
-                        Id = (int)reader["Id"],
                         Naam = (string)reader["Naam"],
+                        Traject = (string)reader["Onderwijstraject"]
                     });
                 }
                 reader.Close();
@@ -42,14 +45,18 @@ namespace Inzetsysteem.DAL.Contexts
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 conn.Open();
-                SqlCommand command = new SqlCommand($"Select ID, Naam FROM Onderwijseenheid WHERE OnderwijstrajectID = {traject.Id}", conn);                              //vervang met store procedure
+                SqlCommand command = new SqlCommand($"SELECT Onderwijseenheid.Naam, OnderwijsTraject.Naam as Onderwijstraject " +
+                                                    $"FROM Onderwijseenheid " +
+                                                    //$"WHERE OnderwijsTraject = '{traject.Naam}' " +
+                                                    $"JOIN Onderwijstraject " +
+                                                    $"ON Onderwijstraject.ID = onderwijseenheid.OnderwijstrajectID", conn);                              //vervang met store procedure
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
                     result.Add(new OnderwijsEenheid
                     {
-                        Id = (int)reader["Id"],
                         Naam = (string)reader["Naam"],
+                        Traject = (string)reader["Onderwijstraject"]
                     });
                 }
                 reader.Close();

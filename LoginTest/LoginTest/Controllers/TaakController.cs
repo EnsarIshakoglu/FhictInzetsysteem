@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Inzetsysteem.Logic;
 using Inzetsysteem.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Inzetsysteem.Controllers
 {
@@ -14,9 +15,7 @@ namespace Inzetsysteem.Controllers
         {
             OnderwijsLogic onderwijsLogic = new OnderwijsLogic();
             List<OnderwijsTraject> onderwijsTrajects = onderwijsLogic.GetAllTrajects();
-            List<Taak> taakList = onderwijsTrajects.Cast<Taak>().ToList();
-            //taakList.AddRange();
-            return View(taakList);
+            return View(onderwijsTrajects);
         }
 
         public IActionResult OnderdeelToevoegen()
@@ -35,5 +34,20 @@ namespace Inzetsysteem.Controllers
         {
             return RedirectToAction("Index", "Taak");
         }
+
+        [HttpPost]
+        public IActionResult GetEenheden(string traject)
+        {
+            OnderwijsLogic b = new OnderwijsLogic();
+            List<OnderwijsEenheid> q = new List<OnderwijsEenheid>();
+            foreach (OnderwijsEenheid eenheid in b.GetAllEenhedenByTraject(new OnderwijsTraject { Naam = traject }))
+            {
+                q.Add(eenheid);
+            }
+            /*string c = JsonConvert.SerializeObject(q);
+            System.IO.File.WriteAllText(@"D:\path.txt", c);*/
+            return Json(q);
+        }
+
     }
 }
