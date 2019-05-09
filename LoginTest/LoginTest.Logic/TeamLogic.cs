@@ -15,12 +15,12 @@ namespace Inzetsysteem.Logic
 
         public IEnumerable<User> GetTeamUsers(User user)
         {
-            return GetTeamUsers(user);
+            return _repo.GetTeamUsers(user);
         }
 
         public IEnumerable<Team> GetTeam(int id)
         {
-            return GetTeam(id);
+            return GetTeam(id); //doe een keer iets goed leon
         }
 
         public IEnumerable<Team> GetAllTeams()

@@ -12,7 +12,6 @@ namespace Inzetsysteem.Controllers
     {
         private readonly TeamLogic _teamLogic = new TeamLogic(); 
 
-        [HttpGet]
         public IActionResult TeamBeheren()
         {
             User _user = new User();

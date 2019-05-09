@@ -63,8 +63,7 @@ namespace Inzetsysteem.DAL.Contexts
                     //voeg namen van mensen toe die team id hebben
                     userList.Add(new User
                     {
-                        Name = (string)reader["Naam"],
-                        Id = (int)reader["ID"]
+                        Name = (string)reader["Naam"]
                     });
                 }
 
