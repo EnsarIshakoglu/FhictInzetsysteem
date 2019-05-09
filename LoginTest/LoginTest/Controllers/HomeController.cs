@@ -35,7 +35,7 @@ namespace Inzetsysteem.Controllers
         public IActionResult Index([Bind("Password, Username")] User user)
         {
 
-            if (!ModelState.IsValid)
+            /*if (!ModelState.IsValid)
             {
                 return View();
             }
@@ -44,8 +44,10 @@ namespace Inzetsysteem.Controllers
             {
                 InitUser(user, _userLogic.GetUserID(user));
                 return RedirectToAction("Profile", "Home");   //De cookies worden pas nadat je naar een nieuwe controller bent gegaan gerefreshed, hierdoor doe ik redirecten naar de index pag van homecontroller
-            }
+            }*/
 
+
+            InitUserMock();
             return View();
 
         }
@@ -111,6 +113,23 @@ namespace Inzetsysteem.Controllers
 
             await this.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authProp);
         }
+
+        private async void InitUserMock()
+        {
+            var claims = new List<Claim>();
+            claims.Add(new Claim(ClaimTypes.Role, "Teamleider"));
+            claims.Add(new Claim(ClaimTypes.Role, "Docent"));
+            claims.Add(new Claim(ClaimTypes.Name, "12"));
+
+            ClaimsPrincipal principal = new ClaimsPrincipal(new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme));
+            var authProp = new AuthenticationProperties
+            {
+                IsPersistent = false
+            };
+
+            await this.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authProp);
+        }
+
         private async void LogOut(IEnumerable<string> keys)
         {
             await this.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

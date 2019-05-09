@@ -31,7 +31,7 @@ namespace Inzetsysteem.DAL
             }
             return loginSuccesfull;
         }
-
+        
         public List<string> GetUserRoles(User user)
         {
             var roles = new List<string>();

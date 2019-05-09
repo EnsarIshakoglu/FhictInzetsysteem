@@ -23,11 +23,16 @@
 
                                 </div>
                             }
-                            <center><input class="btn-voorkeur" type="submit" value="Save"></center>
-                            <center><input class="btn-voorkeur" type="button" value="terug"></center>
-                        </form>
+                            <center><input class="btn-voorkeur" type="submit" value="Save"></center><br />
+                            <center><button onclick="goBack()" class="btn-voorkeur" type="button" value="terug">Terug</center>                           
+                        </form>                  
                     </a>
                 </div>
             </div>
         </div>
 </body>
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
