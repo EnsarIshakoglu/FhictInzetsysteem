@@ -40,7 +40,7 @@ namespace FHICTDeploymentSystem.Controllers
 
             foreach (var section in _preferenceLogic.GetAllSections())
             {
-                var preferenceValue = Request.Form[section.Name].ToString();
+                var preferenceValue = Request.Form[section.Id.ToString()].ToString();
                 int value = Convert.ToInt32(preferenceValue);                               //todo convert.toint vervangen met iets netters
 
                 preferences.Add(new Preference { Task = section, Value = value });

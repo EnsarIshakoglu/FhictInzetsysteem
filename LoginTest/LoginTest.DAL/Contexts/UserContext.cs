@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 using FHICTDeploymentSystem.Models;
@@ -13,14 +14,18 @@ namespace FHICTDeploymentSystem.DAL
 
         public bool Login(User user)
         {
-            bool loginSuccessful = false;
+            var loginSuccessful = false;
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 conn.Open();
 
-                SqlCommand command = new SqlCommand($"SELECT TOP 1 Id, Username,Password from dbo.Employee WHERE Username = '{user.Username}' and Password = '{user.Password}'", conn);
-                SqlDataReader reader = command.ExecuteReader();
+                var command = new SqlCommand("GetUserData", conn) {CommandType = CommandType.StoredProcedure};
+
+                command.Parameters.Add(new SqlParameter("@Username", user.Username));
+                command.Parameters.Add(new SqlParameter("@Password", user.Password));
+
+                var reader = command.ExecuteReader();
 
                 while (reader.Read())
                 {
@@ -40,8 +45,11 @@ namespace FHICTDeploymentSystem.DAL
             {
                 conn.Open();
 
-                SqlCommand command = new SqlCommand($"select E.Name, A.Name \r\nfrom dbo.[Emp_Auth] as EA\r\ninner join Employee E on EA.EmployeeId = E.ID\r\ninner join [Authorization] A on EA.AuthorizationId = A.ID where E.Name = '{user.Username}'", conn);
-                SqlDataReader reader = command.ExecuteReader();
+                var command = new SqlCommand("GetUserRoles", conn) { CommandType = CommandType.StoredProcedure };
+
+                command.Parameters.Add(new SqlParameter("@Username", user.Username));
+
+                var reader = command.ExecuteReader();
 
                 while (reader.Read())
                 {
@@ -56,14 +64,18 @@ namespace FHICTDeploymentSystem.DAL
 
         public int GetUserId(User user)
         {
-            int userId = 0;
+            var userId = 0;
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 conn.Open();
 
-                SqlCommand command = new SqlCommand($"SELECT TOP 1 Id, Username,Password from dbo.Employee WHERE Username = '{user.Username}' and Password = '{user.Password}'", conn);
-                SqlDataReader reader = command.ExecuteReader();
+                var command = new SqlCommand("GetUserData", conn) { CommandType = CommandType.StoredProcedure };
+
+                command.Parameters.Add(new SqlParameter("@Username", user.Username));
+                command.Parameters.Add(new SqlParameter("@Password", user.Password));
+
+                var reader = command.ExecuteReader();
 
                 while (reader.Read())
                 {
