@@ -70,7 +70,7 @@
                             @if (User.IsInRole(Roles.Teamleider.ToString()))
                             {
                                 <li><a asp-area="" asp-controller="Home" asp-action="TeamBeheren">Team beheren</a></li>
-                                <li><a asp-area="" asp-controller="Home" asp-action="Index">Docenten</a></li>
+                                <li><a asp-area="" asp-controller="Home" asp-action="Docenten">Docenten</a></li>
                             }
                             @if (User.IsInRole(Roles.Blokeigenaar.ToString()) || User.IsInRole(Roles.Staflid.ToString()))
                             {
@@ -92,7 +92,7 @@
                             @if (User.IsInRole(Roles.Teamleider.ToString()))
                             {
                                 <li><a asp-area=""  asp-controller="Home" asp-action="Index">Team beheren</a></li>
-                                <li><<a asp-area="" asp-controller="Home" asp-action="Index">Docenten</a></li>
+                                <li><<a asp-area="" asp-controller="Home" asp-action="Docenten">Docenten</a></li>
                             }                       
                             @if (User.IsInRole(Roles.Blokeigenaar.ToString()) || User.IsInRole(Roles.Staflid.ToString()))
                             {

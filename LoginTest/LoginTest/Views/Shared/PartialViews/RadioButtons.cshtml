@@ -7,17 +7,16 @@
 <div class="container">
     <div class="row">
 
-        <div class="col-md-5th-1 col-sm-4 ">
+        <div class="col l6 ">
             @if (!Model.WaardeIsAverage)
             {
-                <span>@Model.Taak.Naam</span>
+            <a class="btn-voorkeur btn-voorkeur-next"><p>@Model.Taak.Naam</p></a>
             }
             else
             {
-
-                <a href="@Url.Action("RedirectLayer", "Preference", new {taakNaam = @Model.Taak.GetType().Name, id = @Model.Taak.Id})"><span>@Model.Taak.Naam</span></a>
+                <a href="@Url.Action("RedirectLayer", "Preference", new {taakNaam = @Model.Taak.GetType().Name, id = @Model.Taak.Id})" class="btn-voorkeur btn-voorkeur-next"><p>@Model.Taak.Naam</p></a>
             }
-            
+
         </div>
         @for (int x = 0; x < 5; x++)
         {

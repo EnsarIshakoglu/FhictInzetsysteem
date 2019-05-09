@@ -65,6 +65,11 @@ namespace Inzetsysteem.Controllers
             return View();
         }
 
+        public IActionResult Docenten()
+        {
+            return View();
+        }
+
         [HttpGet]
         public IActionResult VoorkeurInvoeren()
         {

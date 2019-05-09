@@ -22,11 +22,33 @@ namespace Inzetsysteem.Controllers
         public IActionResult OnderwijsTrajectPreference()
         {
             var preferences = new List<Preference>();
-            var trajecten = _preferenceLogic.GetAllOnderwijsTrajecten();
+            //var trajecten = _preferenceLogic.GetAllOnderwijsTrajecten();
+            var trajecten = new List<Task>
+            {
+                new OnderwijsTraject
+                {
+                    Naam = "Software",
+                    Id = 1
+                },
+                new OnderwijsTraject
+                {
+                    Naam = "Technology",
+                    Id = 2
+                },
+                new OnderwijsTraject
+                {
+                    Naam = "Media",
+                    Id = 3
+                },
+            };
 
             foreach (var onderwijsTraject in trajecten)
             {
-                preferences.Add(_preferenceLogic.GetTrajectPreference(onderwijsTraject, Convert.ToInt32(User.Identity.Name)));
+                preferences.Add(new Preference {
+                    Taak = onderwijsTraject,
+                    Waarde = 3,
+                    WaardeIsAverage = true
+                });
             }
 
             return View("SubmitPreferences", preferences);
@@ -54,11 +76,34 @@ namespace Inzetsysteem.Controllers
         public IActionResult OnderwijsEenheidPreference(int trajectId)
         {
             var preferences = new List<Preference>();
-            var eenheden = _preferenceLogic.GetAllOnderwijsEenheden(trajectId);
+            //var eenheden = _preferenceLogic.GetAllOnderwijsEenheden(trajectId);
+            var eenheden = new List<Task>
+            {
+                new OnderwijsTraject
+                {
+                    Naam = "aaaaaa",
+                    Id = 1
+                },
+                new OnderwijsTraject
+                {
+                    Naam = "bbbbbbb",
+                    Id = 2
+                },
+                new OnderwijsTraject
+                {
+                    Naam = "ccccc",
+                    Id = 3
+                },
+            };
 
             foreach (var onderwijsEenheid in eenheden)
             {
-                preferences.Add(_preferenceLogic.GetEenheidPreference(onderwijsEenheid, Convert.ToInt32(User.Identity.Name)));
+                preferences.Add(new Preference
+                {
+                    Taak = onderwijsEenheid,
+                    Waarde = 3,
+                    WaardeIsAverage = true
+                });
             }
 
             return View("SubmitPreferences", preferences);
