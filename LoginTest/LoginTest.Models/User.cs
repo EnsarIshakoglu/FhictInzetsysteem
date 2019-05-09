@@ -14,5 +14,7 @@ namespace Inzetsysteem.Models
         [StringLength(60, MinimumLength = 3)]
         [Required(ErrorMessage = "Username field is required!")]
         public string Username { get; set; }
+        public string Name { get; set; }
+        public int Id { get; set; }
     }
 }
