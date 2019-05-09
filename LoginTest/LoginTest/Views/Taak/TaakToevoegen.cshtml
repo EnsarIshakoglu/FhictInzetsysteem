@@ -1,5 +1,4 @@
-﻿@using Microsoft.CodeAnalysis.CSharp.Syntax
-@model List<Inzetsysteem.Models.OnderwijsTraject>
+﻿@model List<Inzetsysteem.Models.OnderwijsTraject>
 @{
     bool lol = false;
     ViewData["Title"] = "Ingelogd";
@@ -131,99 +130,19 @@
 
 @section Scripts
     {
-    @*<script>
-        $1$$('#trajecten').change(function () {
-
-            @if (!lol)
-            {
-                lol = true;
-            }
-            $('#eenheden').empty();
-            @for (var i = 0; i < Model.Count; i++)
-            {
-                if (Model[i].GetType() == typeof(OnderwijsEenheid))
-                {
-                    <text>
-                        var option = document.createElement("option");
-                        option.text = "@Model[i].Naam";
-                        $('#eenheden').add(option);
-                    </text>
-                }
-            }
-        });#1#
-
-        /*$('#trajecten').change(function () {
-
-        var url = "Taak/GetEenheden";
-        var location = document.getElementById("eenheden");
-        var bae = Software;
-        $.post("Taak/GetEenheden",
-            {
-                 traject: bae
-            },
-            function (data) {
-                data.forEach(function(element) {
-                    $(location).add(element);
-                });
-            });
-        })*/
-
-        $('#trajecten').change(function () {
-
-            var url = '@Url.Action("GetEenheden", "Taak")';
-            //var value = $('#trajecten').getSelection.toString();
-            $.post(url,
-                {
-                    traject: 'value'
-                }, function (data) {
-                    // $.each(data, function () {
-
-                    for (var key in data) {
-                        for (var key1 in data[key]) {
-                            console.log(key1);
-                        }
-                    }
-
-                    console.log("----------------------------");
-                    /*for (var word in data) {
-                        var x = document.getElementById("eenheden");
-                        var option = document.createElement("option");
-                        option.text = word;
-                        x.add(option);
-                    }*/
-
-                    //  $("<option value='" + b.toString() + "'>" + b.toString() + "</option>").appendTo("#eenheden");
-
-
-                    // $("<option value='" + data + "'>" + data + "</option>").appendTo("#eenheden");
-
-
-
-                    // $('#eenheden').add(element);
-
-                    /*var x = document.getElementById("eenheden");
-                   var option = document.createElement("option");
-                   option.text = data;
-                   x.add(option);*/
-                    //  });
-                });
-        });
-    </script>*@
     <script>
         $('#trajecten').change(function () {
-
             var url = '@Url.Action("GetEenheden", "Taak")';
             $.post(url,
             {
                 traject: 'value'
-            }, function (data) {
-                for (var key in data) {
-                    for (var thing in key) {
-                        console.log(thing.Naam);
-                        //console.log(key + " -> " + data[key]);
-                    }
-                }
-            console.log("----------------------------");
+                }, function (data) {
+                var eenhedenSelect = $('#eenheden');
+                data.forEach(function (traject) {
+                    eenhedenSelect.append($("<option ></option>")
+                        .attr("value",traject.naam)
+                        .text(traject.naam)); 
+                });
             });
         });
     </script>

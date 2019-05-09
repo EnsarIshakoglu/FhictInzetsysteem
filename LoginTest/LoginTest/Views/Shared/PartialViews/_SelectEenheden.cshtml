@@ -1,9 +1,0 @@
-﻿@model List<Inzetsysteem.Models.Taak>
-<select id="trajecten" type="text" name="field6">
-
-    @foreach (Taak taak in Model)
-    {
-            <option value="@taak.Naam">@taak.Naam</option>
-            <a asp-area="" asp-controller="Taak" asp-action="TaakToevoegen"></a>
-    }
-</select>
