@@ -73,6 +73,26 @@ namespace Inzetsysteem.DAL.Contexts
             return userList;
         }
 
+        public void RemoveUser(User _user)
+        {
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                var sqlCommand = new SqlCommand("RemoveUser", connection);
+                sqlCommand.CommandType = CommandType.StoredProcedure;
+                sqlCommand.Parameters.Add(new SqlParameter("@ID", _user.Id));
+
+                sqlCommand.ExecuteNonQuery();
+
+                connection.Close();
+
+   
+            }
+
+        }
+
         public int Getid(Team team)
         {
             return team.Id;

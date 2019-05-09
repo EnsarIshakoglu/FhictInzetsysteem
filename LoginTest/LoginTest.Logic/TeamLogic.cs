@@ -28,5 +28,10 @@ namespace Inzetsysteem.Logic
             return _repo.GetAllTeams();
         }
 
+        public void RemoveUser(User _user)
+        {
+            _repo.RemoveUser(_user);
+        }
+
     }
 }

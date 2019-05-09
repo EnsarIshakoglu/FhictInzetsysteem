@@ -27,6 +27,12 @@ namespace Inzetsysteem.Controllers
             return View(userlist);
         }
 
+        public IActionResult RemoveUser(User _user)
+        {
+            _teamLogic.RemoveUser(_user);
+            return RedirectToAction("TeamBeheren");
+        }
+
 
     }
 }

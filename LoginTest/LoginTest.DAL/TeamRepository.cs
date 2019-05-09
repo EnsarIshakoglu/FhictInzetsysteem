@@ -24,5 +24,10 @@ namespace Inzetsysteem.DAL
         {
             return _context.GetTeamUsers(user);
         }
+
+        public void RemoveUser(User _user)
+        {
+            _context.RemoveUser(_user);
+        }
     }
 }

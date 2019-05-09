@@ -12,5 +12,7 @@ namespace Inzetsysteem.DAL.Contexts
         IEnumerable<Team> GetAllTeams();
 
         IEnumerable<User> GetTeamUsers(User user);
+
+        void RemoveUser(User _user);
     }
 }
