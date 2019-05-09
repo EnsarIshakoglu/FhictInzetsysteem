@@ -5,8 +5,7 @@ using System.Threading.Tasks;
 
 namespace Inzetsysteem.Models
 {
-    public class Teamleider : Role
+    public class UnitOwner : Role
     {
-        public Team Team { get; private set; }
     }
 }

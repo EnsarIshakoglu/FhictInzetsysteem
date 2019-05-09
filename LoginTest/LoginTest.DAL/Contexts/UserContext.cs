@@ -19,7 +19,7 @@ namespace Inzetsysteem.DAL
             {
                 conn.Open();
 
-                SqlCommand command = new SqlCommand($"SELECT TOP 1 Id, Inlognaam,Wachtwoord from dbo.Gebruiker WHERE Inlognaam = '{user.Username}' and Wachtwoord = '{user.Password}'", conn);
+                SqlCommand command = new SqlCommand($"SELECT TOP 1 Id, Username,Password from dbo.User WHERE Username = '{user.Username}' and Password = '{user.Password}'", conn);
                 SqlDataReader reader = command.ExecuteReader();
 
                 while (reader.Read())
@@ -32,7 +32,7 @@ namespace Inzetsysteem.DAL
             return loginSuccesfull;
         }
 
-        public List<string> GetUserRoles(User user)
+        public IEnumerable<string> GetUserRoles(User user)
         {
             var roles = new List<string>();
 
@@ -40,12 +40,12 @@ namespace Inzetsysteem.DAL
             {
                 conn.Open();
 
-                SqlCommand command = new SqlCommand($"select G.Naam, A.Autorisatienaam \r\nfrom dbo.[Tussentabel gebruiker - Authorisatie] as TAG\r\ninner join Gebruiker G on TAG.GebruikerID = G.ID\r\ninner join Authorisatie A on TAG.AuthorisatieID = A.ID where G.naam = '{user.Username}'", conn);
+                SqlCommand command = new SqlCommand($"select G.Name, A.AutorisatieName \r\nfrom dbo.[Tussentabel gebruiker - Authorisatie] as TAG\r\ninner join Gebruiker G on TAG.GebruikerID = G.ID\r\ninner join Authorisatie A on TAG.AuthorisatieID = A.ID where G.Name = '{user.Username}'", conn);
                 SqlDataReader reader = command.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    roles.Add(reader["Autorisatienaam"].ToString());
+                    roles.Add(reader["AutorisatieName"].ToString());
                 }
                 reader.Close();
                 conn.Close();
@@ -62,7 +62,7 @@ namespace Inzetsysteem.DAL
             {
                 conn.Open();
 
-                SqlCommand command = new SqlCommand($"SELECT TOP 1 Id, Inlognaam,Wachtwoord from dbo.Gebruiker WHERE Inlognaam = '{user.Username}' and Wachtwoord = '{user.Password}'", conn);
+                SqlCommand command = new SqlCommand($"SELECT TOP 1 Id, InlogName,Wachtwoord from dbo.Gebruiker WHERE InlogName = '{user.Username}' and Wachtwoord = '{user.Password}'", conn);
                 SqlDataReader reader = command.ExecuteReader();
 
                 while (reader.Read())

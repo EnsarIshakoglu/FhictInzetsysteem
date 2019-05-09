@@ -14,19 +14,19 @@ namespace Inzetsysteem.DAL
             _context = new PreferenceContext();
         }
 
-        public IEnumerable<OnderwijsTraject> GetAllOnderwijsTrajecten()
+        public IEnumerable<EducationSection> GetAllOnderwijsTrajecten()
         {
             return _context.GetAllOnderwijsTrajecten();
         }
 
-        public void AddTaakPreference(OnderwijsTaak taak, int voorkeurWaarde, int userId)
+        public void AddTaskPreference(OnderwijsTask Task, int PreferenceValue, int userId)
         {
-            _context.AddTaakPreference(taak, voorkeurWaarde, userId);
+            _context.AddTaskPreference(Task, PreferenceValue, userId);
         }
 
-        public void UpdateTaakPreference(OnderwijsTaak taak, int voorkeurWaarde, int userId)
+        public void UpdateTaskPreference(OnderwijsTask Task, int PreferenceValue, int userId)
         {
-            _context.UpdateTaakPreference(taak,voorkeurWaarde,userId);
+            _context.UpdateTaskPreference(Task,PreferenceValue,userId);
         }
 
         public Preference CheckOnderdeelPreference(OnderwijsOnderdeel onderdeel, int userId)
@@ -34,19 +34,19 @@ namespace Inzetsysteem.DAL
             return _context.CheckOnderdeelPreference(onderdeel, userId);
         }
 
-        public void AddOnderdeelPreference(OnderwijsOnderdeel onderdeel, int voorkeurWaarde, int userId)
+        public void AddOnderdeelPreference(OnderwijsOnderdeel onderdeel, int PreferenceValue, int userId)
         {
-            _context.AddOnderdeelPreference(onderdeel, voorkeurWaarde, userId);
+            _context.AddOnderdeelPreference(onderdeel, PreferenceValue, userId);
         }
 
-        public void UpdateOnderdeelPreference(OnderwijsOnderdeel onderdeel, int voorkeurWaarde, int userId)
+        public void UpdateOnderdeelPreference(OnderwijsOnderdeel onderdeel, int PreferenceValue, int userId)
         {
-            _context.UpdateOnderdeelPreference(onderdeel, voorkeurWaarde, userId);
+            _context.UpdateOnderdeelPreference(onderdeel, PreferenceValue, userId);
         }
 
-        public Preference CheckTaakPreference(OnderwijsTaak taak, int userId)
+        public Preference CheckTaskPreference(OnderwijsTask Task, int userId)
         {
-            return _context.CheckTaakPreference(taak, userId);
+            return _context.CheckTaskPreference(Task, userId);
         }
 
         public void SaveTrajectPreferences(IEnumerable<Preference> preferences, int userId)
@@ -54,7 +54,7 @@ namespace Inzetsysteem.DAL
             _context.SaveTrajectPreferences(preferences, userId);
         }
 
-        public IEnumerable<OnderwijsEenheid> GetAllOnderwijsEenheden(int trajectId)
+        public IEnumerable<EducationUnit> GetAllOnderwijsEenheden(int trajectId)
         {
             return _context.GetAllOnderwijsEenheden(trajectId);
         }
@@ -64,22 +64,22 @@ namespace Inzetsysteem.DAL
             return _context.GetAllOnderwijsOnderdelen(eenheidId);
         }
 
-        public IEnumerable<OnderwijsTaak> GetAllOnderwijsTaken(int onderdeelId)
+        public IEnumerable<OnderwijsTask> GetAllOnderwijsTaken(int onderdeelId)
         {
             return _context.GetAllOnderwijsTaken(onderdeelId);
         }
 
-        public IEnumerable<OnderwijsTaak> GetTakenFromTraject(OnderwijsTraject onderwijsTraject)
+        public IEnumerable<OnderwijsTask> GetTakenFromTraject(EducationSection onderwijsTraject)
         {
             return _context.GetTakenFromTraject(onderwijsTraject);
         }
 
-        public IEnumerable<OnderwijsOnderdeel> GetOnderdeelFromTraject(OnderwijsTraject onderwijsTraject)
+        public IEnumerable<OnderwijsOnderdeel> GetOnderdeelFromTraject(EducationSection onderwijsTraject)
         {
             return _context.GetOnderdeelFromTraject(onderwijsTraject);
         }
 
-        public IEnumerable<OnderwijsTaak> GetTakenFromEenheid(OnderwijsEenheid onderwijsEenheid)
+        public IEnumerable<OnderwijsTask> GetTakenFromEenheid(EducationUnit onderwijsEenheid)
         {
             return _context.GetTakenFromEenheid(onderwijsEenheid);
         }

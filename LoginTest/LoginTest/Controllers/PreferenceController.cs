@@ -39,10 +39,10 @@ namespace Inzetsysteem.Controllers
 
             foreach (var traject in _preferenceLogic.GetAllOnderwijsTrajecten())
             {
-                var preferenceValue = Request.Form[traject.Naam].ToString();
+                var preferenceValue = Request.Form[traject.Name].ToString();
                 int value = Convert.ToInt16(preferenceValue);                               //todo convert.toint vervangen met iets netters
 
-                preferences.Add(new Preference { Taak = traject, Waarde = value });
+                preferences.Add(new Preference { Task = traject, Value = value });
             }
 
             _preferenceLogic.SaveTrajectPreferences(preferences, Convert.ToInt32(User.Identity.Name));
@@ -77,14 +77,14 @@ namespace Inzetsysteem.Controllers
             return View("SubmitPreferences", preferences);
         }
         [HttpPost]
-        public IActionResult OnderwijsTaakPreference(int onderdeelId)
+        public IActionResult OnderwijsTaskPreference(int onderdeelId)
         {
             var preferences = new List<Preference>();
             var taken = _preferenceLogic.GetAllOnderwijsTaken(onderdeelId);
 
-            foreach (var onderwijsTaak in taken)
+            foreach (var onderwijsTask in taken)
             {
-                preferences.Add(_preferenceLogic.GetTaakPreference(onderwijsTaak, Convert.ToInt32(User.Identity.Name)));
+                preferences.Add(_preferenceLogic.GetTaskPreference(onderwijsTask, Convert.ToInt32(User.Identity.Name)));
             }
 
             return View("SubmitPreferences", preferences);
@@ -97,10 +97,10 @@ namespace Inzetsysteem.Controllers
 
             foreach (var traject in _preferenceLogic.GetAllOnderwijsTrajecten())
             {
-                var preferenceValue = Request.Form[traject.Naam].ToString();
+                var preferenceValue = Request.Form[traject.Name].ToString();
                 int value = Convert.ToInt16(preferenceValue);                               //todo convert.toint vervangen met iets netters
 
-                preferences.Add(new Preference { Taak = traject, Waarde = value });
+                preferences.Add(new Preference { Task = traject, Value = value });
             }
 
             _preferenceLogic.SaveTrajectPreferences(preferences, Convert.ToInt32(User.Identity.Name));
@@ -108,19 +108,15 @@ namespace Inzetsysteem.Controllers
             return RedirectToAction("OnderwijsEenheidPreference", "Preference");
         }
 
-        public IActionResult RedirectLayer(string taakNaam, int id)
+        public IActionResult RedirectLayer(string TaskName, int id)
         {
-            if (taakNaam == typeof(OnderwijsTraject).Name)
+            if (TaskName == typeof(EducationSection).Name)
             {
                 return OnderwijsEenheidPreference(id);
             }
-            else if (taakNaam == typeof(OnderwijsEenheid).Name)
+            else if (TaskName == typeof(EducationUnit).Name)
             {
                 return OnderwijsOnderdeelPreference(id);
-            }
-            else if (taakNaam == typeof(OnderwijsOnderdeel).Name)
-            {
-                return OnderwijsTaakPreference(id);
             }
             else
             {

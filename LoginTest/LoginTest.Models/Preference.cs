@@ -6,8 +6,8 @@ namespace Inzetsysteem.Models
 {
     public class Preference
     {
-        public Task Taak { get; set; }
-        public int Waarde { get; set; } = -1;
-        public bool WaardeIsAverage { get; set; } = false;
+        public ParentTask Task { get; set; }
+        public int Value { get; set; } = -1;
+        public bool ValueIsAverage { get; set; } = false;
     }
 }

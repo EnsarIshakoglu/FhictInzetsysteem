@@ -60,7 +60,7 @@ namespace Inzetsysteem.Controllers
             return View();
         }
         [HttpGet]
-        public IActionResult VoorkeurInvoeren()
+        public IActionResult PreferenceInvoeren()
         {
 
             return RedirectToAction("Index", "Preference");

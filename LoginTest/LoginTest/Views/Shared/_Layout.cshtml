@@ -65,7 +65,7 @@
                             <li><a asp-area="" asp-controller="Home" asp-action="Profile">Profiel</a></li>
                             @if (User.IsInRole(Roles.Docent.ToString()))
                             {
-                                <li><a asp-area="" asp-controller="Preference" asp-action="OnderwijsTrajectPreference">Voorkeur invoeren</a></li>
+                                <li><a asp-area="" asp-controller="Preference" asp-action="OnderwijsTrajectPreference">Preference invoeren</a></li>
                                 <li><a asp-area="" asp-controller="Home" asp-action="MijnTaken">Mijn taken</a></li>
                             }
                             @if (User.IsInRole(Roles.Teamleider.ToString()))
@@ -75,11 +75,11 @@
                             }                                                  
                             @if (User.IsInRole(Roles.Blokeigenaar.ToString()) || User.IsInRole(Roles.Staflid.ToString()))
                             {
-                                <li><a asp-area="" asp-controller="Home" asp-action="Movies">Taakverdeling</a></li>
+                                <li><a asp-area="" asp-controller="Home" asp-action="Movies">Taskverdeling</a></li>
                             }
                             @if (User.IsInRole(Roles.Blokeigenaar.ToString()) || User.IsInRole(Roles.Curriculumeigenaar.ToString()))
                             {
-                                <li><a asp-area="" asp-controller="Home" asp-action="Movies">Voeg taak toe</a></li>
+                                <li><a asp-area="" asp-controller="Home" asp-action="Movies">Voeg Task toe</a></li>
                             }
                             <input type="button" value="Log Out" onclick="location.href = '@Url.Action("Logout", "Home")'" class="btn btn-primary"/>
                         </ul>
@@ -87,7 +87,7 @@
                             @if (User.IsInRole(Roles.Docent.ToString()))
                             {
                                 <li><a asp-area="" asp-controller="Home" asp-action="Profile">Profiel</a></li>
-                                <li><a asp-area="" asp-controller="Home" asp-action="VoorkeurInvoeren">Voorkeur invoeren</a></li>
+                                <li><a asp-area="" asp-controller="Home" asp-action="PreferenceInvoeren">Preference invoeren</a></li>
                                 <li><a asp-area="" asp-controller="Home" asp-action="MijnTaken">Mijn taken</a></li>
                             }
                             @if (User.IsInRole(Roles.Teamleider.ToString()))
@@ -97,11 +97,11 @@
                             }                       
                             @if (User.IsInRole(Roles.Blokeigenaar.ToString()) || User.IsInRole(Roles.Staflid.ToString()))
                             {
-                                <li><a asp-area="" asp-controller="Home" asp-action="Movies">Taakverdeling</a></li>
+                                <li><a asp-area="" asp-controller="Home" asp-action="Movies">Taskverdeling</a></li>
                             }
                             @if (User.IsInRole(Roles.Blokeigenaar.ToString()) || User.IsInRole(Roles.Curriculumeigenaar.ToString()))
                             {
-                                <li><a asp-area="" asp-controller="Home" asp-action="Movies">Voeg taak toe</a></li>
+                                <li><a asp-area="" asp-controller="Home" asp-action="Movies">Voeg Task toe</a></li>
                             }
                         </ul>
                         <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
