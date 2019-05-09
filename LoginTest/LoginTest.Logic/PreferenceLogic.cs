@@ -12,31 +12,31 @@ namespace Inzetsysteem.Logic
     {
         private readonly PreferenceRepository _repo = new PreferenceRepository();
 
-        public IEnumerable<Section> GetAllSectionen()
+        public IEnumerable<Section> GetAllSections()
         {
             return _repo.GetAllSections();
         }
 
-        public Preference GetsectionPreference(Section edSection, int userId)
+        public Preference GetSectionPreference(Section section, int userId)
         {
             List<Preference> preferences = new List<Preference>();
 
-            var tasks = _repo.GetTasksFromEdSection(edSection);
+            var tasks = _repo.GetTasksFromSection(section);
 
             GetTasksPreferences(tasks, preferences, userId);
-            var preference = new Preference { Value = CalcAveragePreference(preferences), Task = edSection, ValueIsAverage = true };
+            var preference = new Preference { Value = CalcAveragePreference(preferences), Task = section, ValueIsAverage = true };
             return preference;
         }
 
-        public Preference GetEdUnitPreference(Unit EdUnitId, int userId)
+        public Preference GetUnitPreference(Unit unitId, int userId)
         {
             List<Preference> preferences = new List<Preference>();
 
-            var tasks = _repo.GetAllTasks(EdUnitId.Id);
+            var tasks = _repo.GetAllTasks(unitId.Id);
 
             GetTasksPreferences(tasks, preferences, userId);
 
-            var preference = new Preference {Value = CalcAveragePreference(preferences), Task = EdUnitId, ValueIsAverage = true };
+            var preference = new Preference {Value = CalcAveragePreference(preferences), Task = unitId, ValueIsAverage = true };
             return preference;
         }
 
@@ -76,7 +76,7 @@ namespace Inzetsysteem.Logic
             return preferenceValue;
         }
 
-        public void SaveEdSectionPreferences(List<Preference> preferences, int userId)
+        public void SaveSectionPreferences(List<Preference> preferences, int userId)
         {
             _repo.SaveEdSectionPreferences(preferences, userId);
         }
@@ -101,14 +101,14 @@ namespace Inzetsysteem.Logic
             return _repo.GetAllUnits(edSectionId);
         }
 
-        public IEnumerable<Task> GetAllTasks(int EdUnitId)
+        public IEnumerable<Task> GetAllTasks(int unitId)
         {
-            return _repo.GetAllTasks(EdUnitId);
+            return _repo.GetAllTasks(unitId);
         }
 
-        public IEnumerable<Task> GetTasksFromEdSection(Section edSection)
+        public IEnumerable<Task> GetTasksFromSection(Section section)
         {
-            return _repo.GetTasksFromEdSection(edSection);
+            return _repo.GetTasksFromSection(section);
         }
     }
 }

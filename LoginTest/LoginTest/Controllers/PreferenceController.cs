@@ -22,22 +22,22 @@ namespace Inzetsysteem.Controllers
         public IActionResult SectionPreference()
         {
             var preferences = new List<Preference>();
-            var sectionen = _preferenceLogic.GetAllSectionen();
+            var sections = _preferenceLogic.GetAllSections();
 
-            foreach (var Section in sectionen)
+            foreach (var section in sections)
             {
-                preferences.Add(_preferenceLogic.GetsectionPreference(Section, Convert.ToInt32(User.Identity.Name)));
+                preferences.Add(_preferenceLogic.GetSectionPreference(section, Convert.ToInt32(User.Identity.Name)));
             }
 
             return View("SubmitPreferences", preferences);
         }
 
         [HttpPost]
-        public IActionResult GetsectionPreferences()
+        public IActionResult GetSectionPreferences()
         {
             List<Preference> preferences = new List<Preference>();
 
-            foreach (var section in _preferenceLogic.GetAllSectionen())
+            foreach (var section in _preferenceLogic.GetAllSections())
             {
                 var preferenceValue = Request.Form[section.Name].ToString();
                 int value = Convert.ToInt16(preferenceValue);                               //todo convert.toint vervangen met iets netters
@@ -45,7 +45,7 @@ namespace Inzetsysteem.Controllers
                 preferences.Add(new Preference { Task = section, Value = value });
             }
 
-            _preferenceLogic.SaveEdSectionPreferences(preferences, Convert.ToInt32(User.Identity.Name));
+            _preferenceLogic.SaveSectionPreferences(preferences, Convert.ToInt32(User.Identity.Name));
 
             return RedirectToAction("SectionPreference", "Preference");
         }
@@ -54,21 +54,21 @@ namespace Inzetsysteem.Controllers
         public IActionResult UnitPreference(int sectionId)
         {
             var preferences = new List<Preference>();
-            var eenheden = _preferenceLogic.GetAllUnits(sectionId);
+            var units = _preferenceLogic.GetAllUnits(sectionId);
 
-            foreach (var Unit in eenheden)
+            foreach (var unit in units)
             {
-                preferences.Add(_preferenceLogic.GetEdUnitPreference(Unit, Convert.ToInt32(User.Identity.Name)));
+                preferences.Add(_preferenceLogic.GetUnitPreference(unit, Convert.ToInt32(User.Identity.Name)));
             }
 
             return View("SubmitPreferences", preferences);
         }
 
         [HttpPost]
-        public IActionResult TaskPreference(int EdUnitId)
+        public IActionResult TaskPreference(int unitId)
         {
             var preferences = new List<Preference>();
-            var tasks = _preferenceLogic.GetAllTasks(EdUnitId);
+            var tasks = _preferenceLogic.GetAllTasks(unitId);
 
             foreach (var task in tasks)
             {
@@ -79,11 +79,11 @@ namespace Inzetsysteem.Controllers
         }
 
         [HttpPost]
-        public IActionResult GetEenheidPreferences()
+        public IActionResult GetUnitPreferences()
         {
             List<Preference> preferences = new List<Preference>();
 
-            foreach (var section in _preferenceLogic.GetAllSectionen())
+            foreach (var section in _preferenceLogic.GetAllSections())
             {
                 var preferenceValue = Request.Form[section.Name].ToString();
                 int value = Convert.ToInt16(preferenceValue);                               //todo convert.toint vervangen met iets netters
@@ -91,18 +91,18 @@ namespace Inzetsysteem.Controllers
                 preferences.Add(new Preference { Task = section, Value = value });
             }
 
-            _preferenceLogic.SaveEdSectionPreferences(preferences, Convert.ToInt32(User.Identity.Name));
+            _preferenceLogic.SaveSectionPreferences(preferences, Convert.ToInt32(User.Identity.Name));
 
             return RedirectToAction("UnitPreference", "Preference");
         }
 
-        public IActionResult RedirectLayer(string TaskName, int id)
+        public IActionResult RedirectLayer(string taskName, int id)
         {
-            if (TaskName == typeof(Section).Name)
+            if (taskName == typeof(Section).Name)
             {
                 return UnitPreference(id);
             }
-            else if (TaskName == typeof(Unit).Name)
+            else if (taskName == typeof(Unit).Name)
             {
                 return TaskPreference(id);
             }

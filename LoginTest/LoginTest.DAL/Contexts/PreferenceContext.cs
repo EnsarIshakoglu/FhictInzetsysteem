@@ -20,7 +20,7 @@ namespace Inzetsysteem.DAL.Contexts
             {
                 List<Task> tasks = new List<Task>();
 
-                tasks.AddRange(GetTasksFromEdSection(new Section
+                tasks.AddRange(GetTasksFromSection(new Section
                 {
                     Id = sectionPreference.Task.Id,
                     Name = sectionPreference.Task.Name
@@ -70,7 +70,7 @@ namespace Inzetsysteem.DAL.Contexts
             return sections;
         }
 
-        public IEnumerable<Unit> GetAllUnits(int edSectionId)
+        public IEnumerable<Unit> GetAllUnits(int SectionId)
         {
             var units = new List<Unit>();
 
@@ -82,7 +82,7 @@ namespace Inzetsysteem.DAL.Contexts
 
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add(new SqlParameter("@EdSectionId", edSectionId));
+                cmd.Parameters.Add(new SqlParameter("@EdSectionId", SectionId));
 
                 var reader = cmd.ExecuteReader();
 
@@ -101,7 +101,7 @@ namespace Inzetsysteem.DAL.Contexts
             return units;
         }
 
-        public IEnumerable<Task> GetAllTasks(int EdUnitId)
+        public IEnumerable<Task> GetAllTasks(int UnitId)
         {
             var taken = new List<Task>();
 
@@ -113,7 +113,7 @@ namespace Inzetsysteem.DAL.Contexts
 
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add(new SqlParameter("@EdUnitId", EdUnitId));
+                cmd.Parameters.Add(new SqlParameter("@EdUnitId", UnitId));
 
                 var reader = cmd.ExecuteReader();
 
@@ -132,7 +132,7 @@ namespace Inzetsysteem.DAL.Contexts
             return taken;
         }
 
-        public IEnumerable<Task> GetTasksFromEdSection(Section Section)
+        public IEnumerable<Task> GetTasksFromSection(Section Section)
         {
             var tasks = new List<Task>();
 

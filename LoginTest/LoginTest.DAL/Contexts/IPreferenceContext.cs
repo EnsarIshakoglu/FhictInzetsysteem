@@ -10,9 +10,9 @@ namespace Inzetsysteem.DAL.Contexts
         void AddTaskPreference(Task task, int priority, int userId);
         void UpdateTaskPreference(Task task, int priority, int userId);
         Preference CheckTaskPreference(Task task, int userId);
-        IEnumerable<Unit> GetAllUnits(int EdSectionId);
-        IEnumerable<Task> GetAllTasks(int EdUnitId);
-        IEnumerable<Task> GetTasksFromEdSection(Section Section);
+        IEnumerable<Unit> GetAllUnits(int SectionId);
+        IEnumerable<Task> GetAllTasks(int UnitId);
+        IEnumerable<Task> GetTasksFromSection(Section Section);
 
     }
 }
