@@ -21,71 +21,37 @@ namespace Inzetsysteem.Logic
         {
             List<Preference> preferences = new List<Preference>();
 
-            var taken = _repo.GetTakenFromTraject(traject);
-            var onderdelen = _repo.GetOnderdeelFromTraject(traject);
+            var tasks = _repo.GetTakenFromTraject(traject);
 
-            GetTakenPreferences(taken, preferences, userId);
-            GetOnderdelenPreferences(onderdelen, preferences, userId);
-            var voorkeur = new Preference { Waarde = CalcAveragePreference(preferences), Taak = traject, WaardeIsAverage = true };
-            return voorkeur;
+            GetTasksPreferences(tasks, preferences, userId);
+            var preference = new Preference { Waarde = CalcAveragePreference(preferences), Taak = traject, WaardeIsAverage = true };
+            return preference;
         }
 
-        public Preference GetEenheidPreference(OnderwijsEenheid eenheid, int userId)
+        public Preference GetEenheidPreference(OnderwijsEenheid EdUnitId, int userId)
         {
             List<Preference> preferences = new List<Preference>();
 
-            var taken = _repo.GetTakenFromEenheid(eenheid);
-            var onderdelen = _repo.GetAllOnderwijsOnderdelen(eenheid.Id);
+            var tasks = _repo.GetAllTasks(EdUnitId.Id);
 
-            GetTakenPreferences(taken, preferences, userId);
-            GetOnderdelenPreferences(onderdelen, preferences, userId);
+            GetTasksPreferences(tasks, preferences, userId);
 
-            var voorkeur = new Preference {Waarde = CalcAveragePreference(preferences), Taak = eenheid, WaardeIsAverage = true };
-            return voorkeur;
+            var preference = new Preference {Waarde = CalcAveragePreference(preferences), Taak = EdUnitId, WaardeIsAverage = true };
+            return preference;
         }
 
-        public Preference GetOnderdeelPreference(OnderwijsOnderdeel onderdeel, int userId)
+        public Preference GetTaskPreference(OnderwijsTaak task, int userId)
         {
-            List<Preference> preferences = new List<Preference>();
-            Preference voorkeur;
-
-            var taken = _repo.GetAllOnderwijsTaken(onderdeel.Id);
-            if (taken.Count() == 0)
-            {
-                voorkeur = CheckOnderdeelPreference(onderdeel, userId);
-            }
-            else
-            {
-                GetTakenPreferences(taken, preferences, userId);
-                voorkeur = new Preference { Waarde = CalcAveragePreference(preferences), Taak = onderdeel, WaardeIsAverage  = true};
-            }
-            return voorkeur;
+            var preference = new Preference{Waarde = _repo.CheckTaskPreference(task, userId).Waarde, Taak = task};
+            return preference;
         }
 
-        public Preference GetTaakPreference(OnderwijsTaak taak, int userId)
-        {
-            var voorkeur = new Preference{Waarde = _repo.CheckTaakPreference(taak, userId).Waarde, Taak = taak};
-            return voorkeur;
-        }
 
-        public List<Preference> GetOnderdelenPreferences(IEnumerable<OnderwijsOnderdeel> onderdelen, List<Preference> preferences, int userId)
+        public List<Preference> GetTasksPreferences(IEnumerable<OnderwijsTaak> tasks, List<Preference> preferences, int userId)
         {
-            foreach (var onderdeel in onderdelen)
+            foreach (var task in tasks)
             {
-                var value = _repo.CheckOnderdeelPreference(onderdeel, userId);
-                if (value.Waarde > 0)
-                {
-                    preferences.Add(value);
-                }
-            }
-            return preferences;
-        }
-
-        public List<Preference> GetTakenPreferences(IEnumerable<OnderwijsTaak> taken, List<Preference> preferences, int userId)
-        {
-            foreach (var taak in taken)
-            {
-                var value = _repo.CheckTaakPreference(taak, userId);
+                var value = _repo.CheckTaskPreference(task, userId);
                 if (value.Waarde > 0)
                 {
                     preferences.Add(value);
@@ -115,34 +81,19 @@ namespace Inzetsysteem.Logic
             _repo.SaveTrajectPreferences(preferences, userId);
         }
 
-        public Preference CheckTaakPreference(OnderwijsTaak taak, int userId)
+        public Preference CheckTaskPreference(OnderwijsTaak task, int userId)
         {
-            return _repo.CheckTaakPreference(taak, userId);
+            return _repo.CheckTaskPreference(task, userId);
         }
 
-        public void AddTaakPreference(OnderwijsTaak taak, int voorkeurWaarde, int userId)
+        public void AddTaskPreference(OnderwijsTaak task, int priority, int userId)
         {
-            _repo.AddTaakPreference(taak, voorkeurWaarde, userId);
+            _repo.AddTaskPreference(task, priority, userId);
         }
 
-        public void UpdateTaakPreference(OnderwijsTaak taak, int voorkeurWaarde, int userId)
+        public void UpdateTaskPreference(OnderwijsTaak task, int priority, int userId)
         {
-            _repo.UpdateTaakPreference(taak, voorkeurWaarde, userId);
-        }
-
-        public Preference CheckOnderdeelPreference(OnderwijsOnderdeel onderdeel, int userId)
-        {
-            return _repo.CheckOnderdeelPreference(onderdeel, userId);
-        }
-
-        public void AddOnderdeelPreference(OnderwijsOnderdeel onderdeel, int voorkeurWaarde, int userId)
-        {
-            _repo.AddOnderdeelPreference(onderdeel, voorkeurWaarde, userId);
-        }
-
-        public void UpdateOnderdeelPreference(OnderwijsOnderdeel onderdeel, int voorkeurWaarde, int userId)
-        {
-            _repo.UpdateOnderdeelPreference(onderdeel, voorkeurWaarde, userId);
+            _repo.UpdateTaskPreference(task, priority, userId);
         }
 
         public IEnumerable<OnderwijsEenheid> GetAllOnderwijsEenheden(int trajectId)
@@ -150,29 +101,14 @@ namespace Inzetsysteem.Logic
             return _repo.GetAllOnderwijsEenheden(trajectId);
         }
 
-        public IEnumerable<OnderwijsOnderdeel> GetAllOnderwijsOnderdelen(int eenheidId)
+        public IEnumerable<OnderwijsTaak> GetAllTasks(int EdUnitId)
         {
-            return _repo.GetAllOnderwijsOnderdelen(eenheidId);
-        }
-
-        public IEnumerable<OnderwijsTaak> GetAllOnderwijsTaken(int onderdeelId)
-        {
-            return _repo.GetAllOnderwijsTaken(onderdeelId);
+            return _repo.GetAllTasks(EdUnitId);
         }
 
         public IEnumerable<OnderwijsTaak> GetTasksFromTraject(OnderwijsTraject onderwijsTraject)
         {
             return _repo.GetTakenFromTraject(onderwijsTraject);
-        }
-
-        public IEnumerable<OnderwijsOnderdeel> GetOnderdeelFromTraject(OnderwijsTraject onderwijsTraject)
-        {
-            return _repo.GetOnderdeelFromTraject(onderwijsTraject);
-        }
-
-        public IEnumerable<OnderwijsTaak> GetTasksFromEenheid(OnderwijsEenheid onderwijsEenheid)
-        {
-            return _repo.GetTakenFromEenheid(onderwijsEenheid);
         }
     }
 }

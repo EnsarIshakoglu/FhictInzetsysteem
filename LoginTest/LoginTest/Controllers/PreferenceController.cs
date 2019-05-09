@@ -63,28 +63,16 @@ namespace Inzetsysteem.Controllers
 
             return View("SubmitPreferences", preferences);
         }
+
         [HttpPost]
-        public IActionResult OnderwijsOnderdeelPreference(int eenheidId)
+        public IActionResult TaskPreference(int EdUnitId)
         {
             var preferences = new List<Preference>();
-            var onderdelen = _preferenceLogic.GetAllOnderwijsOnderdelen(eenheidId);
+            var tasks = _preferenceLogic.GetAllTasks(EdUnitId);
 
-            foreach (var onderwijsOnderdeel in onderdelen)
+            foreach (var task in tasks)
             {
-                preferences.Add(_preferenceLogic.GetOnderdeelPreference(onderwijsOnderdeel, Convert.ToInt32(User.Identity.Name)));
-            }
-
-            return View("SubmitPreferences", preferences);
-        }
-        [HttpPost]
-        public IActionResult OnderwijsTaakPreference(int onderdeelId)
-        {
-            var preferences = new List<Preference>();
-            var taken = _preferenceLogic.GetAllOnderwijsTaken(onderdeelId);
-
-            foreach (var onderwijsTaak in taken)
-            {
-                preferences.Add(_preferenceLogic.GetTaakPreference(onderwijsTaak, Convert.ToInt32(User.Identity.Name)));
+                preferences.Add(_preferenceLogic.GetTaskPreference(task, Convert.ToInt32(User.Identity.Name)));
             }
 
             return View("SubmitPreferences", preferences);
@@ -116,11 +104,7 @@ namespace Inzetsysteem.Controllers
             }
             else if (taakNaam == typeof(OnderwijsEenheid).Name)
             {
-                return OnderwijsOnderdeelPreference(id);
-            }
-            else if (taakNaam == typeof(OnderwijsOnderdeel).Name)
-            {
-                return OnderwijsTaakPreference(id);
+                return TaskPreference(id);
             }
             else
             {

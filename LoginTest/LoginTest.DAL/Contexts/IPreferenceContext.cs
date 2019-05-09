@@ -7,18 +7,12 @@ namespace Inzetsysteem.DAL.Contexts
     {
         IEnumerable<OnderwijsTraject> GetAllOnderwijsTrajecten();
         void SaveTrajectPreferences(IEnumerable<Preference> preferences, int userId);
-        void AddTaakPreference(OnderwijsTaak taak, int voorkeurWaarde, int userId);
-        void UpdateTaakPreference(OnderwijsTaak taak, int voorkeurWaarde, int userId);
-        Preference CheckOnderdeelPreference(OnderwijsOnderdeel onderdeel, int userId);
-        void AddOnderdeelPreference(OnderwijsOnderdeel onderdeel, int voorkeurWaarde, int userId);
-        void UpdateOnderdeelPreference(OnderwijsOnderdeel onderdeel, int voorkeurWaarde, int userId);
-        Preference CheckTaakPreference(OnderwijsTaak taak, int userId);
+        void AddTaskPreference(OnderwijsTaak task, int priority, int userId);
+        void UpdateTaskPreference(OnderwijsTaak task, int priority, int userId);
+        Preference CheckTaskPreference(OnderwijsTaak task, int userId);
         IEnumerable<OnderwijsEenheid> GetAllOnderwijsEenheden(int trajectId);
-        IEnumerable<OnderwijsOnderdeel> GetAllOnderwijsOnderdelen(int EenheidId);
-        IEnumerable<OnderwijsTaak> GetAllOnderwijsTaken(int OnderdeelId);
+        IEnumerable<OnderwijsTaak> GetAllTasks(int EdUnitId);
         IEnumerable<OnderwijsTaak> GetTakenFromTraject(OnderwijsTraject onderwijsTraject);
-        IEnumerable<OnderwijsOnderdeel> GetOnderdeelFromTraject(OnderwijsTraject onderwijsTraject);
-        IEnumerable<OnderwijsTaak> GetTakenFromEenheid(OnderwijsEenheid onderwijsEenheid);
 
     }
 }
