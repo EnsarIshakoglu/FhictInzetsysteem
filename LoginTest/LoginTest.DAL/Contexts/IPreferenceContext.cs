@@ -5,14 +5,14 @@ namespace Inzetsysteem.DAL.Contexts
 {
     public interface IPreferenceContext
     {
-        IEnumerable<OnderwijsTraject> GetAllOnderwijsTrajecten();
+        IEnumerable<EducationSection> GetAllEducationSectionen();
         void SaveTrajectPreferences(IEnumerable<Preference> preferences, int userId);
-        void AddTaskPreference(OnderwijsTaak task, int priority, int userId);
-        void UpdateTaskPreference(OnderwijsTaak task, int priority, int userId);
-        Preference CheckTaskPreference(OnderwijsTaak task, int userId);
-        IEnumerable<OnderwijsEenheid> GetAllOnderwijsEenheden(int trajectId);
-        IEnumerable<OnderwijsTaak> GetAllTasks(int EdUnitId);
-        IEnumerable<OnderwijsTaak> GetTakenFromTraject(OnderwijsTraject onderwijsTraject);
+        void AddTaskPreference(Task task, int priority, int userId);
+        void UpdateTaskPreference(Task task, int priority, int userId);
+        Preference CheckTaskPreference(Task task, int userId);
+        IEnumerable<EducationUnit> GetAllOnderwijsEenheden(int trajectId);
+        IEnumerable<Task> GetAllTasks(int EdUnitId);
+        IEnumerable<Task> GetTakenFromTraject(EducationSection EducationSection);
 
     }
 }

@@ -14,22 +14,22 @@ namespace Inzetsysteem.DAL
             _context = new PreferenceContext();
         }
 
-        public IEnumerable<OnderwijsTraject> GetAllOnderwijsTrajecten()
+        public IEnumerable<EducationSection> GetAllEducationSectionen()
         {
-            return _context.GetAllOnderwijsTrajecten();
+            return _context.GetAllEducationSectionen();
         }
 
-        public void AddTaskPreference(OnderwijsTaak task, int priority, int userId)
+        public void AddTaskPreference(Task task, int priority, int userId)
         {
             _context.AddTaskPreference(task, priority, userId);
         }
 
-        public void UpdateTaskPreference(OnderwijsTaak task, int priority, int userId)
+        public void UpdateTaskPreference(Task task, int priority, int userId)
         {
             _context.UpdateTaskPreference(task, priority, userId);
         }
 
-        public Preference CheckTaskPreference(OnderwijsTaak task, int userId)
+        public Preference CheckTaskPreference(Task task, int userId)
         {
             return _context.CheckTaskPreference(task, userId);
         }
@@ -39,19 +39,19 @@ namespace Inzetsysteem.DAL
             _context.SaveTrajectPreferences(preferences, userId);
         }
 
-        public IEnumerable<OnderwijsEenheid> GetAllOnderwijsEenheden(int trajectId)
+        public IEnumerable<EducationUnit> GetAllOnderwijsEenheden(int trajectId)
         {
             return _context.GetAllOnderwijsEenheden(trajectId);
         }
 
-        public IEnumerable<OnderwijsTaak> GetAllTasks(int EdUnitId)
+        public IEnumerable<Task> GetAllTasks(int EdUnitId)
         {
             return _context.GetAllTasks(EdUnitId);
         }
 
-        public IEnumerable<OnderwijsTaak> GetTakenFromTraject(OnderwijsTraject onderwijsTraject)
+        public IEnumerable<Task> GetTakenFromTraject(EducationSection EducationSection)
         {
-            return _context.GetTakenFromTraject(onderwijsTraject);
+            return _context.GetTakenFromTraject(EducationSection);
         }
     }
 }

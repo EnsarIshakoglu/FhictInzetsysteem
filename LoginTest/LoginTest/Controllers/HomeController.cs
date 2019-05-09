@@ -42,7 +42,7 @@ namespace Inzetsysteem.Controllers
 
             if (_userLogic.Login(user))
             {
-                InitUser(user, _userLogic.GetUserID(user));
+                InitUser(user, _userLogic.GetUserId(user));
                 return RedirectToAction("Profile", "Home");   //De cookies worden pas nadat je naar een nieuwe controller bent gegaan gerefreshed, hierdoor doe ik redirecten naar de index pag van homecontroller
             }
 

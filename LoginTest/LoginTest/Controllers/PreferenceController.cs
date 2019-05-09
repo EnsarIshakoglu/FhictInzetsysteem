@@ -19,14 +19,14 @@ namespace Inzetsysteem.Controllers
 
 
         [HttpGet]
-        public IActionResult OnderwijsTrajectPreference()
+        public IActionResult EducationSectionPreference()
         {
             var preferences = new List<Preference>();
-            var trajecten = _preferenceLogic.GetAllOnderwijsTrajecten();
+            var trajecten = _preferenceLogic.GetAllEducationSectionen();
 
-            foreach (var onderwijsTraject in trajecten)
+            foreach (var EducationSection in trajecten)
             {
-                preferences.Add(_preferenceLogic.GetTrajectPreference(onderwijsTraject, Convert.ToInt32(User.Identity.Name)));
+                preferences.Add(_preferenceLogic.GetTrajectPreference(EducationSection, Convert.ToInt32(User.Identity.Name)));
             }
 
             return View("SubmitPreferences", preferences);
@@ -37,28 +37,28 @@ namespace Inzetsysteem.Controllers
         {
             List<Preference> preferences = new List<Preference>();
 
-            foreach (var traject in _preferenceLogic.GetAllOnderwijsTrajecten())
+            foreach (var traject in _preferenceLogic.GetAllEducationSectionen())
             {
-                var preferenceValue = Request.Form[traject.Naam].ToString();
+                var preferenceValue = Request.Form[traject.Name].ToString();
                 int value = Convert.ToInt16(preferenceValue);                               //todo convert.toint vervangen met iets netters
 
-                preferences.Add(new Preference { Taak = traject, Waarde = value });
+                preferences.Add(new Preference { Task = traject, Value = value });
             }
 
             _preferenceLogic.SaveTrajectPreferences(preferences, Convert.ToInt32(User.Identity.Name));
 
-            return RedirectToAction("OnderwijsTrajectPreference", "Preference");
+            return RedirectToAction("EducationSectionPreference", "Preference");
         }
 
         [HttpPost]
-        public IActionResult OnderwijsEenheidPreference(int trajectId)
+        public IActionResult EducationUnitPreference(int trajectId)
         {
             var preferences = new List<Preference>();
             var eenheden = _preferenceLogic.GetAllOnderwijsEenheden(trajectId);
 
-            foreach (var onderwijsEenheid in eenheden)
+            foreach (var EducationUnit in eenheden)
             {
-                preferences.Add(_preferenceLogic.GetEenheidPreference(onderwijsEenheid, Convert.ToInt32(User.Identity.Name)));
+                preferences.Add(_preferenceLogic.GetEenheidPreference(EducationUnit, Convert.ToInt32(User.Identity.Name)));
             }
 
             return View("SubmitPreferences", preferences);
@@ -83,26 +83,26 @@ namespace Inzetsysteem.Controllers
         {
             List<Preference> preferences = new List<Preference>();
 
-            foreach (var traject in _preferenceLogic.GetAllOnderwijsTrajecten())
+            foreach (var traject in _preferenceLogic.GetAllEducationSectionen())
             {
-                var preferenceValue = Request.Form[traject.Naam].ToString();
+                var preferenceValue = Request.Form[traject.Name].ToString();
                 int value = Convert.ToInt16(preferenceValue);                               //todo convert.toint vervangen met iets netters
 
-                preferences.Add(new Preference { Taak = traject, Waarde = value });
+                preferences.Add(new Preference { Task = traject, Value = value });
             }
 
             _preferenceLogic.SaveTrajectPreferences(preferences, Convert.ToInt32(User.Identity.Name));
 
-            return RedirectToAction("OnderwijsEenheidPreference", "Preference");
+            return RedirectToAction("EducationUnitPreference", "Preference");
         }
 
-        public IActionResult RedirectLayer(string taakNaam, int id)
+        public IActionResult RedirectLayer(string TaskName, int id)
         {
-            if (taakNaam == typeof(OnderwijsTraject).Name)
+            if (TaskName == typeof(EducationSection).Name)
             {
-                return OnderwijsEenheidPreference(id);
+                return EducationUnitPreference(id);
             }
-            else if (taakNaam == typeof(OnderwijsEenheid).Name)
+            else if (TaskName == typeof(EducationUnit).Name)
             {
                 return TaskPreference(id);
             }

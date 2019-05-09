@@ -9,6 +9,6 @@ namespace Inzetsysteem.DAL
     {
         bool Login(User user);
         IEnumerable<string> GetUserRoles(User user);
-        int GetUserID(User user);
+        int GetUserId(User user);
     }
 }

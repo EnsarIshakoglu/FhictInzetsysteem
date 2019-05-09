@@ -54,7 +54,7 @@ namespace Inzetsysteem.DAL
             return roles;
         }
 
-        public int GetUserID(User user)
+        public int GetUserId(User user)
         {
             int userId = 0;
 
