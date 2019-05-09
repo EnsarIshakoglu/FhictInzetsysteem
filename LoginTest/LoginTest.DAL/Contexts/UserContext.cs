@@ -13,7 +13,7 @@ namespace Inzetsysteem.DAL
 
         public bool Login(User user)
         {
-            bool loginSuccesfull = false;
+            bool loginSuccessful = false;
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
@@ -24,12 +24,12 @@ namespace Inzetsysteem.DAL
 
                 while (reader.Read())
                 {
-                    loginSuccesfull = true;
+                    loginSuccessful = true;
                 }
                 reader.Close();
                 conn.Close();
             }
-            return loginSuccesfull;
+            return loginSuccessful;
         }
 
         public IEnumerable<string> GetUserRoles(User user)

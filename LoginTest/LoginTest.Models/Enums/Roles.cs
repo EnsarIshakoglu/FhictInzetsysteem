@@ -6,10 +6,10 @@ namespace Inzetsysteem.Models
 {
     public enum Roles
     {
-        Teamleider,
-        Blokeigenaar,
-        Curriculumeigenaar,
-        Staflid,
-        Docent
+        TeamLeader,
+        UnitOwner,
+        CurriculumOwner,
+        InstituteMember,
+        Teacher
     }
 }

@@ -6,6 +6,5 @@ namespace Inzetsysteem.Models
 {
     public class Team
     {
-        public int AantalMensen { get; private set; }
     }
 }

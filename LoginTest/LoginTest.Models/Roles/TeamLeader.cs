@@ -7,6 +7,6 @@ namespace Inzetsysteem.Models
 {
     public class TeamLeader : Role
     {
-        public Team Team { get; private set; }
+        public Team Team { get; set; }
     }
 }
