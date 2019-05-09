@@ -2,13 +2,13 @@
 @model IEnumerable<Preference>
 
 @{
-    ViewData["Title"] = "EducationUnitPartialView";
+    ViewData["Title"] = "UnitPartialView";
 }
 
 <h1>OnderwijsEenheden</h1>
 <body>
 
-    <form method="post" asp-controller="Preference" asp-action="GetTrajectPreferences">
+    <form method="post" asp-controller="Preference" asp-action="GetsectionPreferences">
         @foreach (var Preference in @Model)
         {
             <div>

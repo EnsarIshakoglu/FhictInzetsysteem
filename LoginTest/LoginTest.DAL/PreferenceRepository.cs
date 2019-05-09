@@ -14,9 +14,9 @@ namespace Inzetsysteem.DAL
             _context = new PreferenceContext();
         }
 
-        public IEnumerable<EducationSection> GetAllEducationSections()
+        public IEnumerable<Section> GetAllSections()
         {
-            return _context.GetAllEducationSections();
+            return _context.GetAllSections();
         }
 
         public void AddTaskPreference(Task task, int priority, int userId)
@@ -39,9 +39,9 @@ namespace Inzetsysteem.DAL
             _context.SaveEdSectionPreferences(preferences, userId);
         }
 
-        public IEnumerable<EducationUnit> GetAllEducationUnits(int EdSectionId)
+        public IEnumerable<Unit> GetAllUnits(int EdSectionId)
         {
-            return _context.GetAllEducationUnits(EdSectionId);
+            return _context.GetAllUnits(EdSectionId);
         }
 
         public IEnumerable<Task> GetAllTasks(int EdUnitId)
@@ -49,7 +49,7 @@ namespace Inzetsysteem.DAL
             return _context.GetAllTasks(EdUnitId);
         }
 
-        public IEnumerable<Task> GetTasksFromEdSection(EducationSection edSection)
+        public IEnumerable<Task> GetTasksFromEdSection(Section edSection)
         {
             return _context.GetTasksFromEdSection(edSection);
         }

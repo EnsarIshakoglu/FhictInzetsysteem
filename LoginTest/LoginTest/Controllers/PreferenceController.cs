@@ -19,46 +19,46 @@ namespace Inzetsysteem.Controllers
 
 
         [HttpGet]
-        public IActionResult EducationSectionPreference()
+        public IActionResult SectionPreference()
         {
             var preferences = new List<Preference>();
-            var trajecten = _preferenceLogic.GetAllEducationSectionen();
+            var sectionen = _preferenceLogic.GetAllSectionen();
 
-            foreach (var EducationSection in trajecten)
+            foreach (var Section in sectionen)
             {
-                preferences.Add(_preferenceLogic.GetTrajectPreference(EducationSection, Convert.ToInt32(User.Identity.Name)));
+                preferences.Add(_preferenceLogic.GetsectionPreference(Section, Convert.ToInt32(User.Identity.Name)));
             }
 
             return View("SubmitPreferences", preferences);
         }
 
         [HttpPost]
-        public IActionResult GetTrajectPreferences()
+        public IActionResult GetsectionPreferences()
         {
             List<Preference> preferences = new List<Preference>();
 
-            foreach (var traject in _preferenceLogic.GetAllEducationSectionen())
+            foreach (var section in _preferenceLogic.GetAllSectionen())
             {
-                var preferenceValue = Request.Form[traject.Name].ToString();
+                var preferenceValue = Request.Form[section.Name].ToString();
                 int value = Convert.ToInt16(preferenceValue);                               //todo convert.toint vervangen met iets netters
 
-                preferences.Add(new Preference { Task = traject, Value = value });
+                preferences.Add(new Preference { Task = section, Value = value });
             }
 
             _preferenceLogic.SaveEdSectionPreferences(preferences, Convert.ToInt32(User.Identity.Name));
 
-            return RedirectToAction("EducationSectionPreference", "Preference");
+            return RedirectToAction("SectionPreference", "Preference");
         }
 
         [HttpPost]
-        public IActionResult EducationUnitPreference(int trajectId)
+        public IActionResult UnitPreference(int sectionId)
         {
             var preferences = new List<Preference>();
-            var eenheden = _preferenceLogic.GetAllEducationUnits(trajectId);
+            var eenheden = _preferenceLogic.GetAllUnits(sectionId);
 
-            foreach (var EducationUnit in eenheden)
+            foreach (var Unit in eenheden)
             {
-                preferences.Add(_preferenceLogic.GetEdUnitPreference(EducationUnit, Convert.ToInt32(User.Identity.Name)));
+                preferences.Add(_preferenceLogic.GetEdUnitPreference(Unit, Convert.ToInt32(User.Identity.Name)));
             }
 
             return View("SubmitPreferences", preferences);
@@ -83,24 +83,24 @@ namespace Inzetsysteem.Controllers
         {
             List<Preference> preferences = new List<Preference>();
 
-            foreach (var traject in _preferenceLogic.GetAllEducationSectionen())
+            foreach (var section in _preferenceLogic.GetAllSectionen())
             {
-                var preferenceValue = Request.Form[traject.Name].ToString();
+                var preferenceValue = Request.Form[section.Name].ToString();
                 int value = Convert.ToInt16(preferenceValue);                               //todo convert.toint vervangen met iets netters
 
-                preferences.Add(new Preference { Task = traject, Value = value });
+                preferences.Add(new Preference { Task = section, Value = value });
             }
 
             _preferenceLogic.SaveEdSectionPreferences(preferences, Convert.ToInt32(User.Identity.Name));
 
-            return RedirectToAction("EducationUnitPreference", "Preference");
+            return RedirectToAction("UnitPreference", "Preference");
         }
 
         public IActionResult RedirectLayer(string TaskName, int id)
         {
             if (TaskName == typeof(Section).Name)
             {
-                return EducationUnitPreference(id);
+                return UnitPreference(id);
             }
             else if (TaskName == typeof(Unit).Name)
             {

@@ -65,7 +65,7 @@
                             <li><a asp-area="" asp-controller="Home" asp-action="Profile">Profile</a></li>
                             @if (User.IsInRole(Roles.Teacher.ToString()))
                             {
-                                <li><a asp-area="" asp-controller="Preference" asp-action="EducationSectionPreference">Set preferences</a></li>
+                                <li><a asp-area="" asp-controller="Preference" asp-action="SectionPreference">Set preferences</a></li>
                                 <li><a asp-area="" asp-controller="Home" asp-action="MijnTaken">My tasks</a></li>
                             }
                             @if (User.IsInRole(Roles.TeamLeader.ToString()))

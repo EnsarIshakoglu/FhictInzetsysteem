@@ -14,16 +14,16 @@ namespace Inzetsysteem.DAL.Contexts
         private readonly string _connectionString =
             "Server=mssql.fhict.local;Database=dbi389621;User Id=dbi389621;Password=Ensar123;";
 
-        public void SaveEdSectionPreferences(IEnumerable<Preference> trajectPreferences, int userId)
+        public void SaveEdSectionPreferences(IEnumerable<Preference> sectionPreferences, int userId)
         {
-            foreach (var trajectPreference in trajectPreferences)
+            foreach (var sectionPreference in sectionPreferences)
             {
                 List<Task> tasks = new List<Task>();
 
-                tasks.AddRange(GetTasksFromEdSection(new EducationSection
+                tasks.AddRange(GetTasksFromEdSection(new Section
                 {
-                    Id = trajectPreference.Task.Id,
-                    Name = trajectPreference.Task.Name
+                    Id = sectionPreference.Task.Id,
+                    Name = sectionPreference.Task.Name
                 }));
 
                 foreach (var task in tasks)
@@ -31,11 +31,11 @@ namespace Inzetsysteem.DAL.Contexts
                     var taskPreference = CheckTaskPreference(task, userId);
                     if (taskPreference.Value == -1)
                     {
-                        AddTaskPreference(task, trajectPreference.Value, userId);
+                        AddTaskPreference(task, sectionPreference.Value, userId);
                     }
                     else
                     {
-                        UpdateTaskPreference(task, trajectPreference.Value, userId);
+                        UpdateTaskPreference(task, sectionPreference.Value, userId);
                     }
                 }
             }
@@ -43,9 +43,9 @@ namespace Inzetsysteem.DAL.Contexts
         }
 
 
-        public IEnumerable<EducationSection> GetAllEducationSections()
+        public IEnumerable<Section> GetAllSections()
         {
-            var trajecten = new List<EducationSection>();
+            var sectionen = new List<Section>();
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -57,7 +57,7 @@ namespace Inzetsysteem.DAL.Contexts
 
                 while (reader.Read())
                 {
-                    trajecten.Add(new EducationSection
+                    sectionen.Add(new Section
                     {
                         Id = (int) reader["Id"],
                         Name = reader["Name"]?.ToString()
@@ -67,12 +67,12 @@ namespace Inzetsysteem.DAL.Contexts
                 connection.Close();
             }
 
-            return trajecten;
+            return sectionen;
         }
 
-        public IEnumerable<EducationUnit> GetAllEducationUnits(int EdSectionId)
+        public IEnumerable<Unit> GetAllUnits(int edSectionId)
         {
-            var eenheden = new List<EducationUnit>();
+            var eenheden = new List<Unit>();
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -82,13 +82,13 @@ namespace Inzetsysteem.DAL.Contexts
 
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add(new SqlParameter("@EdSectionId", EdSectionId));
+                cmd.Parameters.Add(new SqlParameter("@EdSectionId", edSectionId));
 
                 var reader = cmd.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    eenheden.Add(new EducationUnit
+                    eenheden.Add(new Unit
                     {
                         Id = (int)reader["Id"],
                         Name = reader["Name"]?.ToString()
@@ -132,7 +132,7 @@ namespace Inzetsysteem.DAL.Contexts
             return taken;
         }
 
-        public IEnumerable<Task> GetTasksFromEdSection(EducationSection EducationSection)
+        public IEnumerable<Task> GetTasksFromEdSection(Section Section)
         {
             var tasks = new List<Task>();
 
@@ -144,7 +144,7 @@ namespace Inzetsysteem.DAL.Contexts
 
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add(new SqlParameter("@SectionId", EducationSection.Id));
+                cmd.Parameters.Add(new SqlParameter("@SectionId", Section.Id));
 
                 var reader = cmd.ExecuteReader();
 
