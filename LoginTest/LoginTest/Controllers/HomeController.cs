@@ -59,6 +59,12 @@ namespace Inzetsysteem.Controllers
         {
             return View();
         }
+
+        public IActionResult TeamBeheren()
+        {
+            return View();
+        }
+
         [HttpGet]
         public IActionResult VoorkeurInvoeren()
         {

@@ -1,0 +1,132 @@
+﻿@{
+    ViewData["Title"] = "Ingelogd";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
+    <title>MU Material : Home</title>
+
+    <!-- CSS  -->
+    <link href="~/lib/bootstrap/dist/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <!-- Font Awesome -->
+    <link href="~/lib/bootstrap/dist/css/font-awesome.css" rel="stylesheet">
+    <!-- Skill Progress Bar -->
+    <link href="~/lib/bootstrap/dist/css/pro-bars.css" rel="stylesheet" type="text/css" media="all" />
+    <!-- Owl Carousel -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/owl.carousel.css">
+    <!-- Default Theme CSS File-->
+    <link id="switcher" href="~/lib/bootstrap/dist/css/default-theme.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <!-- Main css File -->
+    <link href="~/lib/bootstrap/dist/css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+
+    <!-- Font -->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+</head>
+
+<body>
+    <!-- BEGIN PRELOADER -->
+    <!-- END PRELOADER -->
+    <div class="main-wrapper">
+        <main role="main">
+            <!-- START ABOUT SECTION -->
+            <section id="about">
+                <div class="container">
+                    <div class="row">
+                        <div class="col s12">
+                            <div class="about-inner">
+                                <div class="row">
+                                    <div class="col s12 m4 l3">
+                                        <div class="about-inner-left">
+                                            <img class="profile-img" src="~/Images/profile-img1.jpg" alt="Profile Image">
+                                        </div><br>
+                                        @if (User.IsInRole(Roles.Docent.ToString()))
+                                        {
+                                        <table>
+                                            <thead>
+                                            <tr>
+                                                <th data-field="id">Bevoegdheden</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>Bevoegheid 1</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Bevoegheid 2</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Bevoegheid 3</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        }
+                                    </div>
+                                    <div class="col s12 m8 l9">
+                                        <div class="about-inner-right">
+                                            <h3>Voornaam, Achternaam</h3>
+                                            <div class="personal-information col s12 m12 l6">
+                                                <ul>
+                                                    <li><span>Mobielnummer : </span>+31 61254689</li>
+                                                    <li><span>Email : </span>John@gmail.com</li>
+                                                    <li><span>Team : </span>team 1</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Start Experience -->
+            <section id="experience">
+                <div class="container">
+                    <div class="experience-inner">
+                        <h2 class="title">Footer</h2>
+                        <p>text</p>
+                    </div>
+                </div>
+            </section>
+            <!-- Start Footer -->
+            <footer id="footer" role="contentinfo">
+                <!-- Start Footer Bottom -->
+                <div class="footer-bottom">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col s12">
+                                <div class="footer-inner">
+                                    <!-- Bottom to Up Btn -->
+                                    <button class="btn-floating btn-large up-btn"><i class="mdi-navigation-expand-less"></i></button>
+                                    <p class="design-info">Gemaakt door groep 2</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </main>
+    </div>
+    <!-- jQuery Library -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <!-- Materialize js -->
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <!-- Skill Progress Bar -->
+    <script src="js/appear.min.js" type="text/javascript"></script>
+    <script src="js/pro-bars.min.js" type="text/javascript"></script>
+    <!-- Owl slider -->
+    <script src="js/owl.carousel.min.js"></script>
+    <!-- Mixit slider  -->
+    <script src="http://cdn.jsdelivr.net/jquery.mixitup/latest/jquery.mixitup.min.js"></script>
+    <!-- counter -->
+    <script src="js/waypoints.min.js"></script>
+    <script src="js/jquery.counterup.min.js"></script>
+
+    <!-- Custom Js -->
+    <script src="js/custom.js"></script>
+</body>
+</html>

@@ -2384,7 +2384,7 @@ code, kbd, pre, samp {
  * 2. Correct font properties not being inherited.
  * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.
  */
-button, input, optgroup, select, textarea {
+button, input, optgroup, textarea {
     color: inherit;
     /* 1 */
     font: inherit;
@@ -2406,7 +2406,7 @@ button {
  * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.
  * Correct `select` style inheritance in Firefox.
  */
-button, select {
+button {
     text-transform: none;
 }
 
@@ -8097,9 +8097,9 @@ a.waves-effect .waves-ripple {
 }
 
 /* Remove Focus Boxes */
-select:focus {
+/*select:focus {
     outline: 1px solid #c9f3ef;
-}
+}*/
 
 button:focus {
     outline: none;
@@ -8697,7 +8697,7 @@ input[type=checkbox]:not(:disabled) ~ .lever:active:after {
 /***************
   Select Field
 ***************/
-.select-label {
+/*.select-label {
     position: absolute;
 }
 
@@ -8770,7 +8770,7 @@ select {
 .select-dropdown li.disabled {
     color: rgba(0, 0, 0, 0.3);
     background-color: transparent;
-}
+}*/
 
 /*********************
       File Input
