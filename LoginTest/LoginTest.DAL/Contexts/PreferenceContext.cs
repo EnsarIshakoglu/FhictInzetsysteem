@@ -20,7 +20,7 @@ namespace FHICTDeploymentSystem.DAL.Contexts
             {
                 List<Task> tasks = new List<Task>();
 
-                tasks.AddRange(GetTasksFromEdSection(new Section
+                tasks.AddRange(GetTasksFromSection(new Section
                 {
                     Id = sectionPreference.Task.Id,
                     Name = sectionPreference.Task.Name
@@ -45,7 +45,7 @@ namespace FHICTDeploymentSystem.DAL.Contexts
 
         public IEnumerable<Section> GetAllSections()
         {
-            var sectionen = new List<Section>();
+            var sections = new List<Section>();
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -57,7 +57,7 @@ namespace FHICTDeploymentSystem.DAL.Contexts
 
                 while (reader.Read())
                 {
-                    sectionen.Add(new Section
+                    sections.Add(new Section
                     {
                         Id = (int) reader["Id"],
                         Name = reader["Name"]?.ToString()
@@ -67,12 +67,12 @@ namespace FHICTDeploymentSystem.DAL.Contexts
                 connection.Close();
             }
 
-            return sectionen;
+            return sections;
         }
 
-        public IEnumerable<Unit> GetAllUnits(int edSectionId)
+        public IEnumerable<Unit> GetAllUnits(int SectionId)
         {
-            var eenheden = new List<Unit>();
+            var units = new List<Unit>();
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -82,13 +82,13 @@ namespace FHICTDeploymentSystem.DAL.Contexts
 
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add(new SqlParameter("@EdSectionId", edSectionId));
+                cmd.Parameters.Add(new SqlParameter("@EdSectionId", SectionId));
 
                 var reader = cmd.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    eenheden.Add(new Unit
+                    units.Add(new Unit
                     {
                         Id = (int)reader["Id"],
                         Name = reader["Name"]?.ToString()
@@ -98,10 +98,10 @@ namespace FHICTDeploymentSystem.DAL.Contexts
                 connection.Close();
             }
 
-            return eenheden;
+            return units;
         }
 
-        public IEnumerable<Task> GetAllTasks(int EdUnitId)
+        public IEnumerable<Task> GetAllTasks(int UnitId)
         {
             var taken = new List<Task>();
 
@@ -113,7 +113,7 @@ namespace FHICTDeploymentSystem.DAL.Contexts
 
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add(new SqlParameter("@EdUnitId", EdUnitId));
+                cmd.Parameters.Add(new SqlParameter("@EdUnitId", UnitId));
 
                 var reader = cmd.ExecuteReader();
 
@@ -132,7 +132,7 @@ namespace FHICTDeploymentSystem.DAL.Contexts
             return taken;
         }
 
-        public IEnumerable<Task> GetTasksFromEdSection(Section Section)
+        public IEnumerable<Task> GetTasksFromSection(Section Section)
         {
             var tasks = new List<Task>();
 

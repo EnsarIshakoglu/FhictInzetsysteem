@@ -55,12 +55,12 @@ namespace FHICTDeploymentSystem.Controllers
             return View();
         }
 
-        public IActionResult MijnTaken()
+        public IActionResult MyTasks()
         {
             return View();
         }
         [HttpGet]
-        public IActionResult PreferenceInvoeren()
+        public IActionResult SetPreference()
         {
 
             return RedirectToAction("Index", "Preference");

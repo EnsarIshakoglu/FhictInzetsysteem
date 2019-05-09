@@ -4,16 +4,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FHICTDeploymentSystem.Controllers
 {
-    [Authorize(Roles = "Teamleider")]
+    [Authorize(Roles = "TeamLeader")]
     [Route("Home/Index")]
     public class TeamleiderController : Controller
     {
-        public IActionResult Docenten()
+        public IActionResult Teachers()
         {
             return View();
         }
 
-        public IActionResult TeamBeheren()
+        public IActionResult ManageTeams()
         {
             return View();
         }

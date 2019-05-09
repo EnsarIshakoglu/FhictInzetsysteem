@@ -39,19 +39,19 @@ namespace FHICTDeploymentSystem.DAL
             _context.SaveEdSectionPreferences(preferences, userId);
         }
 
-        public IEnumerable<Unit> GetAllUnits(int EdSectionId)
+        public IEnumerable<Unit> GetAllUnits(int SectionId)
         {
-            return _context.GetAllUnits(EdSectionId);
+            return _context.GetAllUnits(SectionId);
         }
 
-        public IEnumerable<Task> GetAllTasks(int EdUnitId)
+        public IEnumerable<Task> GetAllTasks(int UnitId)
         {
-            return _context.GetAllTasks(EdUnitId);
+            return _context.GetAllTasks(UnitId);
         }
 
-        public IEnumerable<Task> GetTasksFromEdSection(Section edSection)
+        public IEnumerable<Task> GetTasksFromSection(Section Section)
         {
-            return _context.GetTasksFromEdSection(edSection);
+            return _context.GetTasksFromSection(Section);
         }
     }
 }
