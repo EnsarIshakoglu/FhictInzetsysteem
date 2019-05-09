@@ -51,7 +51,7 @@ namespace Inzetsysteem.DAL.Contexts
             {
                 connection.Open();
 
-                SqlCommand cmd = new SqlCommand("GetAlleTrajecten", connection);
+                SqlCommand cmd = new SqlCommand("GetAllSections", connection);
 
                 var reader = cmd.ExecuteReader();
 
@@ -78,11 +78,11 @@ namespace Inzetsysteem.DAL.Contexts
             {
                 connection.Open();
 
-                SqlCommand cmd = new SqlCommand("GetAlleEenheden", connection);
+                SqlCommand cmd = new SqlCommand("GetUnits", connection);
 
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add(new SqlParameter("@TrajectID", EdSectionId));
+                cmd.Parameters.Add(new SqlParameter("@EdSectionId", EdSectionId));
 
                 var reader = cmd.ExecuteReader();
 
@@ -140,11 +140,11 @@ namespace Inzetsysteem.DAL.Contexts
             {
                 connection.Open();
 
-                SqlCommand cmd = new SqlCommand("GetTakenBinnenTraject", connection);
+                SqlCommand cmd = new SqlCommand("GetTasksWithinSection", connection);
 
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add(new SqlParameter("@TrajectID", EducationSection.Id));
+                cmd.Parameters.Add(new SqlParameter("@SectionId", EducationSection.Id));
 
                 var reader = cmd.ExecuteReader();
 
