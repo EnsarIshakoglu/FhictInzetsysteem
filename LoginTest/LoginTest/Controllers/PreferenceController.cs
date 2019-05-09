@@ -29,6 +29,7 @@ namespace FHICTDeploymentSystem.Controllers
                 preferences.Add(_preferenceLogic.GetSectionPreference(section, Convert.ToInt32(User.Identity.Name)));
             }
 
+            TempData["Title"] = "Sections";
             return View("SubmitPreferences", preferences);
         }
 
@@ -100,10 +101,12 @@ namespace FHICTDeploymentSystem.Controllers
         {
             if (taskName == typeof(Section).Name)
             {
+                TempData["Title"] = "Units";
                 return UnitPreference(id);
             }
             else if (taskName == typeof(Unit).Name)
             {
+                TempData["Title"] = "Tasks";
                 return TaskPreference(id);
             }
             else

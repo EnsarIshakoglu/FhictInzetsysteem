@@ -5,7 +5,7 @@
     ViewData["Title"] = "SectionPartialView";
 }
 
-<h1>Sections</h1>
+<h1 id="Title" style="color: #663366"></h1>
 <body>
 
     <form method="post" asp-controller="Preference" asp-action="GetSectionPreferences">
@@ -19,3 +19,14 @@
     </form>
 </body>
 
+@if (null != TempData["Title"])
+{
+    <script type="text/javascript">
+
+        var h1 = document.createElement('h1');
+        h1.innerHTML = '@TempData["Title"]';
+        console.log(h1.innerHTML);
+
+        document.getElementById('Title').appendChild(h1);
+    </script>
+}
