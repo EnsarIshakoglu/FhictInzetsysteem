@@ -45,7 +45,7 @@ namespace Inzetsysteem.DAL.Contexts
 
         public IEnumerable<Section> GetAllSections()
         {
-            var sectionen = new List<Section>();
+            var sections = new List<Section>();
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -57,7 +57,7 @@ namespace Inzetsysteem.DAL.Contexts
 
                 while (reader.Read())
                 {
-                    sectionen.Add(new Section
+                    sections.Add(new Section
                     {
                         Id = (int) reader["Id"],
                         Name = reader["Name"]?.ToString()
@@ -67,12 +67,12 @@ namespace Inzetsysteem.DAL.Contexts
                 connection.Close();
             }
 
-            return sectionen;
+            return sections;
         }
 
         public IEnumerable<Unit> GetAllUnits(int edSectionId)
         {
-            var eenheden = new List<Unit>();
+            var units = new List<Unit>();
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -88,7 +88,7 @@ namespace Inzetsysteem.DAL.Contexts
 
                 while (reader.Read())
                 {
-                    eenheden.Add(new Unit
+                    units.Add(new Unit
                     {
                         Id = (int)reader["Id"],
                         Name = reader["Name"]?.ToString()
@@ -98,7 +98,7 @@ namespace Inzetsysteem.DAL.Contexts
                 connection.Close();
             }
 
-            return eenheden;
+            return units;
         }
 
         public IEnumerable<Task> GetAllTasks(int EdUnitId)
