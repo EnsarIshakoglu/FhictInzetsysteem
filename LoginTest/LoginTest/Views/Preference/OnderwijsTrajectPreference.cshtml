@@ -7,15 +7,60 @@
 
 <h1>OnderwijsTrajecten</h1>
 <body>
-
-    <form method="post" asp-controller="Preference" asp-action="GetTrajectPreferences">
-        @foreach (var voorkeur in @Model)
-        {
-            <div>
-                @Html.Partial("PartialViews/RadioButtons", voorkeur)
+        <div class="carousel-wrapper">
+            <span id="item-1"></span>
+            <span id="item-2"></span>
+            <span id="item-3"></span>
+            <span id="item-4"></span>
+            <div class="carousel-item item-1">
+                <h4>Kies een richting</h4>
+                <p>text....</p>
+                <div class="parent-btn">
+                                   <a>
+                                       <form method="post" asp-controller="Preference" asp-action="GetTrajectPreferences">
+                                           @foreach (var voorkeur in @Model)
+                                           {
+                                               <div>
+                                                   @Html.Partial("PartialViews/RadioButtons", voorkeur)
+                                               </div>
+                                           }
+                                           <input type="submit" value="Save">
+                                       </form>
+                                   </a>
+</div>
             </div>
-        }
-        <input type="submit" value="Save">
-    </form>
+
+            <div class="carousel-item item-2">
+                <h4>Kies een semester</h4>
+                <p>Tekst</p><div class="parent-btn">
+                    <a class="btn-voorkeur btn-voorkeur-prev" href="#item-1"><p>Terug</p></a>
+                    <a class="btn-voorkeur btn-voorkeur-next" href="#item-3"><p>Volgende</p></a>
+                </div>
+            </div>
+
+            <div class="carousel-item item-3">
+                <h4>Kies een periode</h4>
+                <p>Tekst</p><div class="parent-btn">
+                    <a class="btn-voorkeur btn-voorkeur-prev" href="#item-2"><p>Terug</p></a>
+                    <a class="btn-voorkeur btn-voorkeur-next" href="#item-4"><p>Volgende</p></a>
+                </div>
+            </div>
+            <div class="carousel-item item-4">
+                <h4>Kies een vak</h4>
+                <p>Tekst</p>
+                <div class="parent-btn">
+                    <form method="post" asp-controller="Preference" asp-action="GetTrajectPreferences">
+                        @foreach (var voorkeur in @Model)
+                        {
+                            <div>
+                                @Html.Partial("PartialViews/RadioButtons", voorkeur)
+                            </div>
+                        }
+                        <input type="submit" value="Save">
+                    </form>
+                    <a class="btn-voorkeur btn-voorkeur-prev" href="#item-3"><p>Terug</p></a>
+                </div>
+            </div>
+        </div>
 </body>
 

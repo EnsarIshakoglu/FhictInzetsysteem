@@ -5,8 +5,9 @@
 <div class="container">
     <div class="row">
 
-        <div class="col-md-5th-1 col-sm-4 ">
-            <span>@Model.Taak.Naam</span>
+
+        <div class="col l6">
+            <a class="btn-voorkeur btn-voorkeur-next" href="#item-2"><p>@Model.Taak.Naam</p></a>
         </div>
         @for (int x = 0; x < 5; x++)
         {
@@ -15,7 +16,8 @@
             if (x == 0)
             {
                 value = 3;
-            } else if (x > 2)
+            }
+            else if (x > 2)
             {
                 value++;
             }
@@ -23,9 +25,9 @@
             {
                 defCheck = "checked";
             }
-                <div class="col-md-5th-1 col-sm-4 col-md-offset-0 col-sm-offset-2">
-                    <input id="Waarde" name=@Model.Taak.Naam type="radio" value=@value ; @defCheck><span>@x</span>
-                </div>
+            <div class="col-md-5th-1 col-sm-4 col-md-offset-0 col-sm-offset-2">
+                <input id="Waarde" name=@Model.Taak.Naam type="radio" value=@value ; @defCheck><span>@x</span>
+            </div>
 
         }
 
