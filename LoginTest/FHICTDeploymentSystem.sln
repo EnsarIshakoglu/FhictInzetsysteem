@@ -5,13 +5,13 @@ VisualStudioVersion = 15.0.28307.489
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FHICTDeploymentSystem", "LoginTest\FHICTDeploymentSystem.csproj", "{60155E56-47BA-4F96-9341-1EFC0799B142}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inzetsysteem.DAL", "LoginTest.DAL\Inzetsysteem.DAL.csproj", "{931D21A6-784B-4FE1-96A9-C5FDEA6154C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "LoginTest.DAL\DAL.csproj", "{931D21A6-784B-4FE1-96A9-C5FDEA6154C0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inzetsysteem.Interfaces", "LoginTest.Interfaces\Inzetsysteem.Interfaces.csproj", "{DBFE3A7D-BC9A-45BB-804F-E8CDF99FA2DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Interfaces", "LoginTest.Interfaces\Interfaces.csproj", "{DBFE3A7D-BC9A-45BB-804F-E8CDF99FA2DF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inzetsysteem.Logic", "LoginTest.Logic\Inzetsysteem.Logic.csproj", "{13762C3E-4DE7-41A0-8790-B54D24A0AC26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logic", "LoginTest.Logic\Logic.csproj", "{13762C3E-4DE7-41A0-8790-B54D24A0AC26}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inzetsysteem.Models", "LoginTest.Models\Inzetsysteem.Models.csproj", "{37B23416-B3D0-4744-A236-CA9F3D50FD48}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "LoginTest.Models\Models.csproj", "{37B23416-B3D0-4744-A236-CA9F3D50FD48}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
