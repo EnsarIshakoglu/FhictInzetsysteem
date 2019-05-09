@@ -14,35 +14,6 @@ namespace FHICTDeploymentSystem.DAL.Contexts
         private readonly string _connectionString =
             "Server=mssql.fhict.local;Database=dbi389621;User Id=dbi389621;Password=Ensar123;";
 
-        public void SaveEdSectionPreferences(IEnumerable<Preference> sectionPreferences, int userId)
-        {
-            foreach (var sectionPreference in sectionPreferences)
-            {
-                List<Task> tasks = new List<Task>();
-
-                tasks.AddRange(GetTasksFromSection(new Section
-                {
-                    Id = sectionPreference.Task.Id,
-                    Name = sectionPreference.Task.Name
-                }));
-
-                foreach (var task in tasks)
-                {
-                    var taskPreference = CheckTaskPreference(task, userId);
-                    if (taskPreference.Value == -1)
-                    {
-                        AddTaskPreference(task, sectionPreference.Value, userId);
-                    }
-                    else
-                    {
-                        UpdateTaskPreference(task, sectionPreference.Value, userId);
-                    }
-                }
-            }
-
-        }
-
-
         public IEnumerable<Section> GetAllSections()
         {
             var sections = new List<Section>();

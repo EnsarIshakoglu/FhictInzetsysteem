@@ -34,11 +34,6 @@ namespace FHICTDeploymentSystem.DAL
             return _context.CheckTaskPreference(task, userId);
         }
 
-        public void SaveEdSectionPreferences(IEnumerable<Preference> preferences, int userId)
-        {
-            _context.SaveEdSectionPreferences(preferences, userId);
-        }
-
         public IEnumerable<Unit> GetAllUnits(int SectionId)
         {
             return _context.GetAllUnits(SectionId);

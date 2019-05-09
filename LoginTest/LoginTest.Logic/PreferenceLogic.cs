@@ -21,22 +21,22 @@ namespace FHICTDeploymentSystem.Logic
         {
             List<Preference> preferences = new List<Preference>();
 
-            var tasks = _repo.GetTasksFromSection(section);
+            var tasks = GetTasksFromSection(section);
 
             GetTasksPreferences(tasks, preferences, userId);
             var preference = new Preference { Value = CalcAveragePreference(preferences), Task = section, ValueIsAverage = true };
             return preference;
         }
 
-        public Preference GetUnitPreference(Unit unitId, int userId)
+        public Preference GetUnitPreference(Unit unit, int userId)
         {
             List<Preference> preferences = new List<Preference>();
 
-            var tasks = _repo.GetAllTasks(unitId.Id);
+            var tasks = GetAllTasks(unit.Id);
 
             GetTasksPreferences(tasks, preferences, userId);
 
-            var preference = new Preference {Value = CalcAveragePreference(preferences), Task = unitId, ValueIsAverage = true };
+            var preference = new Preference {Value = CalcAveragePreference(preferences), Task = unit, ValueIsAverage = true };
             return preference;
         }
 
@@ -51,10 +51,10 @@ namespace FHICTDeploymentSystem.Logic
         {
             foreach (var task in tasks)
             {
-                var value = _repo.CheckTaskPreference(task, userId);
-                if (value.Value > 0)
+                var Priority = CheckTaskPreference(task, userId);
+                if (Priority.Value > 0)
                 {
-                    preferences.Add(value);
+                    preferences.Add(Priority);
                 }
             }
             return preferences;
@@ -76,9 +76,32 @@ namespace FHICTDeploymentSystem.Logic
             return preferenceValue;
         }
 
-        public void SaveSectionPreferences(List<Preference> preferences, int userId)
+        public void SaveSectionPreferences(IEnumerable<Preference> sectionPreferences, int userId)
         {
-            _repo.SaveEdSectionPreferences(preferences, userId);
+            foreach (var sectionPreference in sectionPreferences)
+            {
+                List<Task> tasks = new List<Task>();
+
+                tasks.AddRange(GetTasksFromSection(new Section
+                {
+                    Id = sectionPreference.Task.Id,
+                    Name = sectionPreference.Task.Name
+                }));
+
+                foreach (var task in tasks)
+                {
+                    var taskPreference = CheckTaskPreference(task, userId);
+                    if (taskPreference.Value == -1)
+                    {
+                        AddTaskPreference(task, sectionPreference.Value, userId);
+                    }
+                    else
+                    {
+                        UpdateTaskPreference(task, sectionPreference.Value, userId);
+                    }
+                }
+            }
+
         }
 
         public Preference CheckTaskPreference(Task task, int userId)
