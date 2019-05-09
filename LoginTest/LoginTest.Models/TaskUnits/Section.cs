@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Inzetsysteem.Models
 {
-    public class EducationSection : ParentTask
+    public class Section : ParentTask
     {
 
     }

@@ -14,7 +14,7 @@ namespace Inzetsysteem.DAL
             _context = new PreferenceContext();
         }
 
-        public IEnumerable<EducationSection> GetAllEducationSectionen()
+        public IEnumerable<Section> GetAllEducationSectionen()
         {
             return _context.GetAllEducationSectionen();
         }
@@ -39,7 +39,7 @@ namespace Inzetsysteem.DAL
             _context.SaveTrajectPreferences(preferences, userId);
         }
 
-        public IEnumerable<EducationUnit> GetAllOnderwijsEenheden(int trajectId)
+        public IEnumerable<Unit> GetAllOnderwijsEenheden(int trajectId)
         {
             return _context.GetAllOnderwijsEenheden(trajectId);
         }
@@ -49,7 +49,7 @@ namespace Inzetsysteem.DAL
             return _context.GetAllTasks(EdUnitId);
         }
 
-        public IEnumerable<Task> GetTakenFromTraject(EducationSection EducationSection)
+        public IEnumerable<Task> GetTakenFromTraject(Section EducationSection)
         {
             return _context.GetTakenFromTraject(EducationSection);
         }

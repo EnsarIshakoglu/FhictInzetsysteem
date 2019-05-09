@@ -98,11 +98,11 @@ namespace Inzetsysteem.Controllers
 
         public IActionResult RedirectLayer(string TaskName, int id)
         {
-            if (TaskName == typeof(EducationSection).Name)
+            if (TaskName == typeof(Section).Name)
             {
                 return EducationUnitPreference(id);
             }
-            else if (TaskName == typeof(EducationUnit).Name)
+            else if (TaskName == typeof(Unit).Name)
             {
                 return TaskPreference(id);
             }

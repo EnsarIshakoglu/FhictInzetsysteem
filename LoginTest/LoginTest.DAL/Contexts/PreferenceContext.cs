@@ -20,7 +20,7 @@ namespace Inzetsysteem.DAL.Contexts
             {
                 List<Task> tasks = new List<Task>();
 
-                tasks.AddRange(GetTakenFromTraject(new EducationSection
+                tasks.AddRange(GetTakenFromTraject(new Section
                 {
                     Id = trajectPreference.Task.Id,
                     Name = trajectPreference.Task.Name
@@ -43,9 +43,9 @@ namespace Inzetsysteem.DAL.Contexts
         }
 
 
-        public IEnumerable<EducationSection> GetAllEducationSectionen()
+        public IEnumerable<Section> GetAllEducationSectionen()
         {
-            var trajecten = new List<EducationSection>();
+            var trajecten = new List<Section>();
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -57,7 +57,7 @@ namespace Inzetsysteem.DAL.Contexts
 
                 while (reader.Read())
                 {
-                    trajecten.Add(new EducationSection
+                    trajecten.Add(new Section
                     {
                         Id = (int) reader["Id"],
                         Name = reader["Name"]?.ToString()
@@ -70,9 +70,9 @@ namespace Inzetsysteem.DAL.Contexts
             return trajecten;
         }
 
-        public IEnumerable<EducationUnit> GetAllOnderwijsEenheden(int trajectId)
+        public IEnumerable<Unit> GetAllOnderwijsEenheden(int trajectId)
         {
-            var eenheden = new List<EducationUnit>();
+            var eenheden = new List<Unit>();
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -88,7 +88,7 @@ namespace Inzetsysteem.DAL.Contexts
 
                 while (reader.Read())
                 {
-                    eenheden.Add(new EducationUnit
+                    eenheden.Add(new Unit
                     {
                         Id = (int)reader["Id"],
                         Name = reader["Name"]?.ToString()
@@ -132,7 +132,7 @@ namespace Inzetsysteem.DAL.Contexts
             return taken;
         }
 
-        public IEnumerable<Task> GetTakenFromTraject(EducationSection EducationSection)
+        public IEnumerable<Task> GetTakenFromTraject(Section EducationSection)
         {
             var tasks = new List<Task>();
 

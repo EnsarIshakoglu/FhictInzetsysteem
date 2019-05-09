@@ -12,12 +12,12 @@ namespace Inzetsysteem.Logic
     {
         private readonly PreferenceRepository _repo = new PreferenceRepository();
 
-        public IEnumerable<EducationSection> GetAllEducationSectionen()
+        public IEnumerable<Section> GetAllEducationSectionen()
         {
             return _repo.GetAllEducationSectionen();
         }
 
-        public Preference GetTrajectPreference(EducationSection traject, int userId)
+        public Preference GetTrajectPreference(Section traject, int userId)
         {
             List<Preference> preferences = new List<Preference>();
 
@@ -28,7 +28,7 @@ namespace Inzetsysteem.Logic
             return preference;
         }
 
-        public Preference GetEenheidPreference(EducationUnit EdUnitId, int userId)
+        public Preference GetEenheidPreference(Unit EdUnitId, int userId)
         {
             List<Preference> preferences = new List<Preference>();
 
@@ -96,7 +96,7 @@ namespace Inzetsysteem.Logic
             _repo.UpdateTaskPreference(task, priority, userId);
         }
 
-        public IEnumerable<EducationUnit> GetAllOnderwijsEenheden(int trajectId)
+        public IEnumerable<Unit> GetAllOnderwijsEenheden(int trajectId)
         {
             return _repo.GetAllOnderwijsEenheden(trajectId);
         }
@@ -106,7 +106,7 @@ namespace Inzetsysteem.Logic
             return _repo.GetAllTasks(EdUnitId);
         }
 
-        public IEnumerable<Task> GetTasksFromTraject(EducationSection EducationSection)
+        public IEnumerable<Task> GetTasksFromTraject(Section EducationSection)
         {
             return _repo.GetTakenFromTraject(EducationSection);
         }
