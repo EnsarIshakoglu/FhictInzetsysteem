@@ -14,13 +14,13 @@ namespace Inzetsysteem.DAL.Contexts
         private readonly string _connectionString =
             "Server=mssql.fhict.local;Database=dbi389621;User Id=dbi389621;Password=Ensar123;";
 
-        public void SaveTrajectPreferences(IEnumerable<Preference> trajectPreferences, int userId)
+        public void SaveEdSectionPreferences(IEnumerable<Preference> trajectPreferences, int userId)
         {
             foreach (var trajectPreference in trajectPreferences)
             {
                 List<Task> tasks = new List<Task>();
 
-                tasks.AddRange(GetTakenFromTraject(new Section
+                tasks.AddRange(GetTasksFromEdSection(new EducationSection
                 {
                     Id = trajectPreference.Task.Id,
                     Name = trajectPreference.Task.Name
@@ -43,9 +43,9 @@ namespace Inzetsysteem.DAL.Contexts
         }
 
 
-        public IEnumerable<Section> GetAllEducationSectionen()
+        public IEnumerable<EducationSection> GetAllEducationSections()
         {
-            var trajecten = new List<Section>();
+            var trajecten = new List<EducationSection>();
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -57,7 +57,7 @@ namespace Inzetsysteem.DAL.Contexts
 
                 while (reader.Read())
                 {
-                    trajecten.Add(new Section
+                    trajecten.Add(new EducationSection
                     {
                         Id = (int) reader["Id"],
                         Name = reader["Name"]?.ToString()
@@ -70,9 +70,9 @@ namespace Inzetsysteem.DAL.Contexts
             return trajecten;
         }
 
-        public IEnumerable<Unit> GetAllOnderwijsEenheden(int trajectId)
+        public IEnumerable<EducationUnit> GetAllEducationUnits(int EdSectionId)
         {
-            var eenheden = new List<Unit>();
+            var eenheden = new List<EducationUnit>();
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -82,13 +82,13 @@ namespace Inzetsysteem.DAL.Contexts
 
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add(new SqlParameter("@TrajectID", trajectId));
+                cmd.Parameters.Add(new SqlParameter("@TrajectID", EdSectionId));
 
                 var reader = cmd.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    eenheden.Add(new Unit
+                    eenheden.Add(new EducationUnit
                     {
                         Id = (int)reader["Id"],
                         Name = reader["Name"]?.ToString()
@@ -132,7 +132,7 @@ namespace Inzetsysteem.DAL.Contexts
             return taken;
         }
 
-        public IEnumerable<Task> GetTakenFromTraject(Section EducationSection)
+        public IEnumerable<Task> GetTasksFromEdSection(EducationSection EducationSection)
         {
             var tasks = new List<Task>();
 

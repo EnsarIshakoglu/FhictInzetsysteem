@@ -45,7 +45,7 @@ namespace Inzetsysteem.Controllers
                 preferences.Add(new Preference { Task = traject, Value = value });
             }
 
-            _preferenceLogic.SaveTrajectPreferences(preferences, Convert.ToInt32(User.Identity.Name));
+            _preferenceLogic.SaveEdSectionPreferences(preferences, Convert.ToInt32(User.Identity.Name));
 
             return RedirectToAction("EducationSectionPreference", "Preference");
         }
@@ -54,11 +54,11 @@ namespace Inzetsysteem.Controllers
         public IActionResult EducationUnitPreference(int trajectId)
         {
             var preferences = new List<Preference>();
-            var eenheden = _preferenceLogic.GetAllOnderwijsEenheden(trajectId);
+            var eenheden = _preferenceLogic.GetAllEducationUnits(trajectId);
 
             foreach (var EducationUnit in eenheden)
             {
-                preferences.Add(_preferenceLogic.GetEenheidPreference(EducationUnit, Convert.ToInt32(User.Identity.Name)));
+                preferences.Add(_preferenceLogic.GetEdUnitPreference(EducationUnit, Convert.ToInt32(User.Identity.Name)));
             }
 
             return View("SubmitPreferences", preferences);
@@ -91,7 +91,7 @@ namespace Inzetsysteem.Controllers
                 preferences.Add(new Preference { Task = traject, Value = value });
             }
 
-            _preferenceLogic.SaveTrajectPreferences(preferences, Convert.ToInt32(User.Identity.Name));
+            _preferenceLogic.SaveEdSectionPreferences(preferences, Convert.ToInt32(User.Identity.Name));
 
             return RedirectToAction("EducationUnitPreference", "Preference");
         }
