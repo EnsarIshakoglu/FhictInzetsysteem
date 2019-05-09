@@ -5,10 +5,10 @@
     ViewData["Title"] = "SectionPartialView";
 }
 
-<h1>Sectionen</h1>
+<h1>Sections</h1>
 <body>
 
-    <form method="post" asp-controller="Preference" asp-action="GetsectionPreferences">
+    <form method="post" asp-controller="Preference" asp-action="GetSectionPreferences">
         @foreach (var Preference in @Model)
         {
             <div>

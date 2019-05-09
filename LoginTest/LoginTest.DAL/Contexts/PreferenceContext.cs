@@ -78,11 +78,11 @@ namespace FHICTDeploymentSystem.DAL.Contexts
             {
                 connection.Open();
 
-                SqlCommand cmd = new SqlCommand("GetUnits", connection);
+                SqlCommand cmd = new SqlCommand("GetAllUnits", connection);
 
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add(new SqlParameter("@EdSectionId", SectionId));
+                cmd.Parameters.Add(new SqlParameter("@SectionId", SectionId));
 
                 var reader = cmd.ExecuteReader();
 
@@ -113,7 +113,7 @@ namespace FHICTDeploymentSystem.DAL.Contexts
 
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add(new SqlParameter("@EdUnitId", UnitId));
+                cmd.Parameters.Add(new SqlParameter("@UnitId", UnitId));
 
                 var reader = cmd.ExecuteReader();
 
