@@ -2,13 +2,15 @@
     ViewData["Title"] = "Ingelogd";
 }
 
+@*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="####" crossorigin="anonymous">*@
+
 <style type="text/css">
     .form-style-5 {
         max-width: 500px;
-        padding: 10px 20px;
         background: #f4f7f8;
         margin: 10px auto;
         padding: 20px;
+        margin-top: 50px;
         background: #f4f7f8;
         border-radius: 8px;
         font-family: Georgia, "Times New Roman", Times, serif;
@@ -98,29 +100,67 @@
             }
 </style>
 
-<div class="form-style-5">
-    <form>
-        <fieldset>
-            <center><legend>Titel taak</legend></center>
-            <input type="text" name="field1" placeholder="Code">
-            <input type="text" name="field2" placeholder="Uren">
-            <input type="text" name="field3" placeholder="Factor">
-            <input type="text" name="field4" placeholder="Onderwijseenheid">
-            <input type="text" name="field5" placeholder="Beheerder taak">
-            <label for="job">Traject:</label>
-            <select id="job" name="field6">
-                    <option value="fishkeeping">Fishkeeping</option>
-                    <option value="reading">Reading</option>
-                    <option value="boxing">Boxing</option>
-                    <option value="debate">Debate</option>
-                    <option value="gaming">Gaming</option>
-                    <option value="snooker">Snooker</option>
-                    <option value="other_indoor">Other</option>
-            </select>
-        </fieldset>
-        <fieldset>
+<div class="carousel-wrapper">
+    <span id="item-1"></span>
+    <span id="item-2"></span>
+    <div class="carousel-item item-1">
+        <h4>Onderwijstaken</h4>
+        <div class="form-style-5">
+            <form>
+                <fieldset>
+                    <legend>Titel taak</legend>
+                    <input type="text" name="field1" placeholder="Code">
+                    <input type="text" name="field2" placeholder="Uren">
+                    <input type="text" name="field3" placeholder="Factor">
+                    <input type="text" name="field4" placeholder="Onderwijseenheid">
+                    <input type="text" name="field4" placeholder="Onderdeel">
+                    <input type="text" name="field5" placeholder="Beheerder taak">
+                    <label for="traject">Traject:</label>
+                    <select id="traject" name="field6">
+                        <option value="Software">Software</option>
+                        <option value="Media">Media</option>
+                        <option value="Technology">Technology</option>
+                        <option value="Business">Business</option>
+                    </select>
+                </fieldset>
+                <fieldset>
 <textarea name="field7" placeholder="Omschrijving"></textarea>
-        </fieldset>
-        <input type="submit" value="Voeg toe" />
-    </form>
+                </fieldset>
+                <input type="submit" value="Voeg toe" />
+            </form>
+        </div>
+        <div class="parent-btn">
+            <a class="btn-voorkeur btn-voorkeur-next" href="#item-2"><p>Onderwijsonderdelen</p></a>
+        </div>
+    </div>
+
+    <div class="carousel-item item-2">
+        <h4>Onderwijsonderdelen</h4>
+        <div class="form-style-5">
+            <form>
+                <fieldset>
+                    <legend>Titel taak</legend>
+                    <input type="text" name="field1" placeholder="Code">
+                    <input type="text" name="field2" placeholder="Uren">
+                    <input type="text" name="field3" placeholder="Factor">
+                    <input type="text" name="field4" placeholder="Onderwijseenheid">
+                    <input type="text" name="field5" placeholder="Beheerder taak">
+                    <label for="traject">Traject:</label>
+                    <select id="traject" name="field6">
+                        <option value="Software">Software</option>
+                        <option value="Media">Media</option>
+                        <option value="Technology">Technology</option>
+                        <option value="Business">Business</option>
+                    </select>
+                </fieldset>
+                <fieldset>
+<textarea name="field7" placeholder="Omschrijving"></textarea>
+                </fieldset>
+                <input type="submit" value="Voeg toe" />
+            </form>
+        </div>
+        <div class="parent-btn">
+            <a class="btn-voorkeur btn-voorkeur-prev" href="#item-1"><p>Onderwijstaken</p></a>
+        </div>
+    </div>
 </div>
