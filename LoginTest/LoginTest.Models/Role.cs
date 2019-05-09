@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Inzetsysteem.Models
 {
-    public abstract class Rol
+    public abstract class Role
     {
     }
 }

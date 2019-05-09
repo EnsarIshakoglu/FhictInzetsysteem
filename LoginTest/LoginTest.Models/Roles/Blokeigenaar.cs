@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Inzetsysteem.Models
 {
-    public class Blokeigenaar : Rol
+    public class Blokeigenaar : Role
     {
     }
 }

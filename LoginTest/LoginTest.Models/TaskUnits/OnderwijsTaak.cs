@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Inzetsysteem.Models
 {
-    public class OnderwijsTaak : Taak
+    public class OnderwijsTaak : Task
     {
         public string Periode { get; private set; }
         public int BegroteUren { get; private set; }

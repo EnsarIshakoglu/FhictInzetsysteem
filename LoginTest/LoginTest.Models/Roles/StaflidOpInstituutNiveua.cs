@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Inzetsysteem.Models
 {
-    public class StaflidOpInstituutNiveua : Rol
+    public class StaflidOpInstituutNiveua : Role
     {
     }
 }

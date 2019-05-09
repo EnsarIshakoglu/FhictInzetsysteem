@@ -108,7 +108,6 @@ namespace Inzetsysteem.Controllers
         }
         private async void LogOut(IEnumerable<string> keys)
         {
-
             await this.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         }
     }

@@ -1,32 +1,34 @@
-﻿@model Voorkeur
+﻿@using Inzetsysteem.Controllers
+@using Inzetsysteem.Logic
+@model Preference
 
 <link href="~/lib/bootstrap/dist/css/radio-btn-bootstrap.css" rel="stylesheet" />
 
 <div class="container">
     <div class="row">
 
+        <div class="col-md-5th-1 col-sm-4 ">
+            @if (!Model.WaardeIsAverage)
+            {
+                <span>@Model.Taak.Naam</span>
+            }
+            else
+            {
 
-        <div class="col l6">
-            <a class="btn-voorkeur btn-voorkeur-next" href="#item-2"><p>@Model.Taak.Naam</p></a>
+                <a href="@Url.Action("RedirectLayer", "Preference", new {taakNaam = @Model.Taak.GetType().Name, id = @Model.Taak.Id})"><span>@Model.Taak.Naam</span></a>
+            }
+            
         </div>
         @for (int x = 0; x < 5; x++)
         {
             string defCheck = null;
-            int value = x;
-            if (x == 0)
-            {
-                value = 3;
-            }
-            else if (x > 2)
-            {
-                value++;
-            }
+
             if (@Model.Waarde == x)
             {
                 defCheck = "checked";
             }
             <div class="col-md-5th-1 col-sm-4 col-md-offset-0 col-sm-offset-2">
-                <input id="Waarde" name=@Model.Taak.Naam type="radio" value=@value ; @defCheck><span>@x</span>
+                <input id="Waarde" name=@Model.Taak.Naam type="radio" value=@x ; @defCheck><span>@x</span>
             </div>
 
         }
