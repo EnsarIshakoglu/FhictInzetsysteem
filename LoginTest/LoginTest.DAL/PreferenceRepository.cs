@@ -14,39 +14,24 @@ namespace Inzetsysteem.DAL
             _context = new PreferenceContext();
         }
 
-        public IEnumerable<EducationSection> GetAllOnderwijsTrajecten()
+        public IEnumerable<OnderwijsTraject> GetAllOnderwijsTrajecten()
         {
             return _context.GetAllOnderwijsTrajecten();
         }
 
-        public void AddTaskPreference(OnderwijsTask Task, int PreferenceValue, int userId)
+        public void AddTaskPreference(OnderwijsTaak task, int priority, int userId)
         {
-            _context.AddTaskPreference(Task, PreferenceValue, userId);
+            _context.AddTaskPreference(task, priority, userId);
         }
 
-        public void UpdateTaskPreference(OnderwijsTask Task, int PreferenceValue, int userId)
+        public void UpdateTaskPreference(OnderwijsTaak task, int priority, int userId)
         {
-            _context.UpdateTaskPreference(Task,PreferenceValue,userId);
+            _context.UpdateTaskPreference(task, priority, userId);
         }
 
-        public Preference CheckOnderdeelPreference(OnderwijsOnderdeel onderdeel, int userId)
+        public Preference CheckTaskPreference(OnderwijsTaak task, int userId)
         {
-            return _context.CheckOnderdeelPreference(onderdeel, userId);
-        }
-
-        public void AddOnderdeelPreference(OnderwijsOnderdeel onderdeel, int PreferenceValue, int userId)
-        {
-            _context.AddOnderdeelPreference(onderdeel, PreferenceValue, userId);
-        }
-
-        public void UpdateOnderdeelPreference(OnderwijsOnderdeel onderdeel, int PreferenceValue, int userId)
-        {
-            _context.UpdateOnderdeelPreference(onderdeel, PreferenceValue, userId);
-        }
-
-        public Preference CheckTaskPreference(OnderwijsTask Task, int userId)
-        {
-            return _context.CheckTaskPreference(Task, userId);
+            return _context.CheckTaskPreference(task, userId);
         }
 
         public void SaveTrajectPreferences(IEnumerable<Preference> preferences, int userId)
@@ -54,34 +39,19 @@ namespace Inzetsysteem.DAL
             _context.SaveTrajectPreferences(preferences, userId);
         }
 
-        public IEnumerable<EducationUnit> GetAllOnderwijsEenheden(int trajectId)
+        public IEnumerable<OnderwijsEenheid> GetAllOnderwijsEenheden(int trajectId)
         {
             return _context.GetAllOnderwijsEenheden(trajectId);
         }
 
-        public IEnumerable<OnderwijsOnderdeel> GetAllOnderwijsOnderdelen(int eenheidId)
+        public IEnumerable<OnderwijsTaak> GetAllTasks(int EdUnitId)
         {
-            return _context.GetAllOnderwijsOnderdelen(eenheidId);
+            return _context.GetAllTasks(EdUnitId);
         }
 
-        public IEnumerable<OnderwijsTask> GetAllOnderwijsTaken(int onderdeelId)
-        {
-            return _context.GetAllOnderwijsTaken(onderdeelId);
-        }
-
-        public IEnumerable<OnderwijsTask> GetTakenFromTraject(EducationSection onderwijsTraject)
+        public IEnumerable<OnderwijsTaak> GetTakenFromTraject(OnderwijsTraject onderwijsTraject)
         {
             return _context.GetTakenFromTraject(onderwijsTraject);
-        }
-
-        public IEnumerable<OnderwijsOnderdeel> GetOnderdeelFromTraject(EducationSection onderwijsTraject)
-        {
-            return _context.GetOnderdeelFromTraject(onderwijsTraject);
-        }
-
-        public IEnumerable<OnderwijsTask> GetTakenFromEenheid(EducationUnit onderwijsEenheid)
-        {
-            return _context.GetTakenFromEenheid(onderwijsEenheid);
         }
     }
 }

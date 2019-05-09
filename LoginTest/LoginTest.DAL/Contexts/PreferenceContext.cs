@@ -18,24 +18,24 @@ namespace Inzetsysteem.DAL.Contexts
         {
             foreach (var trajectPreference in trajectPreferences)
             {
-                List<OnderwijsTask> tasks = new List<OnderwijsTask>();
+                List<OnderwijsTaak> tasks = new List<OnderwijsTaak>();
 
-                tasks.AddRange(GetTakenFromTraject(new EducationSection
+                tasks.AddRange(GetTakenFromTraject(new OnderwijsTraject
                 {
-                    Id = trajectPreference.Task.Id,
-                    Name = trajectPreference.Task.Name
+                    Id = trajectPreference.Taak.Id,
+                    Naam = trajectPreference.Taak.Naam
                 }));
 
-                foreach (var Task in tasks)
+                foreach (var task in tasks)
                 {
-                    var TaskPreference = CheckTaskPreference(Task, userId);
-                    if (TaskPreference.Value == -1)
+                    var taskPreference = CheckTaskPreference(task, userId);
+                    if (taskPreference.Waarde == -1)
                     {
-                        AddTaskPreference(Task, trajectPreference.Value, userId);
+                        AddTaskPreference(task, trajectPreference.Waarde, userId);
                     }
                     else
                     {
-                        UpdateTaskPreference(Task, trajectPreference.Value, userId);
+                        UpdateTaskPreference(task, trajectPreference.Waarde, userId);
                     }
                 }
             }
@@ -43,9 +43,9 @@ namespace Inzetsysteem.DAL.Contexts
         }
 
 
-        public IEnumerable<EducationSection> GetAllOnderwijsTrajecten()
+        public IEnumerable<OnderwijsTraject> GetAllOnderwijsTrajecten()
         {
-            var trajecten = new List<EducationSection>();
+            var trajecten = new List<OnderwijsTraject>();
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -57,10 +57,10 @@ namespace Inzetsysteem.DAL.Contexts
 
                 while (reader.Read())
                 {
-                    trajecten.Add(new EducationSection
+                    trajecten.Add(new OnderwijsTraject
                     {
                         Id = (int) reader["Id"],
-                        Name = reader["Name"]?.ToString()
+                        Naam = reader["Naam"]?.ToString()
                     });
                 }
 
@@ -70,9 +70,9 @@ namespace Inzetsysteem.DAL.Contexts
             return trajecten;
         }
 
-        public IEnumerable<EducationUnit> GetAllOnderwijsEenheden(int trajectId)
+        public IEnumerable<OnderwijsEenheid> GetAllOnderwijsEenheden(int trajectId)
         {
-            var eenheden = new List<EducationUnit>();
+            var eenheden = new List<OnderwijsEenheid>();
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -88,10 +88,10 @@ namespace Inzetsysteem.DAL.Contexts
 
                 while (reader.Read())
                 {
-                    eenheden.Add(new EducationUnit
+                    eenheden.Add(new OnderwijsEenheid
                     {
                         Id = (int)reader["Id"],
-                        Name = reader["Name"]?.ToString()
+                        Naam = reader["Naam"]?.ToString()
                     });
                 }
 
@@ -101,59 +101,28 @@ namespace Inzetsysteem.DAL.Contexts
             return eenheden;
         }
 
-        public IEnumerable<OnderwijsOnderdeel> GetAllOnderwijsOnderdelen(int EenheidId)
+        public IEnumerable<OnderwijsTaak> GetAllTasks(int EdUnitId)
         {
-            var onderdelen = new List<OnderwijsOnderdeel>();
+            var taken = new List<OnderwijsTaak>();
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
 
-                SqlCommand cmd = new SqlCommand("GetAlleOnderdelen", connection);
+                SqlCommand cmd = new SqlCommand("GetAllTasks", connection);
 
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add(new SqlParameter("@EenheidID", EenheidId));
+                cmd.Parameters.Add(new SqlParameter("@EdUnitId", EdUnitId));
 
                 var reader = cmd.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    onderdelen.Add(new OnderwijsOnderdeel
+                    taken.Add(new OnderwijsTaak
                     {
                         Id = (int)reader["Id"],
-                        Name = reader["Name"]?.ToString()
-                    });
-                }
-
-                connection.Close();
-            }
-
-            return onderdelen;
-        }
-
-        public IEnumerable<OnderwijsTask> GetAllOnderwijsTaken(int OnderdeelId)
-        {
-            var taken = new List<OnderwijsTask>();
-
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-
-                SqlCommand cmd = new SqlCommand("GetAlleTaken", connection);
-
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.Add(new SqlParameter("@OnderdeelID", OnderdeelId));
-
-                var reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    taken.Add(new OnderwijsTask
-                    {
-                        Id = (int)reader["Id"],
-                        Name = reader["Name"]?.ToString()
+                        Naam = reader["Code"]?.ToString()
                     });
                 }
 
@@ -163,9 +132,9 @@ namespace Inzetsysteem.DAL.Contexts
             return taken;
         }
 
-        public IEnumerable<OnderwijsTask> GetTakenFromTraject(EducationSection onderwijsTraject)
+        public IEnumerable<OnderwijsTaak> GetTakenFromTraject(OnderwijsTraject onderwijsTraject)
         {
-            var tasks = new List<OnderwijsTask>();
+            var tasks = new List<OnderwijsTaak>();
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -181,7 +150,7 @@ namespace Inzetsysteem.DAL.Contexts
 
                 while (reader.Read())
                 {
-                    tasks.Add(new OnderwijsTask
+                    tasks.Add(new OnderwijsTaak
                     {
                         Id = (int)reader["Id"],
                     });
@@ -193,72 +162,12 @@ namespace Inzetsysteem.DAL.Contexts
             return tasks;
         }
 
-        public IEnumerable<OnderwijsOnderdeel> GetOnderdeelFromTraject(EducationSection onderwijsTraject)
+        public Preference CheckTaskPreference(OnderwijsTaak task, int userId) //todo kijken of het generic kan gemaakt worden
         {
-            var tasks = new List<OnderwijsOnderdeel>();
-
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            var taskPreference = new Preference
             {
-                connection.Open();
-
-                SqlCommand cmd = new SqlCommand("GetOnderdelenBinnenTraject", connection);
-
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.Add(new SqlParameter("@TrajectID", onderwijsTraject.Id));
-
-                var reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    tasks.Add(new OnderwijsOnderdeel
-                    {
-                        Id = (int)reader["Id"],
-                    });
-                }
-
-                connection.Close();
-            }
-
-            return tasks;
-        }
-
-        public IEnumerable<OnderwijsTask> GetTakenFromEenheid(EducationUnit onderwijsEenheid)
-        {
-            var tasks = new List<OnderwijsTask>();
-
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-
-                SqlCommand cmd = new SqlCommand("GetTakenBinnenEenheid", connection);
-
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.Add(new SqlParameter("@EenheidID", onderwijsEenheid.Id));
-
-                var reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    tasks.Add(new OnderwijsTask
-                    {
-                        Id = (int)reader["Id"],
-                    });
-                }
-
-                connection.Close();
-            }
-
-            return tasks;
-        }
-
-        public Preference CheckTaskPreference(OnderwijsTask Task, int userId) //todo kijken of het generic kan gemaakt worden
-        {
-            var TaskPreference = new Preference
-            {
-                Task = Task,
-                Value = -1
+                Taak = task,
+                Waarde = -1
             };
 
                 using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -269,23 +178,23 @@ namespace Inzetsysteem.DAL.Contexts
 
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.Add(new SqlParameter("@TaskID", Task.Id));
-                    cmd.Parameters.Add(new SqlParameter("@GebruikersID", userId));
+                    cmd.Parameters.Add(new SqlParameter("@TaskId", task.Id));
+                    cmd.Parameters.Add(new SqlParameter("@EmployeeId", userId));
 
                     var reader = cmd.ExecuteReader();
 
                     while (reader.Read())
                     {
-                        TaskPreference.Value = (int)reader["Preference Value"];
+                        taskPreference.Waarde = (int)reader["Priority"];
                     }
 
                 connection.Close();
                 }
 
-            return TaskPreference;
+            return taskPreference;
         }
 
-        public void AddTaskPreference(OnderwijsTask Task, int PreferenceValue, int userId)
+        public void AddTaskPreference(OnderwijsTaak task, int priority, int userId)
         {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
@@ -295,9 +204,9 @@ namespace Inzetsysteem.DAL.Contexts
 
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.Add(new SqlParameter("@TaskID", Task.Id));
-                    cmd.Parameters.Add(new SqlParameter("@PreferenceValue", PreferenceValue));
-                    cmd.Parameters.Add(new SqlParameter("@GebruikersID", userId));
+                    cmd.Parameters.Add(new SqlParameter("@TaskId", task.Id));
+                    cmd.Parameters.Add(new SqlParameter("@Priority", priority));
+                    cmd.Parameters.Add(new SqlParameter("@EmployeeId", userId));
 
                     cmd.ExecuteNonQuery();
 
@@ -305,7 +214,7 @@ namespace Inzetsysteem.DAL.Contexts
                 }
         }
 
-        public void UpdateTaskPreference(OnderwijsTask Task, int PreferenceValue, int userId)
+        public void UpdateTaskPreference(OnderwijsTaak task, int priority, int userId)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -315,80 +224,9 @@ namespace Inzetsysteem.DAL.Contexts
 
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add(new SqlParameter("@TaskID", Task.Id));
-                cmd.Parameters.Add(new SqlParameter("@PreferenceValue", PreferenceValue));
-                cmd.Parameters.Add(new SqlParameter("@GebruikersID", userId));
-
-                cmd.ExecuteNonQuery();
-
-                connection.Close();
-            }
-        }
-
-        public Preference CheckOnderdeelPreference(OnderwijsOnderdeel onderdeel, int userId)
-        {
-            var onderdeelPreference = new Preference
-            {
-                Task = onderdeel
-            };
-
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-
-                SqlCommand cmd = new SqlCommand("CheckOnderdeelPreference", connection);
-
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.Add(new SqlParameter("@OnderdeelID", onderdeel.Id));
-                cmd.Parameters.Add(new SqlParameter("@GebruikersID", userId));
-
-                var reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    onderdeelPreference.Value = (int)reader["Preference Value"];
-                }
-
-                connection.Close();
-            }
-
-            return onderdeelPreference;
-        }
-
-        public void AddOnderdeelPreference(OnderwijsOnderdeel onderdeel, int PreferenceValue, int userId)
-        {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-
-                SqlCommand cmd = new SqlCommand("AddOnderdeelPreference", connection);
-
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.Add(new SqlParameter("@OnderdeelID", onderdeel.Id));
-                cmd.Parameters.Add(new SqlParameter("@PreferenceValue", PreferenceValue));
-                cmd.Parameters.Add(new SqlParameter("@GebruikersID", userId));
-
-                cmd.ExecuteNonQuery();
-
-                connection.Close();
-            }
-        }
-
-        public void UpdateOnderdeelPreference(OnderwijsOnderdeel onderdeel, int PreferenceValue, int userId)
-        {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-
-                SqlCommand cmd = new SqlCommand("UpdateOnderdeelPreference", connection);
-
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.Add(new SqlParameter("@OnderdeelID", onderdeel.Id));
-                cmd.Parameters.Add(new SqlParameter("@PreferenceValue", PreferenceValue));
-                cmd.Parameters.Add(new SqlParameter("@GebruikersID", userId));
+                cmd.Parameters.Add(new SqlParameter("@TaskId", task.Id));
+                cmd.Parameters.Add(new SqlParameter("@Priority", priority));
+                cmd.Parameters.Add(new SqlParameter("@EmployeeId", userId));
 
                 cmd.ExecuteNonQuery();
 
