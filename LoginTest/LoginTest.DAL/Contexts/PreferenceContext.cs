@@ -14,13 +14,13 @@ namespace Inzetsysteem.DAL.Contexts
         private readonly string _connectionString =
             "Server=mssql.fhict.local;Database=dbi389621;User Id=dbi389621;Password=Ensar123;";
 
-        public void SaveTrajectPreferences(IEnumerable<Preference> trajectPreferences, int userId)
+        public void SaveEdSectionPreferences(IEnumerable<Preference> trajectPreferences, int userId)
         {
             foreach (var trajectPreference in trajectPreferences)
             {
                 List<Task> tasks = new List<Task>();
 
-                tasks.AddRange(GetTakenFromTraject(new EducationSection
+                tasks.AddRange(GetTasksFromEdSection(new EducationSection
                 {
                     Id = trajectPreference.Task.Id,
                     Name = trajectPreference.Task.Name
@@ -43,7 +43,7 @@ namespace Inzetsysteem.DAL.Contexts
         }
 
 
-        public IEnumerable<EducationSection> GetAllEducationSectionen()
+        public IEnumerable<EducationSection> GetAllEducationSections()
         {
             var trajecten = new List<EducationSection>();
 
@@ -70,7 +70,7 @@ namespace Inzetsysteem.DAL.Contexts
             return trajecten;
         }
 
-        public IEnumerable<EducationUnit> GetAllOnderwijsEenheden(int trajectId)
+        public IEnumerable<EducationUnit> GetAllEducationUnits(int EdSectionId)
         {
             var eenheden = new List<EducationUnit>();
 
@@ -82,7 +82,7 @@ namespace Inzetsysteem.DAL.Contexts
 
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add(new SqlParameter("@TrajectID", trajectId));
+                cmd.Parameters.Add(new SqlParameter("@TrajectID", EdSectionId));
 
                 var reader = cmd.ExecuteReader();
 
@@ -132,7 +132,7 @@ namespace Inzetsysteem.DAL.Contexts
             return taken;
         }
 
-        public IEnumerable<Task> GetTakenFromTraject(EducationSection EducationSection)
+        public IEnumerable<Task> GetTasksFromEdSection(EducationSection EducationSection)
         {
             var tasks = new List<Task>();
 
