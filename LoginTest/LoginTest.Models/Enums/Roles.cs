@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Inzetsysteem.Models
+namespace FHICTDeploymentSystem.Models
 {
     public enum Roles
     {

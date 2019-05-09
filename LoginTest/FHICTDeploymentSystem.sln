@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.489
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inzetsysteem", "LoginTest\Inzetsysteem.csproj", "{60155E56-47BA-4F96-9341-1EFC0799B142}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FHICTDeploymentSystem", "LoginTest\FHICTDeploymentSystem.csproj", "{60155E56-47BA-4F96-9341-1EFC0799B142}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inzetsysteem.DAL", "LoginTest.DAL\Inzetsysteem.DAL.csproj", "{931D21A6-784B-4FE1-96A9-C5FDEA6154C0}"
 EndProject

@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Security.Claims;
-using Inzetsysteem.Logic;
+using FHICTDeploymentSystem.Logic;
 using Microsoft.AspNetCore.Mvc;
-using Inzetsysteem.Models;
+using FHICTDeploymentSystem.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 
-namespace Inzetsysteem.Controllers
+namespace FHICTDeploymentSystem.Controllers
 {
     [Authorize]
     public class HomeController : Controller

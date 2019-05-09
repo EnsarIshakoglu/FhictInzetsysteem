@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Inzetsysteem.Models
+namespace FHICTDeploymentSystem.Models
 {
     public class Task : ParentTask
     {

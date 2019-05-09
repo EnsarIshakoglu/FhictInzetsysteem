@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Inzetsysteem.DAL;
-using Inzetsysteem.Models;
+using FHICTDeploymentSystem.DAL;
+using FHICTDeploymentSystem.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Inzetsysteem
+namespace FHICTDeploymentSystem
 {
     public class Startup
     {
@@ -35,14 +35,9 @@ namespace Inzetsysteem
             });
 
             services.AddScoped<IUserContext, UserContext>();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
-            services.AddSession(options =>
-            {
-                //sessie verloopt na 30 minuten
-                options.IdleTimeout = TimeSpan.FromMinutes(30);
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,7 +57,7 @@ namespace Inzetsysteem
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-            app.UseSession();
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

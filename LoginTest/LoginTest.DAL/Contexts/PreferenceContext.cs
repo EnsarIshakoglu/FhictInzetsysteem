@@ -5,9 +5,9 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using Inzetsysteem.Models;
+using FHICTDeploymentSystem.Models;
 
-namespace Inzetsysteem.DAL.Contexts
+namespace FHICTDeploymentSystem.DAL.Contexts
 {
     public class PreferenceContext : IPreferenceContext
     {

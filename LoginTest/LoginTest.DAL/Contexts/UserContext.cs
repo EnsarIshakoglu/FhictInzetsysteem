@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
-using Inzetsysteem.Models;
+using FHICTDeploymentSystem.Models;
 
-namespace Inzetsysteem.DAL
+namespace FHICTDeploymentSystem.DAL
 {
     public class UserContext : IUserContext
     {
@@ -19,7 +19,7 @@ namespace Inzetsysteem.DAL
             {
                 conn.Open();
 
-                SqlCommand command = new SqlCommand($"SELECT TOP 1 Id, Username,Password from dbo.User WHERE Username = '{user.Username}' and Password = '{user.Password}'", conn);
+                SqlCommand command = new SqlCommand($"SELECT TOP 1 Id, Username,Password from dbo.Employee WHERE Username = '{user.Username}' and Password = '{user.Password}'", conn);
                 SqlDataReader reader = command.ExecuteReader();
 
                 while (reader.Read())
@@ -40,12 +40,12 @@ namespace Inzetsysteem.DAL
             {
                 conn.Open();
 
-                SqlCommand command = new SqlCommand($"select G.Name, A.AutorisatieName \r\nfrom dbo.[Tussentabel gebruiker - Authorisatie] as TAG\r\ninner join Gebruiker G on TAG.GebruikerID = G.ID\r\ninner join Authorisatie A on TAG.AuthorisatieID = A.ID where G.Name = '{user.Username}'", conn);
+                SqlCommand command = new SqlCommand($"select E.Name, A.Name \r\nfrom dbo.[Emp_Auth] as EA\r\ninner join Employee E on EA.EmployeeId = E.ID\r\ninner join [Authorization] A on EA.AuthorizationId = A.ID where E.Name = '{user.Username}'", conn);
                 SqlDataReader reader = command.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    roles.Add(reader["AutorisatieName"].ToString());
+                    roles.Add(reader["Name"].ToString());
                 }
                 reader.Close();
                 conn.Close();
@@ -62,7 +62,7 @@ namespace Inzetsysteem.DAL
             {
                 conn.Open();
 
-                SqlCommand command = new SqlCommand($"SELECT TOP 1 Id, InlogName,Wachtwoord from dbo.Gebruiker WHERE InlogName = '{user.Username}' and Wachtwoord = '{user.Password}'", conn);
+                SqlCommand command = new SqlCommand($"SELECT TOP 1 Id, Username,Password from dbo.Employee WHERE Username = '{user.Username}' and Password = '{user.Password}'", conn);
                 SqlDataReader reader = command.ExecuteReader();
 
                 while (reader.Read())

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Inzetsysteem.DAL.Contexts;
-using Inzetsysteem.Models;
+using FHICTDeploymentSystem.DAL.Contexts;
+using FHICTDeploymentSystem.Models;
 
-namespace Inzetsysteem.DAL
+namespace FHICTDeploymentSystem.DAL
 {
     public class PreferenceRepository
     {

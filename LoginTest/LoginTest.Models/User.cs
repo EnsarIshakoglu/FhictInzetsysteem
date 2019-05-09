@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 
-namespace Inzetsysteem.Models
+namespace FHICTDeploymentSystem.Models
 {
     public class User
     {
