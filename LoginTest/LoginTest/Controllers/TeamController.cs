@@ -2,15 +2,32 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Inzetsysteem.Logic;
+using Inzetsysteem.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Inzetsysteem.Controllers
 {
     public class TeamController : Controller
     {
-        public IActionResult Index()
+        private readonly TeamLogic _teamLogic = new TeamLogic(); 
+
+        [HttpGet]
+        public IActionResult TeamBeheren()
         {
-            return View();
+            User _user = new User();
+            _user.TeamId = 1;
+
+            var userlist = new List<User>();
+            var users = _teamLogic.GetTeamUsers(_user);
+
+            foreach (var user in users)
+            {
+                userlist.Add(user);
+            }
+            return View(userlist);
         }
+
+
     }
 }

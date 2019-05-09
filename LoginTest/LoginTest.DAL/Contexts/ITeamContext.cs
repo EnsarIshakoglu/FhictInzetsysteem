@@ -11,6 +11,6 @@ namespace Inzetsysteem.DAL.Contexts
         string Getnaam(Team team);
         IEnumerable<Team> GetAllTeams();
 
-        IEnumerable<User> GetTeamUsers(int id);
+        IEnumerable<User> GetTeamUsers(User user);
     }
 }

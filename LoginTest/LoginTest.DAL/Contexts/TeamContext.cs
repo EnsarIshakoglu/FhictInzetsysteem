@@ -43,26 +43,25 @@ namespace Inzetsysteem.DAL.Contexts
         }
 
         //vraag alle users op die bij een specifiek(ID) team horen(id en naam)
-        public IEnumerable<User> GetTeamUsers(int id)
+        public IEnumerable<User> GetTeamUsers(User user
+        )
         {
-            var team = new List<User>();
+            var userList = new List<User>();
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
 
-                var sqlCommand = new SqlCommand("GetAllTeams", connection);
-
+                var sqlCommand = new SqlCommand("GetAlleUsersVanTeam", connection);
                 sqlCommand.CommandType = CommandType.StoredProcedure;
-
-                sqlCommand.Parameters.Add(new SqlParameter("@Teamid", id));
+                sqlCommand.Parameters.Add(new SqlParameter("@TeamsID", user.TeamId));
 
                 var reader = sqlCommand.ExecuteReader();
 
                 while (reader.Read())
                 {
                     //voeg namen van mensen toe die team id hebben
-                    team.Add(new User
+                    userList.Add(new User
                     {
                         Name = (string)reader["Naam"],
                         Id = (int)reader["ID"]
@@ -72,7 +71,7 @@ namespace Inzetsysteem.DAL.Contexts
                 connection.Close();
             }
 
-            return team;
+            return userList;
         }
 
         public int Getid(Team team)

@@ -9,18 +9,23 @@ using Newtonsoft.Json;
 
 namespace Inzetsysteem.Logic
 {
-    class TeamLogic
+    public class TeamLogic
     {
         private readonly TeamRepository _repo = new TeamRepository();
 
-        public IEnumerable<User> GetTeamUsers()
+        public IEnumerable<User> GetTeamUsers(User user)
         {
-            return GetTeamUsers();
+            return GetTeamUsers(user);
         }
 
         public IEnumerable<Team> GetTeam(int id)
         {
             return GetTeam(id);
+        }
+
+        public IEnumerable<Team> GetAllTeams()
+        {
+            return _repo.GetAllTeams();
         }
 
     }

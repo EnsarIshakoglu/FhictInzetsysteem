@@ -20,9 +20,9 @@ namespace Inzetsysteem.DAL
             return _context.GetAllTeams();
         }
 
-        public IEnumerable<User> GetAllTeamUsers(int id)
+        public IEnumerable<User> GetTeamUsers(User user)
         {
-            return GetAllTeamUsers(id);
+            return _context.GetTeamUsers(user);
         }
     }
 }
