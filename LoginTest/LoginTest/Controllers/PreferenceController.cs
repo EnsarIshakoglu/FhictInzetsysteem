@@ -12,14 +12,8 @@ namespace FHICTDeploymentSystem.Controllers
         private readonly PreferenceLogic _preferenceLogic = new PreferenceLogic();
 
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-
         [HttpGet]
-        public IActionResult SectionPreference()
+        public IActionResult SaveSectionPreference()
         {
             var preferences = new List<Preference>();
             var sections = _preferenceLogic.GetAllSections();
@@ -32,6 +26,7 @@ namespace FHICTDeploymentSystem.Controllers
             TempData["Title"] = "Sections";
             return View("SubmitPreferences", preferences);
         }
+
 
         [HttpPost]
         public IActionResult GetSectionPreferences()
