@@ -28,7 +28,6 @@ namespace FHICTDeploymentSystem.Controllers
         }
 
 
-        [HttpPost]
         public IActionResult SaveSectionPreferences()
         {
             List<Preference> preferences = new List<Preference>();
@@ -60,18 +59,17 @@ namespace FHICTDeploymentSystem.Controllers
             return View("SubmitPreferences", preferences);
         }
 
-        [HttpPost]
-        public IActionResult SaveUnitPreferences()
+        public IActionResult SaveUnitPreferences(IEnumerable<Preference> unitsPreferences)
         {
             List<Preference> preferences = new List<Preference>();
 
-            foreach (var section in _preferenceLogic.GetAllSections())
+            /*foreach (var unit in _preferenceLogic.GetAllUnits())
             {
                 var preferenceValue = Request.Form[section.Name].ToString();
                 int value = Convert.ToInt16(preferenceValue);                               //todo convert.toint vervangen met iets netters
 
                 preferences.Add(new Preference { Task = section, Value = value });
-            }
+            }*/
 
             _preferenceLogic.SaveSectionPreferences(preferences, Convert.ToInt32(User.Identity.Name));
 
@@ -105,6 +103,21 @@ namespace FHICTDeploymentSystem.Controllers
             {
                 TempData["Title"] = "Tasks";
                 return TaskPreference(id);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        [HttpPost]
+        public IActionResult SaveChecker(IEnumerable<Preference> preferences)
+        {
+            var taskType = preferences.First().Task.GetType();
+
+            if (taskType == typeof(Unit))
+            {
+                return RedirectToAction("SaveUnitPreferences", preferences);
             }
             else
             {

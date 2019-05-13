@@ -8,15 +8,13 @@
 <h1 id="Title" style="color: #663366"></h1>
 <body>
 
-    <form method="post" asp-controller="Preference" asp-action="SaveSectionPreferences">
         @foreach (var Preference in @Model)
         {
             <div>
                 @Html.Partial("PartialViews/RadioButtons", Preference)
             </div>
         }
-        <input type="submit" value="Save">
-    </form>
+        <button id="saveBtn" onclick="goToSaveChecker()" >Save preference!</button>
 </body>
 
 @if (null != TempData["Title"])
@@ -30,3 +28,38 @@
         document.getElementById('Title').appendChild(h1);
     </script>
 }
+
+<script>
+    $(function() {
+        $('#saveBtn').on('click', goToSaveChecker);
+    });
+
+    function goToSaveChecker() {
+        console.log('hallo');
+
+        var controllerPath = '@Url.Action("SaveChecker", "Preference")';
+
+        //var verificationToken = $("input[name='__RequestVerificationToken']").val();
+
+        var preferences = @Model;
+
+        console.log(JSON.stringify(preferences));
+
+        $.ajax({
+            url: controllerPath,
+            data: JSON.stringify(preferences),
+            type: "POST", /*
+                headers: {
+                    "RequestVerificationToken": verificationToken
+                },*/
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function() {
+                console.log('Succes!');
+            },
+            error: function() {
+                console.log('Error');
+            }
+        });
+    }
+</script>
