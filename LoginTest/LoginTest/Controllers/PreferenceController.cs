@@ -13,7 +13,7 @@ namespace FHICTDeploymentSystem.Controllers
 
 
         [HttpGet]
-        public IActionResult SaveSectionPreference()
+        public IActionResult SectionPreference()
         {
             var preferences = new List<Preference>();
             var sections = _preferenceLogic.GetAllSections();
@@ -29,7 +29,7 @@ namespace FHICTDeploymentSystem.Controllers
 
 
         [HttpPost]
-        public IActionResult GetSectionPreferences()
+        public IActionResult SaveSectionPreferences()
         {
             List<Preference> preferences = new List<Preference>();
 
@@ -46,7 +46,7 @@ namespace FHICTDeploymentSystem.Controllers
             return RedirectToAction("SectionPreference", "Preference");
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult UnitPreference(int sectionId)
         {
             var preferences = new List<Preference>();
@@ -58,6 +58,24 @@ namespace FHICTDeploymentSystem.Controllers
             }
 
             return View("SubmitPreferences", preferences);
+        }
+
+        [HttpPost]
+        public IActionResult SaveUnitPreferences()
+        {
+            List<Preference> preferences = new List<Preference>();
+
+            foreach (var section in _preferenceLogic.GetAllSections())
+            {
+                var preferenceValue = Request.Form[section.Name].ToString();
+                int value = Convert.ToInt16(preferenceValue);                               //todo convert.toint vervangen met iets netters
+
+                preferences.Add(new Preference { Task = section, Value = value });
+            }
+
+            _preferenceLogic.SaveSectionPreferences(preferences, Convert.ToInt32(User.Identity.Name));
+
+            return RedirectToAction("UnitPreference", "Preference");
         }
 
         [HttpPost]
@@ -74,23 +92,7 @@ namespace FHICTDeploymentSystem.Controllers
             return View("SubmitPreferences", preferences);
         }
 
-        [HttpPost]
-        public IActionResult GetUnitPreferences()
-        {
-            List<Preference> preferences = new List<Preference>();
-
-            foreach (var section in _preferenceLogic.GetAllSections())
-            {
-                var preferenceValue = Request.Form[section.Name].ToString();
-                int value = Convert.ToInt16(preferenceValue);                               //todo convert.toint vervangen met iets netters
-
-                preferences.Add(new Preference { Task = section, Value = value });
-            }
-
-            _preferenceLogic.SaveSectionPreferences(preferences, Convert.ToInt32(User.Identity.Name));
-
-            return RedirectToAction("UnitPreference", "Preference");
-        }
+        
 
         public IActionResult RedirectLayer(string taskName, int id)
         {
