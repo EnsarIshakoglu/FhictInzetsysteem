@@ -133,5 +133,10 @@ namespace FHICTDeploymentSystem.Logic
         {
             return _repo.GetTasksFromSection(section);
         }
+
+        public void AddTask(Task task)
+        {
+            _repo.AddTask(task);
+        }
     }
 }

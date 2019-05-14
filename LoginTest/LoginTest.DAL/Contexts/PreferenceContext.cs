@@ -208,5 +208,26 @@ namespace FHICTDeploymentSystem.DAL.Contexts
                 connection.Close();
             }
         }
+
+        public void AddTask(Task task)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                SqlCommand cmd = new SqlCommand("AddTask", connection);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add(new SqlParameter("@Name", task.Name));
+                cmd.Parameters.Add(new SqlParameter("@Period", task.Period));
+                cmd.Parameters.Add(new SqlParameter("@Description", task.Description));
+                cmd.Parameters.Add(new SqlParameter("@EstimatedHours", task.EstimatedHours));
+                cmd.Parameters.Add(new SqlParameter("@Explanation", task.Explanation));
+                cmd.Parameters.Add(new SqlParameter("@Factor", task.Factor));
+                cmd.ExecuteNonQuery();
+                connection.Close();
+            }
+        }
     }
 }

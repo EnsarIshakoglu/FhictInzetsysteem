@@ -79,7 +79,7 @@
                             }
                             @if (User.IsInRole(Roles.UnitOwner.ToString()) || User.IsInRole(Roles.InstituteMember.ToString()))
                             {
-                                <li><a asp-area="" asp-controller="Home" asp-action="Movies">Add task</a></li>
+                                <li><a asp-area="" asp-controller="Task" asp-action="Index">Add task</a></li>
                             }
                             <input type="button" value="Log Out" onclick="location.href = '@Url.Action("Logout", "Home")'" class="btn btn-primary"/>
                         </ul>

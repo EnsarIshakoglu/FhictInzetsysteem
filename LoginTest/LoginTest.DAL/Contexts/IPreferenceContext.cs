@@ -12,6 +12,7 @@ namespace FHICTDeploymentSystem.DAL.Contexts
         IEnumerable<Unit> GetAllUnits(int SectionId);
         IEnumerable<Task> GetAllTasks(int UnitId);
         IEnumerable<Task> GetTasksFromSection(Section Section);
+        void AddTask(Task task);
 
     }
 }

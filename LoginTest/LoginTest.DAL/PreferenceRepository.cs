@@ -48,5 +48,10 @@ namespace FHICTDeploymentSystem.DAL
         {
             return _context.GetTasksFromSection(Section);
         }
+
+        public void AddTask(Task task)
+        {
+            _context.AddTask(task);
+        }
     }
 }
