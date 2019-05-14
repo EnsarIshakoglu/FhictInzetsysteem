@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using FHICTDeploymentSystem.DAL;
 using FHICTDeploymentSystem.Models;
 using Newtonsoft.Json;
@@ -20,24 +21,39 @@ namespace FHICTDeploymentSystem.Logic
         public Preference GetSectionPreference(EducationObject section, int userId)
         {
             List<Preference> preferences = new List<Preference>();
-
             var tasks = GetTasksFromSection(section);
 
-            GetTasksPreferences(tasks, preferences, userId);
-            var preference = new Preference { Value = CalcAveragePreference(preferences), Task = section, ValueIsAverage = true };
+            preferences = GetTasksPreferences(tasks, preferences, userId);
+            int averageValue = CalcAveragePreference(preferences);
+            var preference = new Preference { Value = averageValue, Task = section };
+            preference.ValueIsAverage = CheckIfAverage(preferences, averageValue);
+
             return preference;
         }
 
         public Preference GetUnitPreference(EducationObject unit, int userId)
         {
             List<Preference> preferences = new List<Preference>();
-
             var tasks = GetAllTasks(unit.Id);
 
-            GetTasksPreferences(tasks, preferences, userId);
+            preferences = GetTasksPreferences(tasks, preferences, userId);
+            int averageValue = CalcAveragePreference(preferences);
+            var preference = new Preference { Value = averageValue, Task = unit };
+            preference.ValueIsAverage = CheckIfAverage(preferences, averageValue);
 
-            var preference = new Preference { Value = CalcAveragePreference(preferences), Task = unit, ValueIsAverage = true };
             return preference;
+        }
+
+        public bool CheckIfAverage(List<Preference> preferences, int averageValue)
+        {
+            foreach (var pref in preferences)
+            {
+                if (pref.Value != averageValue)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public Preference GetTaskPreference(EducationObject task, int userId)
