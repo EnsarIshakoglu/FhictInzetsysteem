@@ -14,7 +14,11 @@
                 @Html.Partial("PartialViews/RadioButtons", Preference)
             </div>
         }
-        <button id="saveBtn" onclick="goToSaveChecker()" >Save preference!</button>
+
+        @{
+            
+        }
+        <button id="saveBtn" onclick="location.href = '@Url.Action("SaveChecker", "Preference")'">Save preference!</button>
 </body>
 
 @if (null != TempData["Title"])
@@ -28,38 +32,3 @@
         document.getElementById('Title').appendChild(h1);
     </script>
 }
-
-<script>
-    $(function() {
-        $('#saveBtn').on('click', goToSaveChecker);
-    });
-
-    function goToSaveChecker() {
-        console.log('hallo');
-
-        var controllerPath = '@Url.Action("SaveChecker", "Preference")';
-
-        //var verificationToken = $("input[name='__RequestVerificationToken']").val();
-
-        var preferences = @Model;
-
-        console.log(JSON.stringify(preferences));
-
-        $.ajax({
-            url: controllerPath,
-            data: JSON.stringify(preferences),
-            type: "POST", /*
-                headers: {
-                    "RequestVerificationToken": verificationToken
-                },*/
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function() {
-                console.log('Succes!');
-            },
-            error: function() {
-                console.log('Error');
-            }
-        });
-    }
-</script>
