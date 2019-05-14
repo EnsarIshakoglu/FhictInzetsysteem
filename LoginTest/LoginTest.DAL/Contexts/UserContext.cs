@@ -53,7 +53,7 @@ namespace FHICTDeploymentSystem.DAL
 
                 while (reader.Read())
                 {
-                    roles.Add(reader["Name"].ToString());
+                    roles.Add(reader["AuthName"].ToString());
                 }
                 reader.Close();
                 conn.Close();

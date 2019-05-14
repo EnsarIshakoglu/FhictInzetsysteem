@@ -14,5 +14,6 @@ namespace FHICTDeploymentSystem.Models
         public string Description { get; set; }
         public string Explanation { get; set; }
         public EducationType EducationType { get; set; }
+        public int UnitExecId { get; set; }
     }
 }
