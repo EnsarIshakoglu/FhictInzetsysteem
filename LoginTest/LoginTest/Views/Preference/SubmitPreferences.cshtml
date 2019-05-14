@@ -1,21 +1,38 @@
 ﻿@using Microsoft.EntityFrameworkCore.Internal
-@using FHICTDeploymentSystem.Models
 @model IEnumerable<Preference>
 
 @{
-    ViewData["Title"] = "SectionPartialView";
+    ViewData["Title"] = "OnderwijsTrajectPartialView";
 }
-
 <h1 id="Title" style="color: #663366"></h1>
 <body>
+    <div class="carousel-wrapper">
 
-    @foreach (var Preference in @Model)
-    {
-        <div>
-            @Html.Partial("PartialViews/RadioButtons", Preference)
+        <div class="carousel-item item-1">
+            <h4>Kies een richting</h4>
+            <p>text....</p>
+            <div class="parent-btn">
+                <a>
+                    @foreach (var Preference in @Model)
+                    {
+                        <div>
+                            @Html.Partial("PartialViews/RadioButtons", Preference)
+                        </div>
+                    }
+
+                    <div class="parent-btn">
+
+                        <center><button style="width: 15%;" id="saveBtn" onclick="goToSaveChecker()" class="btn-voorkeur" type="submit">Save</button></center>
+                        <br />
+                        <center><button style="width: 15%;" onclick="goBack()" class="btn-voorkeur" type="button">Terug</button></center>
+                    </div>
+                    @*
+                        </form>
+                    *@
+                </a>
+            </div>
         </div>
-    }
-    <button id="saveBtn" onclick="goToSaveChecker()">Save preference!</button>
+    </div>
 </body>
 
 @if (null != TempData["Title"])
@@ -29,7 +46,6 @@
         document.getElementById('Title').appendChild(h1);
     </script>
 }
-
 <script>
     $(function() {
         $('#saveBtn').on('click', goToSaveChecker);
@@ -43,7 +59,7 @@
         {
             <text>
                 var radioButton = $('input[name=' + @preference.Task.Id + ']:checked').val();
-        
+
                 console.log(radioButton);
                 var preference = {
                     "Task": {
@@ -76,5 +92,10 @@
                 console.log('Error');
             }
         });
+    }
+</script>
+<script>
+    function goBack() {
+        window.history.back();
     }
 </script>
