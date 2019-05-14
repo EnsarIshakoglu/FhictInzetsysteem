@@ -1,6 +1,18 @@
 ﻿@using FHICTDeploymentSystem.Controllers
 @using FHICTDeploymentSystem.Logic
+@using FHICTDeploymentSystem.Models
+@using Microsoft.EntityFrameworkCore.Infrastructure
+@using Task = FHICTDeploymentSystem.Models.Task
 @model Preference
+
+@{
+    Task task = new Task();
+    if (Model.Task.GetType() == typeof(Task))
+    {
+        task = (Task)Model.Task;
+    }
+}
+
 
 <link href="~/lib/bootstrap/dist/css/radio-btn-bootstrap.css" rel="stylesheet" />
 
@@ -8,16 +20,20 @@
     <div class="row">
 
         <div class="col-md-5th-1 col-sm-4 ">
+
             @if (!Model.ValueIsAverage)
             {
-                <span>@Model.Task.Name</span>
+            <ul>
+                <li>@task.Period | @Model.Task.Name</li>
+                <li>@task.Description</li>
+            </ul>
             }
             else
             {
 
                 <a href="@Url.Action("RedirectLayer", "Preference", new {TaskName = @Model.Task.GetType().Name, id = @Model.Task.Id})"><span>@Model.Task.Name</span></a>
             }
-            
+
         </div>
         @for (int x = 0; x < 5; x++)
         {

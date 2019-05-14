@@ -93,13 +93,17 @@ namespace FHICTDeploymentSystem.DAL.Contexts
                     taken.Add(new Task
                     {
                         Id = (int)reader["Id"],
-                        Name = reader["Code"]?.ToString()
+                        Name = reader["Code"]?.ToString(),
+                        Period = (int)reader["Period"],
+                        Explanation = reader["Explanation"]?.ToString(),
+                        Description = reader["Description"]?.ToString(),
+                        EstimatedHours = (int)reader["Hours"]
                     });
                 }
 
                 connection.Close();
             }
-
+            
             return taken;
         }
 
