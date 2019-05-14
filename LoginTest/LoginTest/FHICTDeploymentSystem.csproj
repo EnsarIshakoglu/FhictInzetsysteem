@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
     <PackageReference Include="System.Data.SqlClient" Version="4.6.0" />
@@ -15,9 +16,15 @@
 
 
   <ItemGroup>
-    <ProjectReference Include="..\LoginTest.DAL\LoginTest.DAL.csproj" />
-    <ProjectReference Include="..\LoginTest.Logic\LoginTest.Logic.csproj" />
-    <ProjectReference Include="..\LoginTest.Models\LoginTest.Models.csproj" />
+    <ProjectReference Include="..\LoginTest.DAL\DAL.csproj" />
+    <ProjectReference Include="..\LoginTest.Logic\Logic.csproj" />
+    <ProjectReference Include="..\LoginTest.Models\Models.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Views\Shared\PartialViews\Preference\" />
+    <Folder Include="wwwroot\Images\" />
   </ItemGroup>
 
 </Project>

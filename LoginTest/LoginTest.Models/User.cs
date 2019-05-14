@@ -1,20 +1,18 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
-namespace LoginTest.Models
+namespace FHICTDeploymentSystem.Models
 {
     public class User
     {
-        public User(string password, string userName)
-        {
-            Password = password;
-            UserName = userName;
-        }
-
-        [Required(ErrorMessage = "Password is required!")]
+        [Required(ErrorMessage = "Password field is required!")]
         public string Password { get; set; }
-        [Required(ErrorMessage = "Username is required")]
-        public string UserName { get; set; }
+        [StringLength(60, MinimumLength = 3)]
+        [Required(ErrorMessage = "Username field is required!")]
+        public string Username { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 using System;
 
-namespace LoginTest.Models
+namespace FHICTDeploymentSystem.Models
 {
     public class ErrorViewModel
     {

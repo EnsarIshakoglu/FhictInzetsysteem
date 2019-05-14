@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using FHICTDeploymentSystem.Models;
 
-namespace LoginTest.DAL
+namespace FHICTDeploymentSystem.DAL
 {
     public class UserRepository
     {
@@ -13,9 +14,19 @@ namespace LoginTest.DAL
             _context = new UserContext();
         }
 
-        public bool Login(string userName, string password)
+        public bool Login(User user)
         {
-            return _context.Login(userName, password);
+            return _context.Login(user);
+        }
+
+        public IEnumerable<string> GetUserRoles(User user)
+        {
+            return _context.GetUserRoles(user);
+        }
+
+        public int GetUserId(User user)
+        {
+            return _context.GetUserId(user);
         }
     }
 }
