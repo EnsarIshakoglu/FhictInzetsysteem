@@ -96,6 +96,10 @@ namespace FHICTDeploymentSystem.DAL.Contexts
                     {
                         Id = (int)reader["Id"],
                         Name = reader["Code"]?.ToString(),
+                        Description = reader["Description"]?.ToString(),
+                        Explanation = reader["Explanation"]?.ToString(),
+                        Period = (int)reader["Period"],
+                        EstimatedHours = (int)reader["Hours"],
                         EducationType = EducationType.Task
                     });
                 }

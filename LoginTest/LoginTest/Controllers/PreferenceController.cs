@@ -34,8 +34,11 @@ namespace FHICTDeploymentSystem.Controllers
 
             foreach (var preference in preferences)
             {
-                var value = preference.Value;
-                savePreferences.Add(new Preference {Task = preference.Task, Value = value});
+                if (preference.Value != -1)
+                {
+                    var value = preference.Value;
+                    savePreferences.Add(new Preference {Task = preference.Task, Value = value});
+                }
             }
 
             _preferenceLogic.SaveSectionPreferences(savePreferences, Convert.ToInt32(User.Identity.Name));
@@ -63,8 +66,11 @@ namespace FHICTDeploymentSystem.Controllers
 
             foreach (var preference in preferences)
             {
-                var value = preference.Value;
-                savePreferences.Add(new Preference { Task = preference.Task, Value = value });
+                if (preference.Value != -1)
+                {
+                    var value = preference.Value;
+                    savePreferences.Add(new Preference {Task = preference.Task, Value = value});
+                }
             }
 
             _preferenceLogic.SaveUnitPreferences(savePreferences, Convert.ToInt32(User.Identity.Name));
@@ -92,8 +98,11 @@ namespace FHICTDeploymentSystem.Controllers
 
             foreach (var preference in preferences)
             {
-                var value = preference.Value;
-                savePreferences.Add(new Preference { Task = preference.Task, Value = value });
+                if (preference.Value != -1)
+                {
+                    var value = preference.Value;
+                    savePreferences.Add(new Preference {Task = preference.Task, Value = value});
+                }
             }
 
             _preferenceLogic.SaveTaskPreferences(savePreferences, Convert.ToInt32(User.Identity.Name));
