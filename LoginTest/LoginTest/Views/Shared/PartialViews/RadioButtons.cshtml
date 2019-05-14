@@ -8,22 +8,19 @@
 
 <div class="container">
     <div class="row">
-        @if (!Model.ValueIsAverage)
+        @if (Model.Task.EducationType.Equals(EducationType.Task))
         {
-            <div id="periodText" class="hola">Period 1</div>
+            <div id="periodText" class="hola">Period @Model.Task.Period</div>
         }
 
         <div class="col l6">
             <center>
-                @if (!Model.ValueIsAverage)
+                @if (Model.Task.EducationType.Equals(EducationType.Task))
                 {
 
-                    <ul class="btn-voorkeur btn-voorkeur-next">
-                        <li>
-                            @Model.Task.Name
-                        </li>
+                    <ul class="btn-voorkeur btn-voorkeur-next" >
+                        @Model.Task.Name : <a style="font-size: small; ">@Model.Task.Description</a>
                     </ul>
-                    <div class="Omschrijving">Dit is een beschrijving</div>
                 }
                 else
                 {
@@ -33,20 +30,25 @@
                             @Model.Task.Name
                         </li>
                     </ul>
+                    <div class="Omschrijving">Average preference value: @Model.Value</div>
                 }
             </center>
         </div>
         @for (int x = 1; x < 5; x++)
         {
-            string defCheck = null;
-
-            if (@Model.Value == x)
+            if (Model.Task.EducationType.Equals(EducationType.Task))
             {
-                defCheck = "checked";
+                <div class="radioknoppen">
+                    <input id="Waarde" name=@Model.Task.Id type="radio" value=@x ; checked><br/><span style="color: #000000">@x</span>
+                </div>
             }
-            <div class="radioknoppen">
-                <input id="Waarde" name=@Model.Task.Name type="radio" value=@x><span>@x</span>
-            </div>
+            else
+            {
+                <div class="radioknoppen">
+                    <input id="Waarde" name=@Model.Task.Id type="radio" value=@x><br /><span style="color: #000000">@x</span>
+                </div>
+            }
+
 
         }
 
