@@ -79,17 +79,17 @@ namespace Inzetsysteem.Controllers
             //var eenheden = _preferenceLogic.GetAllOnderwijsEenheden(trajectId);
             var eenheden = new List<Task>
             {
-                new OnderwijsTraject
+                new OnderwijsEenheid()
                 {
                     Naam = "aaaaaa",
                     Id = 1
                 },
-                new OnderwijsTraject
+                new OnderwijsEenheid()
                 {
                     Naam = "bbbbbbb",
                     Id = 2
                 },
-                new OnderwijsTraject
+                new OnderwijsEenheid()
                 {
                     Naam = "ccccc",
                     Id = 3
@@ -103,6 +103,42 @@ namespace Inzetsysteem.Controllers
                     Taak = onderwijsEenheid,
                     Waarde = 3,
                     WaardeIsAverage = true
+                });
+            }
+
+            return View("SubmitPreferences", preferences);
+        }
+        [HttpPost]
+        public IActionResult OnderwijsTaakPreferenceView(int trajectId)
+        {
+            var preferences = new List<Preference>();
+            //var eenheden = _preferenceLogic.GetAllOnderwijsEenheden(trajectId);
+            var eenheden = new List<Task>
+            {
+                new OnderwijsTaak
+                {
+                    Naam = "taak1",
+                    Id = 1,
+                },
+                new OnderwijsTaak
+                {
+                    Naam = "taak2",
+                    Id = 2
+                },
+                new OnderwijsTaak
+                {
+                    Naam = "taak3",
+                    Id = 3
+                },
+            };
+
+            foreach (var onderwijsEenheid in eenheden)
+            {
+                preferences.Add(new Preference
+                {
+                    Taak = onderwijsEenheid,
+                    Waarde = 3,
+                    WaardeIsAverage = false
                 });
             }
 
@@ -161,7 +197,7 @@ namespace Inzetsysteem.Controllers
             }
             else if (taakNaam == typeof(OnderwijsEenheid).Name)
             {
-                return OnderwijsOnderdeelPreference(id);
+                return OnderwijsTaakPreferenceView(id);
             }
             else if (taakNaam == typeof(OnderwijsOnderdeel).Name)
             {
