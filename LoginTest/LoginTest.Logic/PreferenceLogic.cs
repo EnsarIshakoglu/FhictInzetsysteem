@@ -12,12 +12,12 @@ namespace FHICTDeploymentSystem.Logic
     {
         private readonly PreferenceRepository _repo = new PreferenceRepository();
 
-        public IEnumerable<Section> GetAllSections()
+        public IEnumerable<EducationObject> GetAllSections()
         {
             return _repo.GetAllSections();
         }
 
-        public Preference GetSectionPreference(Section section, int userId)
+        public Preference GetSectionPreference(EducationObject section, int userId)
         {
             List<Preference> preferences = new List<Preference>();
 
@@ -28,7 +28,7 @@ namespace FHICTDeploymentSystem.Logic
             return preference;
         }
 
-        public Preference GetUnitPreference(Unit unit, int userId)
+        public Preference GetUnitPreference(EducationObject unit, int userId)
         {
             List<Preference> preferences = new List<Preference>();
 
@@ -40,14 +40,14 @@ namespace FHICTDeploymentSystem.Logic
             return preference;
         }
 
-        public Preference GetTaskPreference(Task task, int userId)
+        public Preference GetTaskPreference(EducationObject task, int userId)
         {
             var preference = new Preference{Value = _repo.CheckTaskPreference(task, userId).Value, Task = task};
             return preference;
         }
 
 
-        public List<Preference> GetTasksPreferences(IEnumerable<Task> tasks, List<Preference> preferences, int userId)
+        public List<Preference> GetTasksPreferences(IEnumerable<EducationObject> tasks, List<Preference> preferences, int userId)
         {
             foreach (var task in tasks)
             {
@@ -80,9 +80,9 @@ namespace FHICTDeploymentSystem.Logic
         {
             foreach (var sectionPreference in sectionPreferences)
             {
-                List<Task> tasks = new List<Task>();
+                List<EducationObject> tasks = new List<EducationObject>();
 
-                tasks.AddRange(GetTasksFromSection(new Section
+                tasks.AddRange(GetTasksFromSection(new EducationObject
                 {
                     Id = sectionPreference.Task.Id,
                     Name = sectionPreference.Task.Name
@@ -104,32 +104,32 @@ namespace FHICTDeploymentSystem.Logic
 
         }
 
-        public Preference CheckTaskPreference(Task task, int userId)
+        public Preference CheckTaskPreference(EducationObject task, int userId)
         {
             return _repo.CheckTaskPreference(task, userId);
         }
 
-        public void AddTaskPreference(Task task, int priority, int userId)
+        public void AddTaskPreference(EducationObject task, int priority, int userId)
         {
             _repo.AddTaskPreference(task, priority, userId);
         }
 
-        public void UpdateTaskPreference(Task task, int priority, int userId)
+        public void UpdateTaskPreference(EducationObject task, int priority, int userId)
         {
             _repo.UpdateTaskPreference(task, priority, userId);
         }
 
-        public IEnumerable<Unit> GetAllUnits(int edSectionId)
+        public IEnumerable<EducationObject> GetAllUnits(int edSectionId)
         {
             return _repo.GetAllUnits(edSectionId);
         }
 
-        public IEnumerable<Task> GetAllTasks(int unitId)
+        public IEnumerable<EducationObject> GetAllTasks(int unitId)
         {
             return _repo.GetAllTasks(unitId);
         }
 
-        public IEnumerable<Task> GetTasksFromSection(Section section)
+        public IEnumerable<EducationObject> GetTasksFromSection(EducationObject section)
         {
             return _repo.GetTasksFromSection(section);
         }

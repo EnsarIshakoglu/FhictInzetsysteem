@@ -14,37 +14,37 @@ namespace FHICTDeploymentSystem.DAL
             _context = new PreferenceContext();
         }
 
-        public IEnumerable<Section> GetAllSections()
+        public IEnumerable<EducationObject> GetAllSections()
         {
             return _context.GetAllSections();
         }
 
-        public void AddTaskPreference(Task task, int priority, int userId)
+        public void AddTaskPreference(EducationObject task, int priority, int userId)
         {
             _context.AddTaskPreference(task, priority, userId);
         }
 
-        public void UpdateTaskPreference(Task task, int priority, int userId)
+        public void UpdateTaskPreference(EducationObject task, int priority, int userId)
         {
             _context.UpdateTaskPreference(task, priority, userId);
         }
 
-        public Preference CheckTaskPreference(Task task, int userId)
+        public Preference CheckTaskPreference(EducationObject task, int userId)
         {
             return _context.CheckTaskPreference(task, userId);
         }
 
-        public IEnumerable<Unit> GetAllUnits(int SectionId)
+        public IEnumerable<EducationObject> GetAllUnits(int SectionId)
         {
             return _context.GetAllUnits(SectionId);
         }
 
-        public IEnumerable<Task> GetAllTasks(int UnitId)
+        public IEnumerable<EducationObject> GetAllTasks(int UnitId)
         {
             return _context.GetAllTasks(UnitId);
         }
 
-        public IEnumerable<Task> GetTasksFromSection(Section Section)
+        public IEnumerable<EducationObject> GetTasksFromSection(EducationObject Section)
         {
             return _context.GetTasksFromSection(Section);
         }

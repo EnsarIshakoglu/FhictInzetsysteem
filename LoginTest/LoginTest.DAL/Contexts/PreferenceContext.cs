@@ -14,9 +14,9 @@ namespace FHICTDeploymentSystem.DAL.Contexts
         private readonly string _connectionString =
             "Server=mssql.fhict.local;Database=dbi389621;User Id=dbi389621;Password=Ensar123;";
 
-        public IEnumerable<Section> GetAllSections()
+        public IEnumerable<EducationObject> GetAllSections()
         {
-            var sections = new List<Section>();
+            var sections = new List<EducationObject>();
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -28,10 +28,11 @@ namespace FHICTDeploymentSystem.DAL.Contexts
 
                 while (reader.Read())
                 {
-                    sections.Add(new Section
+                    sections.Add(new EducationObject
                     {
                         Id = (int) reader["Id"],
-                        Name = reader["Name"]?.ToString()
+                        Name = reader["Name"]?.ToString(),
+                        EducationType = EducationType.Section
                     });
                 }
 
@@ -41,9 +42,9 @@ namespace FHICTDeploymentSystem.DAL.Contexts
             return sections;
         }
 
-        public IEnumerable<Unit> GetAllUnits(int SectionId)
+        public IEnumerable<EducationObject> GetAllUnits(int SectionId)
         {
-            var units = new List<Unit>();
+            var units = new List<EducationObject>();
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -59,10 +60,11 @@ namespace FHICTDeploymentSystem.DAL.Contexts
 
                 while (reader.Read())
                 {
-                    units.Add(new Unit
+                    units.Add(new EducationObject
                     {
                         Id = (int)reader["Id"],
-                        Name = reader["Name"]?.ToString()
+                        Name = reader["Name"]?.ToString(),
+                        EducationType = EducationType.Unit
                     });
                 }
 
@@ -72,9 +74,9 @@ namespace FHICTDeploymentSystem.DAL.Contexts
             return units;
         }
 
-        public IEnumerable<Task> GetAllTasks(int UnitId)
+        public IEnumerable<EducationObject> GetAllTasks(int UnitId)
         {
-            var taken = new List<Task>();
+            var taken = new List<EducationObject>();
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -90,26 +92,23 @@ namespace FHICTDeploymentSystem.DAL.Contexts
 
                 while (reader.Read())
                 {
-                    taken.Add(new Task
+                    taken.Add(new EducationObject
                     {
                         Id = (int)reader["Id"],
                         Name = reader["Code"]?.ToString(),
-                        Period = (int)reader["Period"],
-                        Explanation = reader["Explanation"]?.ToString(),
-                        Description = reader["Description"]?.ToString(),
-                        EstimatedHours = (int)reader["Hours"]
+                        EducationType = EducationType.Task
                     });
                 }
 
                 connection.Close();
             }
-            
+
             return taken;
         }
 
-        public IEnumerable<Task> GetTasksFromSection(Section Section)
+        public IEnumerable<EducationObject> GetTasksFromSection(EducationObject Section)
         {
-            var tasks = new List<Task>();
+            var tasks = new List<EducationObject>();
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -125,9 +124,10 @@ namespace FHICTDeploymentSystem.DAL.Contexts
 
                 while (reader.Read())
                 {
-                    tasks.Add(new Task
+                    tasks.Add(new EducationObject
                     {
                         Id = (int)reader["Id"],
+                        EducationType = EducationType.Task
                     });
                 }
 
@@ -137,7 +137,7 @@ namespace FHICTDeploymentSystem.DAL.Contexts
             return tasks;
         }
 
-        public Preference CheckTaskPreference(Task task, int userId) //todo kijken of het generic kan gemaakt worden
+        public Preference CheckTaskPreference(EducationObject task, int userId) //todo kijken of het generic kan gemaakt worden
         {
             var taskPreference = new Preference
             {
@@ -169,7 +169,7 @@ namespace FHICTDeploymentSystem.DAL.Contexts
             return taskPreference;
         }
 
-        public void AddTaskPreference(Task task, int priority, int userId)
+        public void AddTaskPreference(EducationObject task, int priority, int userId)
         {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
@@ -189,7 +189,7 @@ namespace FHICTDeploymentSystem.DAL.Contexts
                 }
         }
 
-        public void UpdateTaskPreference(Task task, int priority, int userId)
+        public void UpdateTaskPreference(EducationObject task, int priority, int userId)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {

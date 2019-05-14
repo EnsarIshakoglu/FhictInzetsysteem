@@ -59,22 +59,17 @@ namespace FHICTDeploymentSystem.Controllers
             return View("SubmitPreferences", preferences);
         }
 
-        public IActionResult SaveUnitPreferences(IEnumerable<Preference> unitPreferences)
+        public IActionResult SaveUnitPreferences(IEnumerable<Preference> unitsPreferences)
         {
-            List<Unit> units = new List<Unit>();
             List<Preference> preferences = new List<Preference>();
-            foreach (var preference in unitPreferences)
-            {
-                units.Add((Unit)preference.Task);
-            }
 
-            foreach (var unit in units)
+            /*foreach (var unit in _preferenceLogic.GetAllUnits())
             {
-                var preferenceValue = Request.Form[unit.Name].ToString();
-                int value = Convert.ToInt16(preferenceValue);
+                var preferenceValue = Request.Form[section.Name].ToString();
+                int value = Convert.ToInt16(preferenceValue);                               //todo convert.toint vervangen met iets netters
 
-                preferences.Add(new Preference { Task = unit, Value = value });
-            }
+                preferences.Add(new Preference { Task = section, Value = value });
+            }*/
 
             _preferenceLogic.SaveSectionPreferences(preferences, Convert.ToInt32(User.Identity.Name));
 
@@ -95,36 +90,16 @@ namespace FHICTDeploymentSystem.Controllers
             return View("SubmitPreferences", preferences);
         }
 
-        public IActionResult SaveTaskPreferences(IEnumerable<Preference> taskPreferences)
+        
+
+        public IActionResult RedirectLayer(EducationType educationType, int id)
         {
-            List<Task> tasks = new List<Task>();
-            List<Preference> preferences = new List<Preference>();
-            foreach (var preference in taskPreferences)
-            {
-                tasks.Add((Task)preference.Task);
-            }
-
-            foreach (var task in tasks)
-            {
-                var preferenceValue = Request.Form[task.Name].ToString();
-                int value = Convert.ToInt16(preferenceValue);
-
-                preferences.Add(new Preference { Task = task, Value = value });
-            }
-
-            _preferenceLogic.SaveSectionPreferences(preferences, Convert.ToInt32(User.Identity.Name));
-
-            return RedirectToAction("UnitPreference", "Preference");
-        }
-
-        public IActionResult RedirectLayer(string taskName, int id)
-        {
-            if (taskName == typeof(Section).Name)
+            if (educationType.Equals(EducationType.Section))
             {
                 TempData["Title"] = "Units";
                 return UnitPreference(id);
             }
-            else if (taskName == typeof(Unit).Name)
+            else if (educationType.Equals(EducationType.Unit))
             {
                 TempData["Title"] = "Tasks";
                 return TaskPreference(id);
@@ -136,21 +111,21 @@ namespace FHICTDeploymentSystem.Controllers
         }
 
         [HttpPost]
-        public IActionResult SaveChecker(IEnumerable<Preference> preferences)
+        public IActionResult SaveChecker([FromBody]IEnumerable<EducationObject> tasks)
         {
-            var taskType = preferences.First().Task.GetType();
-            if (taskType == typeof(Section))
-            {
-                return RedirectToAction("SaveSectionPreferences", preferences);
-            }
-            else if (taskType == typeof(Unit))
+            /*var taskType = preferences.First().Task.GetType();
+
+            if (taskType == typeof(Unit))
             {
                 return RedirectToAction("SaveUnitPreferences", preferences);
             }
             else
             {
-                return RedirectToAction("SaveTaskPreferences", preferences);
+                return null;
             }
+*/
+
+            return RedirectToAction("RedirectLayer");
         }
     }
 }

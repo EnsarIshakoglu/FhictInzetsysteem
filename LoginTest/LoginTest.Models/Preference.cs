@@ -6,7 +6,7 @@ namespace FHICTDeploymentSystem.Models
 {
     public class Preference
     {
-        public ParentTask Task { get; set; }
+        public EducationObject Task { get; set; }
         public int Value { get; set; } = -1;
         public bool ValueIsAverage { get; set; } = false;
     }
