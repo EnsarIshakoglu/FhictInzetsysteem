@@ -36,13 +36,13 @@ namespace FHICTDeploymentSystem.Logic
 
             GetTasksPreferences(tasks, preferences, userId);
 
-            var preference = new Preference {Value = CalcAveragePreference(preferences), Task = unit, ValueIsAverage = true };
+            var preference = new Preference { Value = CalcAveragePreference(preferences), Task = unit, ValueIsAverage = true };
             return preference;
         }
 
         public Preference GetTaskPreference(EducationObject task, int userId)
         {
-            var preference = new Preference{Value = _repo.CheckTaskPreference(task, userId).Value, Task = task};
+            var preference = new Preference { Value = _repo.CheckTaskPreference(task, userId).Value, Task = task };
             return preference;
         }
 
@@ -85,13 +85,12 @@ namespace FHICTDeploymentSystem.Logic
                 tasks.AddRange(GetTasksFromSection(new EducationObject
                 {
                     Id = sectionPreference.Task.Id,
-                    Name = sectionPreference.Task.Name
                 }));
 
                 foreach (var task in tasks)
                 {
-                    var taskPreference = CheckTaskPreference(task, userId);
-                    if (taskPreference.Value == -1)
+                    var checkTaskPreference = CheckTaskPreference(task, userId);
+                    if (checkTaskPreference.Value == -1)
                     {
                         AddTaskPreference(task, sectionPreference.Value, userId);
                     }
@@ -101,7 +100,46 @@ namespace FHICTDeploymentSystem.Logic
                     }
                 }
             }
+        }
 
+        public void SaveUnitPreferences(IEnumerable<Preference> UnitPreferences, int userId)
+        {
+            foreach (var unitPreference in UnitPreferences)
+            {
+                List<EducationObject> tasks = new List<EducationObject>();
+
+                tasks.AddRange(GetAllTasks(unitPreference.Task.Id));
+                
+                foreach (var task in tasks)
+                {
+                    var checkTaskPreference = CheckTaskPreference(task, userId);
+                    if (checkTaskPreference.Value == -1)
+                    {
+                        AddTaskPreference(task, unitPreference.Value, userId);
+                    }
+                    else
+                    {
+                        UpdateTaskPreference(task, unitPreference.Value, userId);
+                    }
+                }
+            }
+        }
+
+        public void SaveTaskPreferences(IEnumerable<Preference> taskPreferences, int userId)
+        {
+            List<EducationObject> tasks = new List<EducationObject>();
+            foreach (var taskPreference in taskPreferences)
+            {
+                var checkTaskPreference = CheckTaskPreference(taskPreference.Task, userId);
+                if (checkTaskPreference.Value == -1)
+                {
+                    AddTaskPreference(taskPreference.Task, taskPreference.Value, userId);
+                }
+                else
+                {
+                    UpdateTaskPreference(taskPreference.Task, taskPreference.Value, userId);
+                }
+            }
         }
 
         public Preference CheckTaskPreference(EducationObject task, int userId)

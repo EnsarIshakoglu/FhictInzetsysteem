@@ -106,7 +106,7 @@ namespace FHICTDeploymentSystem.DAL.Contexts
             return taken;
         }
 
-        public IEnumerable<EducationObject> GetTasksFromSection(EducationObject Section)
+        public IEnumerable<EducationObject> GetTasksFromSection(EducationObject section)
         {
             var tasks = new List<EducationObject>();
 
@@ -118,7 +118,7 @@ namespace FHICTDeploymentSystem.DAL.Contexts
 
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add(new SqlParameter("@SectionId", Section.Id));
+                cmd.Parameters.Add(new SqlParameter("@SectionId", section.Id));
 
                 var reader = cmd.ExecuteReader();
 

@@ -28,19 +28,17 @@ namespace FHICTDeploymentSystem.Controllers
         }
 
 
-        public IActionResult SaveSectionPreferences()
+        public IActionResult SaveSectionPreferences(IEnumerable<Preference> preferences)
         {
-            List<Preference> preferences = new List<Preference>();
+            List<Preference> savePreferences = new List<Preference>();
 
-            foreach (var section in _preferenceLogic.GetAllSections())
+            foreach (var preference in preferences)
             {
-                var preferenceValue = Request.Form[section.Id.ToString()].ToString();
-                int value = Convert.ToInt32(preferenceValue);                               //todo convert.toint vervangen met iets netters
-
-                preferences.Add(new Preference { Task = section, Value = value });
+                var value = preference.Value;
+                savePreferences.Add(new Preference {Task = preference.Task, Value = value});
             }
 
-            _preferenceLogic.SaveSectionPreferences(preferences, Convert.ToInt32(User.Identity.Name));
+            _preferenceLogic.SaveSectionPreferences(savePreferences, Convert.ToInt32(User.Identity.Name));
 
             return RedirectToAction("SectionPreference", "Preference");
         }
@@ -59,21 +57,19 @@ namespace FHICTDeploymentSystem.Controllers
             return View("SubmitPreferences", preferences);
         }
 
-        public IActionResult SaveUnitPreferences(IEnumerable<Preference> unitsPreferences)
+        public IActionResult SaveUnitPreferences(IEnumerable<Preference> preferences)
         {
-            List<Preference> preferences = new List<Preference>();
+            List<Preference> savePreferences = new List<Preference>();
 
-            /*foreach (var unit in _preferenceLogic.GetAllUnits())
+            foreach (var preference in preferences)
             {
-                var preferenceValue = Request.Form[section.Name].ToString();
-                int value = Convert.ToInt16(preferenceValue);                               //todo convert.toint vervangen met iets netters
+                var value = preference.Value;
+                savePreferences.Add(new Preference { Task = preference.Task, Value = value });
+            }
 
-                preferences.Add(new Preference { Task = section, Value = value });
-            }*/
+            _preferenceLogic.SaveUnitPreferences(savePreferences, Convert.ToInt32(User.Identity.Name));
 
-            _preferenceLogic.SaveSectionPreferences(preferences, Convert.ToInt32(User.Identity.Name));
-
-            return RedirectToAction("UnitPreference", "Preference");
+            return RedirectToAction("SectionPreference", "Preference");
         }
 
         [HttpPost]
@@ -90,7 +86,20 @@ namespace FHICTDeploymentSystem.Controllers
             return View("SubmitPreferences", preferences);
         }
 
-        
+        public IActionResult SaveTaskPreferences(IEnumerable<Preference> preferences)
+        {
+            List<Preference> savePreferences = new List<Preference>();
+
+            foreach (var preference in preferences)
+            {
+                var value = preference.Value;
+                savePreferences.Add(new Preference { Task = preference.Task, Value = value });
+            }
+
+            _preferenceLogic.SaveTaskPreferences(savePreferences, Convert.ToInt32(User.Identity.Name));
+
+            return RedirectToAction("SectionPreference", "Preference");
+        }
 
         public IActionResult RedirectLayer(EducationType educationType, int id)
         {
@@ -111,21 +120,22 @@ namespace FHICTDeploymentSystem.Controllers
         }
 
         [HttpPost]
-        public IActionResult SaveChecker([FromBody]IEnumerable<EducationObject> tasks)
+        public IActionResult SaveChecker([FromBody]IEnumerable<Preference>preferences)
         {
-            /*var taskType = preferences.First().Task.GetType();
+            var taskType = preferences.First().Task.EducationType;
 
-            if (taskType == typeof(Unit))
+            if (taskType == EducationType.Section)
             {
-                return RedirectToAction("SaveUnitPreferences", preferences);
+                return SaveSectionPreferences(preferences);
+            }
+            else if (taskType == EducationType.Unit)
+            {
+                return SaveUnitPreferences(preferences);
             }
             else
             {
-                return null;
+                return SaveTaskPreferences(preferences);
             }
-*/
-
-            return RedirectToAction("RedirectLayer");
         }
     }
 }

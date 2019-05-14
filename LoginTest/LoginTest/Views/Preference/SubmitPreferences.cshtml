@@ -36,33 +36,37 @@
     });
 
     function goToSaveChecker() {
-        var tasks = [];
+        var radioButtons = document.getElementById("Value");
+        var preferences = [];
 
         @foreach (var preference in Model)
         {
             <text>
-                var task = {
-                    "Id": @preference.Task.Id,
-                    "EducationType": @Json.Serialize(preference.Task.EducationType)
-                    };
+                var radioButton = $('input[name=' + @preference.Task.Id + ']:checked').val();
+        
+                console.log(radioButton);
+                var preference = {
+                    "Task": {
+                        "Id": @preference.Task.Id,
+                        "EducationType": @Json.Serialize(preference.Task.EducationType)
+                    },
+                    "Value": radioButton
+                };
 
-                tasks.push(task);
+                preferences.push(preference);
             </text>
         }
 
-    console.log(tasks);
+        console.log(preferences);
 
         var controllerPath = '@Url.Action("SaveChecker", "Preference")';
 
-    console.log(JSON.stringify(tasks));
+        console.log(JSON.stringify(preferences));
 
         $.ajax({
             url: controllerPath,
-            data: JSON.stringify(tasks),
-            type: "POST", /*
-                headers: {
-                    "RequestVerificationToken": verificationToken
-                },*/
+            data: JSON.stringify(preferences),
+            type: "POST",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function() {
