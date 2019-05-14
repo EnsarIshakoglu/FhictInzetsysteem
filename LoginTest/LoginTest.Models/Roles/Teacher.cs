@@ -10,7 +10,7 @@ namespace FHICTDeploymentSystem.Models
         public Team Team { get; set; }
         public int OpenHours { get; set; }
         public List<Preference> Preferences { get; set; }
-        public List<ParentTask> Competencies { get; set; }
-        public List<ParentTask> AssignedTasks { get; set; }
+        public List<EducationObject> Competencies { get; set; }
+        public List<EducationObject> AssignedTasks { get; set; }
     }
 }

@@ -15,7 +15,7 @@
             else
             {
 
-                <a href="@Url.Action("RedirectLayer", "Preference", new {TaskName = @Model.Task.GetType().Name, id = @Model.Task.Id})"><span>@Model.Task.Name</span></a>
+                <a href="@Url.Action("RedirectLayer", "Preference", new {educationType = @Model.Task.EducationType, id = @Model.Task.Id})"><span>@Model.Task.Name</span></a>
             }
             
         </div>

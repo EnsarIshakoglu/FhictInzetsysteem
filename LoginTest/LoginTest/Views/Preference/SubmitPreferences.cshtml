@@ -1,4 +1,5 @@
 ﻿@using Microsoft.EntityFrameworkCore.Internal
+@using FHICTDeploymentSystem.Models
 @model IEnumerable<Preference>
 
 @{
@@ -8,13 +9,13 @@
 <h1 id="Title" style="color: #663366"></h1>
 <body>
 
-        @foreach (var Preference in @Model)
-        {
-            <div>
-                @Html.Partial("PartialViews/RadioButtons", Preference)
-            </div>
-        }
-        <button id="saveBtn" onclick="goToSaveChecker()" >Save preference!</button>
+    @foreach (var Preference in @Model)
+    {
+        <div>
+            @Html.Partial("PartialViews/RadioButtons", Preference)
+        </div>
+    }
+    <button id="saveBtn" onclick="goToSaveChecker()">Save preference!</button>
 </body>
 
 @if (null != TempData["Title"])
@@ -35,19 +36,29 @@
     });
 
     function goToSaveChecker() {
-        console.log('hallo');
+        var tasks = [];
+
+        @foreach (var preference in Model)
+        {
+            <text>
+                var task = {
+                    "Id": @preference.Task.Id,
+                    "EducationType": @Json.Serialize(preference.Task.EducationType)
+                    };
+
+                tasks.push(task);
+            </text>
+        }
+
+    console.log(tasks);
 
         var controllerPath = '@Url.Action("SaveChecker", "Preference")';
 
-        //var verificationToken = $("input[name='__RequestVerificationToken']").val();
-
-        var preferences = @Model;
-
-        console.log(JSON.stringify(preferences));
+    console.log(JSON.stringify(tasks));
 
         $.ajax({
             url: controllerPath,
-            data: JSON.stringify(preferences),
+            data: JSON.stringify(tasks),
             type: "POST", /*
                 headers: {
                     "RequestVerificationToken": verificationToken

@@ -5,13 +5,13 @@ namespace FHICTDeploymentSystem.DAL.Contexts
 {
     public interface IPreferenceContext
     {
-        IEnumerable<Section> GetAllSections();
-        void AddTaskPreference(Task task, int priority, int userId);
-        void UpdateTaskPreference(Task task, int priority, int userId);
-        Preference CheckTaskPreference(Task task, int userId);
-        IEnumerable<Unit> GetAllUnits(int SectionId);
-        IEnumerable<Task> GetAllTasks(int UnitId);
-        IEnumerable<Task> GetTasksFromSection(Section Section);
+        IEnumerable<EducationObject> GetAllSections();
+        void AddTaskPreference(EducationObject task, int priority, int userId);
+        void UpdateTaskPreference(EducationObject task, int priority, int userId);
+        Preference CheckTaskPreference(EducationObject task, int userId);
+        IEnumerable<EducationObject> GetAllUnits(int SectionId);
+        IEnumerable<EducationObject> GetAllTasks(int UnitId);
+        IEnumerable<EducationObject> GetTasksFromSection(EducationObject Section);
 
     }
 }

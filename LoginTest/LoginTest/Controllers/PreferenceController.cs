@@ -92,14 +92,14 @@ namespace FHICTDeploymentSystem.Controllers
 
         
 
-        public IActionResult RedirectLayer(string taskName, int id)
+        public IActionResult RedirectLayer(EducationType educationType, int id)
         {
-            if (taskName == typeof(Section).Name)
+            if (educationType.Equals(EducationType.Section))
             {
                 TempData["Title"] = "Units";
                 return UnitPreference(id);
             }
-            else if (taskName == typeof(Unit).Name)
+            else if (educationType.Equals(EducationType.Unit))
             {
                 TempData["Title"] = "Tasks";
                 return TaskPreference(id);
@@ -111,9 +111,9 @@ namespace FHICTDeploymentSystem.Controllers
         }
 
         [HttpPost]
-        public IActionResult SaveChecker(IEnumerable<Preference> preferences)
+        public IActionResult SaveChecker([FromBody]IEnumerable<EducationObject> tasks)
         {
-            var taskType = preferences.First().Task.GetType();
+            /*var taskType = preferences.First().Task.GetType();
 
             if (taskType == typeof(Unit))
             {
@@ -123,6 +123,9 @@ namespace FHICTDeploymentSystem.Controllers
             {
                 return null;
             }
+*/
+
+            return RedirectToAction("RedirectLayer");
         }
     }
 }
