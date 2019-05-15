@@ -20,7 +20,7 @@
                         <script>
                             var id = @Model.Task.Id;
                         </script>
-                        <ul class="btn-voorkeur btn-voorkeur-next" onclick="toggleVisibility(id)">
+                        <ul class="btn-voorkeur btn-voorkeur-next" onclick="toggleVisibility(@Model.Task.Id)">
                             @Model.Task.Name :
                             <a style="font-size: small;">@Model.Task.Description</a>
                         </ul>
@@ -81,7 +81,7 @@
 
 <script>
     function toggleVisibility(id) {
-            $( "#@Model.Task.Id").toggle();
+            $("#").toggle();
     }
     
 </script>
