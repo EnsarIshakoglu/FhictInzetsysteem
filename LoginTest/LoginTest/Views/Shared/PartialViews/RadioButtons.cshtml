@@ -5,55 +5,58 @@
 @using Task = FHICTDeploymentSystem.Models.EducationObject
 @model Preference
 
+<div class="col l12">
+    <div class="container">
+        <div class="row">
+            @if (Model.Task.EducationType.Equals(EducationType.Task))
+            {
+                <div id="periodText" class="hola">Period @Model.Task.Period</div>
+            }
 
-<div class="container">
-    <div class="row">
-        @if (Model.Task.EducationType.Equals(EducationType.Task))
-        {
-            <div id="periodText" class="hola">Period @Model.Task.Period</div>
-        }
+            <div class="col l8">
+                <center>
+                    @if (Model.Task.EducationType.Equals(EducationType.Task))
+                    {
+                        <script>
+                            var id = @Model.Task.Id;
+                        </script>
+                        <ul class="btn-voorkeur btn-voorkeur-next" onclick="toggleVisibility(id)">
+                            @Model.Task.Name :
+                            <a style="font-size: small;">@Model.Task.Description</a>
+                        </ul>
+                        <div class="Omschrijving" id="@Model.Task.Id" style="width: 80%;">@Model.Task.Explanation</div>
+                    }
+                    else
+                    {
 
-        <div class="col l6">
-            <center>
-                @if (Model.Task.EducationType.Equals(EducationType.Task))
+                        <ul class="btn-voorkeur btn-voorkeur-next" onclick="location.href = '@Url.Action("RedirectLayer", "Preference", new {educationType = @Model.Task.EducationType, id = @Model.Task.Id})'">
+                            <li>
+                                @Model.Task.Name
+                            </li>
+                        </ul>
+                        <div class="Omschrijving">Average preference value: @Model.Value</div>
+                    }
+                </center>
+            </div>
+            @for (int x = 1; x < 5; x++)
+            {
+                if (Model.Task.EducationType.Equals(EducationType.Task))
                 {
-
-                    <ul class="btn-voorkeur btn-voorkeur-next" >
-                        @Model.Task.Name : <a style="font-size: small; ">@Model.Task.Description</a>
-                    </ul>
+                    <div class="radioknoppen">
+                        <input id="Waarde" name=@Model.Task.Id type="radio" value=@x ; checked><br /><span style="color: #000000">@x</span>
+                    </div>
                 }
                 else
                 {
-
-                    <ul class="btn-voorkeur btn-voorkeur-next" onclick="location.href = '@Url.Action("RedirectLayer", "Preference", new {educationType = @Model.Task.EducationType, id = @Model.Task.Id})'">
-                        <li>
-                            @Model.Task.Name
-                        </li>
-                    </ul>
-                    <div class="Omschrijving">Average preference value: @Model.Value</div>
+                    <div class="radioknoppen">
+                        <input id="Waarde" name=@Model.Task.Id type="radio" value=@x><br /><span style="color: #000000">@x</span>
+                    </div>
                 }
-            </center>
+            }
         </div>
-        @for (int x = 1; x < 5; x++)
-        {
-            if (Model.Task.EducationType.Equals(EducationType.Task))
-            {
-                <div class="radioknoppen">
-                    <input id="Waarde" name=@Model.Task.Id type="radio" value=@x ; checked><br/><span style="color: #000000">@x</span>
-                </div>
-            }
-            else
-            {
-                <div class="radioknoppen">
-                    <input id="Waarde" name=@Model.Task.Id type="radio" value=@x><br /><span style="color: #000000">@x</span>
-                </div>
-            }
-
-
-        }
-
     </div>
-</div>
+    </div>
+
 
 
 <style>
@@ -75,3 +78,10 @@
         padding-top: 3%;
     }
 </style>
+
+<script>
+    function toggleVisibility(id) {
+            $( "#@Model.Task.Id").toggle();
+    }
+    
+</script>

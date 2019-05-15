@@ -1,37 +1,61 @@
 ﻿@using Microsoft.EntityFrameworkCore.Internal
 @model IEnumerable<Preference>
-
+<script>
+    /*var preferences = @Json.Serialize(Model);*/
+    console.log(preferences);
+</script>
 @{
     ViewData["Title"] = "OnderwijsTrajectPartialView";
 }
 <h1 id="Title" style="color: #663366"></h1>
 <body>
-    <div class="carousel-wrapper">
+    <div class="parent-dit">
+        <div class="child-dit">
+            <div class="carousel-wrapper">
 
-        <div class="carousel-item item-1">
-            <div class="parent-btn">
-                <a>
-                    @foreach (var Preference in @Model)
-                    {
-                        <div>
-                            @Html.Partial("PartialViews/RadioButtons", Preference)
-                        </div>
-                    }
-
+                <div class="carousel-item item-1">
                     <div class="parent-btn">
+                        <a>
+                            @foreach (var Preference in @Model)
+                            {
+                                <div>
+                                    @Html.Partial("PartialViews/RadioButtons", Preference)
+                                </div>
+                            }
 
-                        <center><button style="width: 15%;" id="saveBtn" onclick="goToSaveChecker()" class="btn-voorkeur" type="submit">Save</button></center>
-                        <br />
-                        <center><button style="width: 15%;" onclick="goBack()" class="btn-voorkeur" type="button">Terug</button></center>
+                            <div class="parent-btn">
+
+                                <center><button style="width: 15%;" id="saveBtn" onclick="goToSaveChecker()" class="btn-voorkeur" type="submit">Save</button></center>
+                                <br />
+                                <center><button style="width: 15%;" onclick="goBack()" class="btn-voorkeur" type="button">Terug</button></center>
+                            </div>
+                            @*
+                            </form>
+                            *@
+                        </a>
                     </div>
-                    @*
-                        </form>
-                    *@
-                </a>
+                </div>
             </div>
+        </div>
+
+        <div id="taskExplanation" style="color: #000000; width: 15%; " class="child-dit">
+            
         </div>
     </div>
 </body>
+
+<style>
+    .parent-dit {
+        padding: 10px 30px;
+        display: flex;
+        justify-content: center; /* align horizontal */
+        align-items: center; 
+    }
+    .child-dit {
+        float: left;
+        margin: 0 5px;
+    }
+</style>
 
 @if (null != TempData["Title"])
 {
@@ -97,3 +121,10 @@
         window.history.back();
     }
 </script>
+@*<script>
+    function showExplanation(id) {
+        var preference = preferences[id];
+        console.log(preference)
+        document.getElementById("taskExplanation").innerHTML = preference['explanation'];
+    };
+</script>*@

@@ -127,6 +127,7 @@
             <input id="code" type="text" name="field5" placeholder="Code">
             <input id="explanation" type="text" name="field6" placeholder="Explanation">
             <input id="hours" type="text" name="field7" placeholder="Hours">
+            @*<input id="factor" type="number" name="field9" placeholder="Factor">*@
         </fieldset>
         <fieldset>
             <textarea id="description" name="field8" placeholder="Description"></textarea>
@@ -172,23 +173,24 @@
                 });
         });
         $('#addButton').on('click', (function () {
-            var task = {
+            var taskToAdd = {
                 "Period": $("#period option:selected").val(),
                 "EstimatedHours": $("#hours").val(),
                 "Explanation": $("#explanation").val(),
                 "Name": $("#code").val(),
                 "Description": $("#description").val(),
-                "UnitExecId": $("#execId option:selected").val()
+                "UnitExecId": $("#execId option:selected").val()/*,
+                "Factor" : $("#factor").val()*/
             };
 
             $.ajax({
                 url: '@Url.Action("AddTask", "Task")',
-                data: JSON.stringify(task),
+                data: JSON.stringify(taskToAdd),
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function() {
-                    console.log('Succes!');
+                    console.log('Success!');
                 },
                 error: function() {
                     console.log('Error');

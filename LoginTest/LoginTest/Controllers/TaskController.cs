@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using FHICTDeploymentSystem.Logic;
 using FHICTDeploymentSystem.Models;
 using Logic;
-using Task = System.Threading.Tasks.Task;
 
 namespace FHICTDeploymentSystem.Controllers
 {
@@ -24,7 +23,10 @@ namespace FHICTDeploymentSystem.Controllers
         [HttpPost]
         public IActionResult AddTask([FromBody] EducationObject taskToAdd)
         {
-            _addTaskLogic.AddTask(taskToAdd);
+            /*for (var x = 0; x < taskToAdd.Factor; x++)
+            {*/
+                _addTaskLogic.AddTask(taskToAdd);               //als factor 2 is komt die taak 2x in de db terecht?
+            /*}*/
 
             return RedirectToAction("Profile", "Home");
         }
