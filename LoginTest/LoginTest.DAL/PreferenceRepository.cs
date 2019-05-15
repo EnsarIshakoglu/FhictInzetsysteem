@@ -39,14 +39,24 @@ namespace FHICTDeploymentSystem.DAL
             return _context.GetAllUnits(SectionId);
         }
 
-        public IEnumerable<EducationObject> GetAllTasks(int UnitId)
+        public IEnumerable<EducationObject> GetAllTasks(int unitExecId)
         {
-            return _context.GetAllTasks(UnitId);
+            return _context.GetAllTasks(unitExecId);
         }
 
         public IEnumerable<EducationObject> GetTasksFromSection(EducationObject Section)
         {
             return _context.GetTasksFromSection(Section);
+        }
+
+        public IEnumerable<EducationObject> GetTasksFromUnit(int unitId)
+        {
+            return _context.GetTasksFromUnit(unitId);
+        }
+
+        public IEnumerable<EducationObject> GetTasksFromUnitExecution(int unitExecutionId)
+        {
+            return _context.GetTasksFromUnitExecution(unitExecutionId);
         }
     }
 }

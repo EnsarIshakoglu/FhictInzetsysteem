@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FHICTDeploymentSystem.Logic;
 using FHICTDeploymentSystem.Models;
+using Logic;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FHICTDeploymentSystem.Controllers
@@ -10,7 +11,7 @@ namespace FHICTDeploymentSystem.Controllers
     public class PreferenceController : Controller
     {
         private readonly PreferenceLogic _preferenceLogic = new PreferenceLogic();
-
+        private readonly AddTaskLogic _addTaskLogic = new AddTaskLogic();
 
         [HttpGet]
         public IActionResult SectionPreference()
@@ -28,7 +29,7 @@ namespace FHICTDeploymentSystem.Controllers
         }
 
 
-        public IActionResult SaveSectionPreferences(IEnumerable<Preference> preferences)
+        public void SaveSectionPreferences(IEnumerable<Preference> preferences)
         {
             List<Preference> savePreferences = new List<Preference>();
 
@@ -42,8 +43,6 @@ namespace FHICTDeploymentSystem.Controllers
             }
 
             _preferenceLogic.SaveSectionPreferences(savePreferences, Convert.ToInt32(User.Identity.Name));
-
-            return RedirectToAction("SectionPreference", "Preference");
         }
 
         [HttpGet]
@@ -60,7 +59,7 @@ namespace FHICTDeploymentSystem.Controllers
             return View("SubmitPreferences", preferences);
         }
 
-        public IActionResult SaveUnitPreferences(IEnumerable<Preference> preferences)
+        public void SaveUnitPreferences(IEnumerable<Preference> preferences)
         {
             List<Preference> savePreferences = new List<Preference>();
 
@@ -74,15 +73,42 @@ namespace FHICTDeploymentSystem.Controllers
             }
 
             _preferenceLogic.SaveUnitPreferences(savePreferences, Convert.ToInt32(User.Identity.Name));
-
-            return RedirectToAction("SectionPreference", "Preference");
         }
-
-        [HttpPost]
-        public IActionResult TaskPreference(int unitId)
+        [HttpGet]
+        public IActionResult UnitExecutionPreference(int unitId)
         {
             var preferences = new List<Preference>();
-            var tasks = _preferenceLogic.GetAllTasks(unitId);
+            var unitExecs = _addTaskLogic.GetUnitTermExecutions(unitId);
+
+            foreach (var unitExec in unitExecs)
+            {
+                preferences.Add(_preferenceLogic.GetUnitExecPreference(unitExec, Convert.ToInt32(User.Identity.Name)));
+            }
+
+            return View("SubmitPreferences", preferences);
+        }
+
+        public void SaveUnitExecutionPreferences(IEnumerable<Preference> preferences)
+        {
+            List<Preference> savePreferences = new List<Preference>();
+
+            foreach (var preference in preferences)
+            {
+                if (preference.Value != -1)
+                {
+                    var value = preference.Value;
+                    savePreferences.Add(new Preference { Task = preference.Task, Value = value });
+                }
+            }
+
+            _preferenceLogic.SaveUnitExecutionPreferences(savePreferences, Convert.ToInt32(User.Identity.Name));
+        }
+
+        [HttpGet]
+        public IActionResult TaskPreference(int unitExecId)
+        {
+            var preferences = new List<Preference>();
+            var tasks = _preferenceLogic.GetAllTasks(unitExecId);
 
             foreach (var task in tasks)
             {
@@ -92,7 +118,8 @@ namespace FHICTDeploymentSystem.Controllers
             return View("SubmitPreferences", preferences);
         }
 
-        public IActionResult SaveTaskPreferences(IEnumerable<Preference> preferences)
+        [HttpPost]
+        public void SaveTaskPreferences(IEnumerable<Preference> preferences)
         {
             List<Preference> savePreferences = new List<Preference>();
 
@@ -106,8 +133,6 @@ namespace FHICTDeploymentSystem.Controllers
             }
 
             _preferenceLogic.SaveTaskPreferences(savePreferences, Convert.ToInt32(User.Identity.Name));
-
-            return RedirectToAction("SectionPreference", "Preference");
         }
 
         public IActionResult RedirectLayer(EducationType educationType, int id)
@@ -117,34 +142,50 @@ namespace FHICTDeploymentSystem.Controllers
                 TempData["Title"] = "Units";
                 return UnitPreference(id);
             }
-            else if (educationType.Equals(EducationType.Unit))
+            if (educationType.Equals(EducationType.Unit))
+            {
+                TempData["Title"] = "UnitExecutions";
+                return UnitExecutionPreference(id);
+            }
+            if (educationType.Equals(EducationType.UnitExec))
             {
                 TempData["Title"] = "Tasks";
                 return TaskPreference(id);
             }
-            else
-            {
                 return null;
-            }
         }
 
         [HttpPost]
         public IActionResult SaveChecker([FromBody]IEnumerable<Preference>preferences)
         {
+            var returnRoute = RedirectToAction("SectionPreference", "Preference");
             var taskType = preferences.First().Task.EducationType;
 
-            if (taskType == EducationType.Section)
+            if (taskType.Equals(EducationType.Section))
             {
-                return SaveSectionPreferences(preferences);
+                SaveSectionPreferences(preferences);
+                returnRoute = RedirectToAction("SectionPreference", "Preference");
             }
-            else if (taskType == EducationType.Unit)
+            if (taskType.Equals(EducationType.Unit))
             {
-                return SaveUnitPreferences(preferences);
+                SaveUnitPreferences(preferences);
+                returnRoute = RedirectToAction("UnitPreference", "Preference");
+                //return RedirectToAction("UnitPreference", "Preference");
             }
-            else
+            if (taskType.Equals(EducationType.UnitExec))
             {
-                return SaveTaskPreferences(preferences);
+                SaveUnitExecutionPreferences(preferences);
+                returnRoute = RedirectToAction("UnitExecutionPreference", "Preference");
+                //return RedirectToAction("UnitExecutionPreference", "Preference");
             }
+            if (taskType.Equals(EducationType.Task))
+            {
+                SaveTaskPreferences(preferences);
+                returnRoute = RedirectToAction("TaskPreference", "Preference");
+                //return RedirectToAction("TaskPreference", "Preference");
+            }
+
+            return returnRoute;
         }
     }
 }

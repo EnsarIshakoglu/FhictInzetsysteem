@@ -74,7 +74,7 @@ namespace FHICTDeploymentSystem.DAL.Contexts
             return units;
         }
 
-        public IEnumerable<EducationObject> GetAllTasks(int UnitId)
+        public IEnumerable<EducationObject> GetAllTasks(int unitExecId)
         {
             var taken = new List<EducationObject>();
 
@@ -86,7 +86,7 @@ namespace FHICTDeploymentSystem.DAL.Contexts
 
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add(new SqlParameter("@UnitId", UnitId));
+                cmd.Parameters.Add(new SqlParameter("@UnitExecId", unitExecId));
 
                 var reader = cmd.ExecuteReader();
 
@@ -131,6 +131,7 @@ namespace FHICTDeploymentSystem.DAL.Contexts
                     tasks.Add(new EducationObject
                     {
                         Id = (int)reader["Id"],
+                        Name = reader["Code"]?.ToString(),
                         EducationType = EducationType.Task
                     });
                 }
@@ -139,6 +140,43 @@ namespace FHICTDeploymentSystem.DAL.Contexts
             }
 
             return tasks;
+        }
+
+        public IEnumerable<EducationObject> GetTasksFromUnit(int unitId)
+        {
+            var tasks = new List<EducationObject>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                SqlCommand cmd = new SqlCommand("GetTasksWithinUnit", connection);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add(new SqlParameter("@UnitId", unitId));
+
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    tasks.Add(new EducationObject
+                    {
+                        Id = (int)reader["Id"],
+                        Name = reader["Code"]?.ToString(),
+                        EducationType = EducationType.Task
+                    });
+                }
+
+                connection.Close();
+            }
+
+            return tasks;
+        }
+
+        public IEnumerable<EducationObject> GetTasksFromUnitExecution(int unitExecutionId)
+        {
+            throw new NotImplementedException();
         }
 
         public Preference CheckTaskPreference(EducationObject task, int userId) //todo kijken of het generic kan gemaakt worden

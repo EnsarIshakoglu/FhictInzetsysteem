@@ -52,7 +52,8 @@ namespace DAL.Contexts
                     unitTermExecutions.Add(new EducationObject
                     {
                         Id = (int)reader["Id"],
-                        Name = reader["Name"]?.ToString()
+                        Name = reader["Name"]?.ToString(),
+                        EducationType = EducationType.UnitExec
                     });
                 }
 

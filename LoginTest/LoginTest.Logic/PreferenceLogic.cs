@@ -31,10 +31,10 @@ namespace FHICTDeploymentSystem.Logic
             return preference;
         }
 
-        public Preference GetUnitPreference(EducationObject unit, int userId)
+        public Preference GetUnitPreference(EducationObject unit, int userId) //---------------------------------------------
         {
             List<Preference> preferences = new List<Preference>();
-            var tasks = GetAllTasks(unit.Id);
+            var tasks = GetTasksFromUnit(unit.Id);
 
             preferences = GetTasksPreferences(tasks, preferences, userId);
             int averageValue = CalcAveragePreference(preferences);
@@ -42,6 +42,23 @@ namespace FHICTDeploymentSystem.Logic
             preference.ValueIsAverage = CheckIfAverage(preferences, averageValue);
 
             return preference;
+        }
+        public Preference GetUnitExecPreference(EducationObject unitExec, int userId)
+        {
+            List<Preference> preferences = new List<Preference>();
+            var tasks = GetAllTasks(unitExec.Id);
+
+            preferences = GetTasksPreferences(tasks, preferences, userId);
+            int averageValue = CalcAveragePreference(preferences);
+            var preference = new Preference { Value = averageValue, Task = unitExec };
+            preference.ValueIsAverage = CheckIfAverage(preferences, averageValue);
+
+            return preference;
+        }
+
+        private IEnumerable<EducationObject> GetTasksFromUnit(int unitId)
+        {
+            return _repo.GetTasksFromUnit(unitId);
         }
 
         public bool CheckIfAverage(List<Preference> preferences, int averageValue)
@@ -67,10 +84,10 @@ namespace FHICTDeploymentSystem.Logic
         {
             foreach (var task in tasks)
             {
-                var Priority = CheckTaskPreference(task, userId);
-                if (Priority.Value > 0)
+                var priority = CheckTaskPreference(task, userId);
+                if (priority.Value > 0)
                 {
-                    preferences.Add(Priority);
+                    preferences.Add(priority);
                 }
             }
             return preferences;
@@ -78,8 +95,8 @@ namespace FHICTDeploymentSystem.Logic
 
         public int CalcAveragePreference(List<Preference> preferences)
         {
-            int preferenceValue = 0;
-            int valueToDivideBy = preferences.Count();
+            decimal preferenceValue = 0;
+            decimal valueToDivideBy = preferences.Count();
             if (valueToDivideBy == 0) valueToDivideBy = 1;
 
             foreach (var preference in preferences)
@@ -87,9 +104,9 @@ namespace FHICTDeploymentSystem.Logic
                 preferenceValue += preference.Value;
             }
 
-            preferenceValue = preferenceValue / valueToDivideBy;
+            var averagePreferenceValue = preferenceValue / valueToDivideBy;
 
-            return preferenceValue;
+            return (int)Math.Round(averagePreferenceValue);
         }
 
         public void SaveSectionPreferences(IEnumerable<Preference> sectionPreferences, int userId)
@@ -118,13 +135,13 @@ namespace FHICTDeploymentSystem.Logic
             }
         }
 
-        public void SaveUnitPreferences(IEnumerable<Preference> UnitPreferences, int userId)
+        public void SaveUnitPreferences(IEnumerable<Preference> unitPreferences, int userId)//---------------------------
         {
-            foreach (var unitPreference in UnitPreferences)
+            foreach (var unitPreference in unitPreferences)
             {
                 List<EducationObject> tasks = new List<EducationObject>();
 
-                tasks.AddRange(GetAllTasks(unitPreference.Task.Id));
+                tasks.AddRange(GetTasksFromUnit(unitPreference.Task.Id));
                 
                 foreach (var task in tasks)
                 {
@@ -136,6 +153,28 @@ namespace FHICTDeploymentSystem.Logic
                     else
                     {
                         UpdateTaskPreference(task, unitPreference.Value, userId);
+                    }
+                }
+            }
+        }
+        public void SaveUnitExecutionPreferences(IEnumerable<Preference> unitExecutionPreferences, int userId)//---------------------------
+        {
+            foreach (var unitExecutionPreference in unitExecutionPreferences)
+            {
+                List<EducationObject> tasks = new List<EducationObject>();
+
+                tasks.AddRange(GetAllTasks(unitExecutionPreference.Task.Id));
+
+                foreach (var task in tasks)
+                {
+                    var checkTaskPreference = CheckTaskPreference(task, userId);
+                    if (checkTaskPreference.Value == -1)
+                    {
+                        AddTaskPreference(task, unitExecutionPreference.Value, userId);
+                    }
+                    else
+                    {
+                        UpdateTaskPreference(task, unitExecutionPreference.Value, userId);
                     }
                 }
             }
@@ -178,9 +217,9 @@ namespace FHICTDeploymentSystem.Logic
             return _repo.GetAllUnits(edSectionId);
         }
 
-        public IEnumerable<EducationObject> GetAllTasks(int unitId)
+        public IEnumerable<EducationObject> GetAllTasks(int unitExecId)
         {
-            return _repo.GetAllTasks(unitId);
+            return _repo.GetAllTasks(unitExecId);
         }
 
         public IEnumerable<EducationObject> GetTasksFromSection(EducationObject section)

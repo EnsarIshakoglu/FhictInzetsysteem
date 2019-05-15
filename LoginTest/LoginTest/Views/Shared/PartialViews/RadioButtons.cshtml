@@ -24,7 +24,11 @@
                             @Model.Task.Name :
                             <a style="font-size: small;">@Model.Task.Description</a>
                         </ul>
-                        <div class="Omschrijving" id="@Model.Task.Id" style="width: 80%;">@Model.Task.Explanation</div>
+                        <div class="col l12">
+                            <div class="Omschrijving col l10" id="@Model.Task.Id" style="">@Model.Task.Explanation</div>
+                            <div class="Omschrijving col l2" id="@Model.Task.Id" style="float: right;">Hours: <b>@Model.Task.EstimatedHours </b></div>
+                        </div>
+                        
                     }
                     else
                     {
@@ -34,16 +38,31 @@
                                 @Model.Task.Name
                             </li>
                         </ul>
-                        <div class="Omschrijving">Average preference value: @Model.Value</div>
+                        if (@Model.Value == 0)
+                        {
+                            <div class="Omschrijving">Average preference value: NONE</div>
+                        }
+                        else
+                        {
+                            <div class="Omschrijving">Average preference value: @Model.Value</div>
+                        }
+
                     }
                 </center>
             </div>
             @for (int x = 1; x < 5; x++)
             {
+                string defCheck = null;
+
+                if (@Model.Value == x)
+                {
+                    defCheck = "checked";
+                }
+
                 if (Model.Task.EducationType.Equals(EducationType.Task))
                 {
                     <div class="radioknoppen">
-                        <input id="Waarde" name=@Model.Task.Id type="radio" value=@x ; checked><br /><span style="color: #000000">@x</span>
+                        <input id="Waarde" name=@Model.Task.Id type="radio" value=@x ; @defCheck><br /><span style="color: #000000">@x</span>
                     </div>
                 }
                 else
