@@ -75,10 +75,10 @@ namespace FHICTDeploymentSystem.Controllers
             _preferenceLogic.SaveUnitPreferences(savePreferences, Convert.ToInt32(User.Identity.Name));
         }
         [HttpGet]
-        public IActionResult UnitExecutionPreference(int unitId)
+        public IActionResult UnitExecutionPreference(int unitExecId)
         {
             var preferences = new List<Preference>();
-            var unitExecs = _addTaskLogic.GetUnitTermExecutions(unitId);
+            var unitExecs = _addTaskLogic.GetUnitTermExecutions(unitExecId);
 
             foreach (var unitExec in unitExecs)
             {

@@ -52,8 +52,9 @@ body {
     white-space: nowrap;
     /* Set the fixed height of the footer here */
     height: 60px;
+    color: #e5e5e5;
+    z-index: 5;
     line-height: 60px; /* Vertically center the text there */
-    background-color: white;
+    background-color: #663366;
     padding-left: 2%;
-
 }
