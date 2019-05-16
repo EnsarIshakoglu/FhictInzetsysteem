@@ -70,7 +70,7 @@
                             @if (User.IsInRole(Roles.Teacher.ToString()))
                             {
                                 <li><a asp-area="" asp-controller="Home" asp-action="Profile">Profile</a></li>
-                                <li><a asp-area="" asp-controller="Preference" asp-action="SectionPreference">Set preferences</a></li>
+                                <li><a asp-area="" asp-controller="Preference" asp-action="SectionPreference">Preferences</a></li>
                                 <li><a asp-area="" asp-controller="Home" asp-action="MijnTaken">My tasks</a></li>
                             }
                             @if (User.IsInRole(Roles.TeamLeader.ToString()))
@@ -84,7 +84,7 @@
                             }
                             @if (User.IsInRole(Roles.UnitOwner.ToString()) || User.IsInRole(Roles.InstituteMember.ToString()))
                             {
-                                <li><a asp-area="" asp-controller="Home" asp-action="Movies">Add Task</a></li>
+                                <li><a asp-area="" asp-controller="Home" asp-action="Movies">Tasks</a></li>
                             }
                         </ul>
                         <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
