@@ -53,6 +53,7 @@ namespace DAL.Contexts
                     {
                         Id = (int)reader["Id"],
                         Name = reader["Name"]?.ToString(),
+                        TermExecution = reader["TermExecution"]?.ToString(),
                         EducationType = EducationType.UnitExec
                     });
                 }

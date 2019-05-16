@@ -62,7 +62,13 @@
                             }
                             @if (User.IsInRole(Roles.UnitOwner.ToString()) || User.IsInRole(Roles.InstituteMember.ToString()))
                             {
-                                <li><a asp-area="" asp-controller="Task" asp-action="Index">Tasks</a></li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link text-dark dropbtn">Add</a>
+                                    <div class="dropdown-content">
+                                        <a asp-area="" asp-controller="Movie" asp-action="AddMovie">Add Movie</a>
+                                        <a asp-area="" asp-controller="Movie" asp-action="AddAiringMovieView">Add Airing</a>
+                                    </div>
+                                </li>
                             }
                             <input type="button" value="Log Out" onclick="location.href = '@Url.Action("Logout", "Home")'" class="btn btn-primary"/>
                         </ul>
@@ -130,3 +136,43 @@
 @RenderSection("Scripts", required: false)
 </body>
 </html>
+
+<style>
+    .dropbtn {
+        color: white;
+        font-size: 16px;
+        border: none;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #663336;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 10;
+    }
+
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+        .dropdown-content a:hover {
+            background-color: #663336;
+        }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown:hover .dropbtn {
+    }
+</style>
