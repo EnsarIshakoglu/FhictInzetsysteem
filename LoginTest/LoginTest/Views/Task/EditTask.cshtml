@@ -133,13 +133,18 @@
     <script>
         $('#sections').change(function() {
             $('#units').empty();
+            $('#tasks').empty();
+            $('#execId').empty();
             var selectedSectionId = $("#sections option:selected").val();
+            var selectedUnit = $('#units');
+            selectedUnit.append($("<option></option>")
+                .attr("value", "12" )
+                .text("-Select-"));
             $.post('@Url.Action("GetUnits", "Task")',
                 {
                     sectionId: selectedSectionId
                 },
                 function(data) {
-                    var selectedUnit = $('#units');
                     data.forEach(function(section) {
                         selectedUnit.append($("<option></option>")
                             .attr("value", section.id)
@@ -150,13 +155,18 @@
 
         $('#units').change(function() {
             $('#execId').empty();
+            $('#tasks').empty();
             var selectedUnitId = $("#units option:selected").val();
+            var selectedExec = $('#execId');
+            selectedExec.append($("<option></option>")
+                .attr("value", "test")
+                .text("-Select-"));
+
             $.post('@Url.Action("GetTermExecutions", "Task")',
                 {
                     unitId: selectedUnitId
                 },
                 function(data) {
-                    var selectedExec = $('#execId');
                     data.forEach(function(exec) {
                         selectedExec.append($("<option></option>")
                             .attr("value", exec.id)
@@ -165,37 +175,23 @@
                 });
         });
 
-        
-        $('#units').change(function() {
-            $('#execId').empty();
-            var selectedUnitId = $("#units option:selected").val();
-            $.post('@Url.Action("GetTermExecutions", "Task")',
+        $('#execId').change(function() {
+            $('#tasks').empty();
+            var selectedExecId = $("#execId option:selected").val();
+            var selectTasks = $('#tasks');
+            selectTasks.append($("<option></option>")
+                .attr("value", "Lol")
+                .text("-Select-"));
+            $.post('@Url.Action("GetTasks", "Task")',
                 {
-                    unitId: selectedUnitId
+                    execId: selectedExecId
                 },
                 function(data) {
-                    var selectedExec = $('#execId');
-                    data.forEach(function(exec) {
-                        selectedExec.append($("<option></option>")
-                            .attr("value", exec.id)
-                            .text(exec.name));
-                    });
-                });
-        });
-
-        $('#units').change(function() {
-            $('#execId').empty();
-            var selectedUnitId = $("#units option:selected").val();
-            $.post('@Url.Action("GetTermExecutions", "Task")',
-                {
-                    unitId: selectedUnitId
-                },
-                function(data) {
-                    var selectedExec = $('#execId');
-                    data.forEach(function(exec) {
-                        selectedExec.append($("<option></option>")
-                            .attr("value", exec.id)
-                            .text(exec.name));
+                    data.forEach(function (task) {
+                        selectTasks.append($("<option></option>")
+                            .attr("value", task.id)
+                            .text(task.name + ": " + task.description));
+                        console.log(JSON.stringify(task));
                     });
                 });
         });

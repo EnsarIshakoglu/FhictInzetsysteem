@@ -37,6 +37,18 @@ namespace FHICTDeploymentSystem.Controllers
         }
 
         [HttpPost]
+        public IActionResult GetTasks(int execId)
+        {
+            var result = new List<EducationObject>();
+            foreach (var termExecution in _preferenceLogic.GetAllTasks(execId))
+            {
+                result.Add(termExecution);
+            }
+
+            return Json(result);
+        }
+
+        [HttpPost]
         public IActionResult GetUnits(int sectionId)
         {
             var result = new List<EducationObject>();

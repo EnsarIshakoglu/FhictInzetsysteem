@@ -141,13 +141,17 @@
     <script>
         $('#sections').change(function() {
             $('#units').empty();
+            $('#execId').empty();
             var selectedSectionId = $("#sections option:selected").val();
+            var selectedUnit = $('#units');
+            selectedUnit.append($("<option></option>")
+                .attr("value", "12" )
+                .text("-Select-"));
             $.post('@Url.Action("GetUnits", "Task")',
                 {
                     sectionId: selectedSectionId
                 },
                 function(data) {
-                    var selectedUnit = $('#units');
                     data.forEach(function(section) {
                         selectedUnit.append($("<option></option>")
                             .attr("value", section.id)
@@ -159,12 +163,16 @@
         $('#units').change(function() {
             $('#execId').empty();
             var selectedUnitId = $("#units option:selected").val();
+            var selectedExec = $('#execId');
+            selectedExec.append($("<option></option>")
+                .attr("value", "test")
+                .text("-Select-"));
+
             $.post('@Url.Action("GetTermExecutions", "Task")',
                 {
                     unitId: selectedUnitId
                 },
                 function(data) {
-                    var selectedExec = $('#execId');
                     data.forEach(function(exec) {
                         selectedExec.append($("<option></option>")
                             .attr("value", exec.id)
@@ -172,6 +180,7 @@
                     });
                 });
         });
+
         $('#addButton').on('click', (function () {
             var taskToAdd = {
                 "Period": $("#period option:selected").val(),
