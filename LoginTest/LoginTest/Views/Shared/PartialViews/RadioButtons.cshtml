@@ -20,10 +20,10 @@
                         <script>
                             var id = @Model.Task.Id;
                         </script>
-                        <ul class="btn-voorkeur btn-voorkeur-next" onclick="toggleVisibility(@Model.Task.Id)">
+                        <div class="btn-voorkeur btn-voorkeur-next" onclick="toggleVisibility(@Model.Task.Id)">
                             @Model.Task.Name
                             <a style="font-size: small;">: @Model.Task.Description</a>
-                        </ul>
+                        </div>
                         <div class="col l12">
                             <div class="Omschrijving col l10" id="@Model.Task.Id" style="">@Model.Task.Explanation</div>
                             <div class="Omschrijving col l2" id="@Model.Task.Id" style="float: right;">Hours: <b>@Model.Task.EstimatedHours </b></div>
