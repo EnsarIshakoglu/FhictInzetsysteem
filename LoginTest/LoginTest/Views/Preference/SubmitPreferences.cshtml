@@ -5,7 +5,7 @@
     console.log(preferences);
 </script>
 @{
-    ViewData["Title"] = "OnderwijsTrajectPartialView";
+    ViewData["Title"] = "SectionPartialView";
 }
 <h1 id="Title" style="color: #663366"></h1>
 <body>
@@ -29,7 +29,7 @@
                                     <br />
                                     @if (Model.First().Task.EducationType != EducationType.Section)
                                     {
-                                        <center><button style="width: 15%;" onclick="goBack()" class="btn-voorkeur" type="button">Terug</button></center>
+                                        <center><button style="width: 15%;" onclick="goBack()" class="btn-voorkeur" type="button">Back</button></center>
                                     }
                                 </div>
                             @*
@@ -100,7 +100,7 @@
 
         console.log(preferences);
 
-        var controllerPath = '@Url.Action("SaveChecker", "Preference")';
+        var controllerPath = '@Url.Action("SaveChecker", "Preference", new { educationType = @Model.First().Task.EducationType, id = @Model.First().Task.Id })';
 
         console.log(JSON.stringify(preferences));
 
@@ -111,7 +111,7 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function() {
-                console.log('Succes!');
+                console.log('Success!');
             },
             error: function() {
                 console.log('Error');
