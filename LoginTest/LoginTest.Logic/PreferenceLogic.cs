@@ -18,95 +18,10 @@ namespace FHICTDeploymentSystem.Logic
             return _repo.GetAllSections();
         }
 
-        public Preference GetSectionPreference(EducationObject section, int userId)
-        {
-            List<Preference> preferences = new List<Preference>();
-            var tasks = GetTasksFromSection(section);
-
-            preferences = GetTasksPreferences(tasks, preferences, userId);
-            int averageValue = CalcAveragePreference(preferences);
-            var preference = new Preference { Value = averageValue, Task = section };
-            preference.ValueIsAverage = CheckIfAverage(preferences, averageValue);
-
-            return preference;
-        }
-
-        public Preference GetUnitPreference(EducationObject unit, int userId) //---------------------------------------------
-        {
-            List<Preference> preferences = new List<Preference>();
-            var tasks = GetTasksFromUnit(unit.Id);
-
-            preferences = GetTasksPreferences(tasks, preferences, userId);
-            int averageValue = CalcAveragePreference(preferences);
-            var preference = new Preference { Value = averageValue, Task = unit };
-            preference.ValueIsAverage = CheckIfAverage(preferences, averageValue);
-
-            return preference;
-        }
-        public Preference GetUnitExecPreference(EducationObject unitExec, int userId)
-        {
-            List<Preference> preferences = new List<Preference>();
-            var tasks = GetAllTasks(unitExec.Id);
-
-            preferences = GetTasksPreferences(tasks, preferences, userId);
-            int averageValue = CalcAveragePreference(preferences);
-            var preference = new Preference { Value = averageValue, Task = unitExec };
-            preference.ValueIsAverage = CheckIfAverage(preferences, averageValue);
-
-            return preference;
-        }
-
-        private IEnumerable<EducationObject> GetTasksFromUnit(int unitId)
-        {
-            return _repo.GetTasksFromUnit(unitId);
-        }
-
-        public bool CheckIfAverage(List<Preference> preferences, int averageValue)
-        {
-            foreach (var pref in preferences)
-            {
-                if (pref.Value != averageValue)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
         public Preference GetTaskPreference(EducationObject task, int userId)
         {
             var preference = new Preference { Value = _repo.CheckTaskPreference(task, userId).Value, Task = task };
             return preference;
-        }
-
-
-        public List<Preference> GetTasksPreferences(IEnumerable<EducationObject> tasks, List<Preference> preferences, int userId)
-        {
-            foreach (var task in tasks)
-            {
-                var priority = CheckTaskPreference(task, userId);
-                if (priority.Value > 0)
-                {
-                    preferences.Add(priority);
-                }
-            }
-            return preferences;
-        }
-
-        public int CalcAveragePreference(List<Preference> preferences)
-        {
-            decimal preferenceValue = 0;
-            decimal valueToDivideBy = preferences.Count();
-            if (valueToDivideBy == 0) valueToDivideBy = 1;
-
-            foreach (var preference in preferences)
-            {
-                preferenceValue += preference.Value;
-            }
-
-            var averagePreferenceValue = preferenceValue / valueToDivideBy;
-
-            return (int)Math.Round(averagePreferenceValue);
         }
 
         public void SaveSectionPreferences(IEnumerable<Preference> sectionPreferences, int userId)
@@ -225,6 +140,10 @@ namespace FHICTDeploymentSystem.Logic
         public IEnumerable<EducationObject> GetTasksFromSection(EducationObject section)
         {
             return _repo.GetTasksFromSection(section);
+        }
+        private IEnumerable<EducationObject> GetTasksFromUnit(int unitId)
+        {
+            return _repo.GetTasksFromUnit(unitId);
         }
     }
 }
