@@ -5,7 +5,7 @@
     console.log(preferences);
 </script>
 @{
-    ViewData["Title"] = "SectionPartialView";
+    ViewData["Title"] = "Preferences";
 }
 <h1 id="Title" style="color: #663366"></h1>
 <body>
@@ -25,11 +25,11 @@
 
                                 <div class="parent-btn">
 
-                                    <center><button style="width: 15%;" id="saveBtn" onclick="goToSaveChecker()" class="btn-voorkeur" type="submit">Save</button></center>
+                                    <center><button style="width: 15%;" id="saveBtn" onclick="goToSaveChecker()" class="btn-preference" type="submit">Save</button></center>
                                     <br />
                                     @if (Model.First().Task.EducationType != EducationType.Section)
                                     {
-                                        <center><button style="width: 15%;" onclick="goBack()" class="btn-voorkeur" type="button">Back</button></center>
+                                        <center><button style="width: 15%;" onclick="goBack()" class="btn-preference" type="button">Back</button></center>
                                     }
                                 </div>
                             @*

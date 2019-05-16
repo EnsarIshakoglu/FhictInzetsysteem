@@ -10,7 +10,7 @@
         <div class="row">
             @if (Model.Task.EducationType.Equals(EducationType.Task))
             {
-                <div id="periodText" class="hola">Period @Model.Task.Period</div>
+                <div id="periodText" class="period-label">Period @Model.Task.Period</div>
             }
 
             <div class="col l7">
@@ -20,20 +20,20 @@
                         <script>
                             var id = @Model.Task.Id;
                         </script>
-                        <div class="btn-voorkeur btn-voorkeur-next" onclick="toggleVisibility(@Model.Task.Id)">
+                        <div class="btn-preference btn-preference-next" onclick="toggleVisibility(@Model.Task.Id)">
                             @Model.Task.Name
                             <a style="font-size: small;">: @Model.Task.Description</a>
                         </div>
                         <div class="col l12">
-                            <div class="Omschrijving col l10" id="@Model.Task.Id" style="">@Model.Task.Explanation</div>
-                            <div class="Omschrijving col l2" id="@Model.Task.Id" style="float: right;">Hours: <b>@Model.Task.EstimatedHours </b></div>
+                            <div class="description-pref col l10" id="@Model.Task.Id" style="">@Model.Task.Explanation</div>
+                            <div class="description-pref col l2" id="@Model.Task.Id" style="float: right;">Hours: <b>@Model.Task.EstimatedHours </b></div>
                         </div>
                         
                     }
                     else
                     {
 
-                        <ul class="btn-voorkeur btn-voorkeur-next" onclick="location.href = '@Url.Action("RedirectLayer", "Preference", new {educationType = @Model.Task.EducationType, id = @Model.Task.Id})'">
+                        <ul class="btn-preference btn-preference-next" onclick="location.href = '@Url.Action("RedirectLayer", "Preference", new {educationType = @Model.Task.EducationType, id = @Model.Task.Id})'">
                             <li>
                                 @Model.Task.Name
                             </li>
@@ -53,14 +53,14 @@
 
                 if (Model.Task.EducationType.Equals(EducationType.Task))
                 {
-                    <div class="radioknoppen">
-                        <input id="Waarde" name=@Model.Task.Id type="radio" value=@x ; @defCheck><br /><span style="color: #000000">@x</span>
+                    <div class="radio-btn">
+                        <input id="Value" name=@Model.Task.Id type="radio" value=@x ; @defCheck><br /><span style="color: #000000">@x</span>
                     </div>
                 }
                 else
                 {
-                    <div class="radioknoppen">
-                        <input id="Waarde" name=@Model.Task.Id type="radio" value=@x><br /><span style="color: #000000">@x</span>
+                    <div class="radio-btn">
+                        <input id="Value" name=@Model.Task.Id type="radio" value=@x><br /><span style="color: #000000">@x</span>
                     </div>
                 }
             }
@@ -78,12 +78,12 @@
         color: #000;
     }
 
-    div [class*="Omschrijving"] {
+    div [class*="description-pref"] {
         color: #000000;
         font-size: small;
     }
 
-    div [class*="radioknoppen"] {
+    div [class*="radio-btn"] {
         float: left;
         padding-left: 3.5%;
         padding-top: 3%;
