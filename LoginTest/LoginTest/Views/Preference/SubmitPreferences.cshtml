@@ -5,7 +5,7 @@
     console.log(preferences);
 </script>
 @{
-    ViewData["Title"] = "OnderwijsTrajectPartialView";
+    ViewData["Title"] = "SectionPartialView";
 }
 <h1 id="Title" style="color: #663366"></h1>
 <body>
@@ -15,34 +15,34 @@
 
                 <div class="carousel-item item-1">
                     <div class="parent-btn">
-                        
-                            @foreach (var Preference in @Model)
+
+                        @foreach (var Preference in @Model)
+                        {
+                            <div>
+                                @Html.Partial("PartialViews/RadioButtons", Preference)
+                            </div>
+                        }
+
+                        <div class="parent-btn">
+
+                            <center><button style="width: 15%;" id="saveBtn" onclick="goToSaveChecker()" class="btn-voorkeur" type="submit">Save</button></center>
+                            <br />
+                            @if (Model.First().Task.EducationType != EducationType.Section)
                             {
-                                <div>
-                                    @Html.Partial("PartialViews/RadioButtons", Preference)
-                                </div>
+                                <center><button style="width: 15%;" onclick="goBack()" class="btn-voorkeur" type="button">Back</button></center>
                             }
-
-                                <div class="parent-btn">
-
-                                    <center><button style="width: 15%;" id="saveBtn" onclick="goToSaveChecker()" class="btn-voorkeur" type="submit">Save</button></center>
-                                    <br />
-                                    @if (Model.First().Task.EducationType != EducationType.Section)
-                                    {
-                                        <center><button style="width: 15%;" onclick="goBack()" class="btn-voorkeur" type="button">Terug</button></center>
-                                    }
-                                </div>
-                            @*
+                        </div>
+                        @*
                             </form>
-                            *@
-                        
+                        *@
+
                     </div>
                 </div>
             </div>
         </div>
 
         <div id="taskExplanation" style="color: #000000; width: 15%; " class="child-dit">
-            
+
         </div>
     </div>
 </body>
@@ -52,8 +52,9 @@
         padding: 10px 30px;
         display: flex;
         justify-content: center; /* align horizontal */
-        align-items: center; 
+        align-items: center;
     }
+
     .child-dit {
         float: left;
         margin: 0 5px;
@@ -100,10 +101,10 @@
 
         console.log(preferences);
 
-        var controllerPath = '@Url.Action("SaveChecker", "Preference")';
+        var controllerPath = '@Url.Action("SaveChecker", "Preference", new { educationType = @Model.First().Task.EducationType, id = @Model.First().Task.Id })';
 
         console.log(JSON.stringify(preferences));
-
+        
         $.ajax({
             url: controllerPath,
             data: JSON.stringify(preferences),
@@ -111,12 +112,12 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function() {
-                console.log('Succes!');
+                console.log('Success!');
             },
             error: function() {
                 console.log('Error');
             }
-        });
+            });
         window.location.reload();
     }
 </script>
@@ -126,9 +127,9 @@
     }
 </script>
 @*<script>
-    function showExplanation(id) {
-        var preference = preferences[id];
-        console.log(preference)
-        document.getElementById("taskExplanation").innerHTML = preference['explanation'];
-    };
-</script>*@
+        function showExplanation(id) {
+            var preference = preferences[id];
+            console.log(preference)
+            document.getElementById("taskExplanation").innerHTML = preference['explanation'];
+        };
+    </script>*@

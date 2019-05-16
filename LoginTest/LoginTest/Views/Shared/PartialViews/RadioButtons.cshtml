@@ -12,6 +12,10 @@
             {
                 <div id="periodText" class="hola">Period @Model.Task.Period</div>
             }
+            else if (Model.Task.EducationType.Equals(EducationType.UnitExec))
+            {
+                <div id="termExecText" class="hola">@Model.Task.TermExecution</div>
+            }
 
             <div class="col l7">
                 <center>
@@ -28,7 +32,7 @@
                             <div class="Omschrijving col l10" id="@Model.Task.Id" style="">@Model.Task.Explanation</div>
                             <div class="Omschrijving col l2" id="@Model.Task.Id" style="float: right;">Hours: <b>@Model.Task.EstimatedHours </b></div>
                         </div>
-                        
+
                     }
                     else
                     {
