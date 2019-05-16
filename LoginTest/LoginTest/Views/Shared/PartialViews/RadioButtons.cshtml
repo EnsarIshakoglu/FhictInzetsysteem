@@ -21,8 +21,8 @@
                             var id = @Model.Task.Id;
                         </script>
                         <ul class="btn-voorkeur btn-voorkeur-next" onclick="toggleVisibility(@Model.Task.Id)">
-                            @Model.Task.Name :
-                            <a style="font-size: small;">@Model.Task.Description</a>
+                            @Model.Task.Name
+                            <a style="font-size: small;">: @Model.Task.Description</a>
                         </ul>
                         <div class="col l12">
                             <div class="Omschrijving col l10" id="@Model.Task.Id" style="">@Model.Task.Explanation</div>
