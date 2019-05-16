@@ -38,19 +38,11 @@
                                 @Model.Task.Name
                             </li>
                         </ul>
-                        if (@Model.Value == 0)
-                        {
-                            <div class="Omschrijving">Average preference value: NONE</div>
-                        }
-                        else
-                        {
-                            <div class="Omschrijving">Average preference value: @Model.Value</div>
-                        }
 
                     }
                 </center>
             </div>
-            @for (int x = 1; x < 5; x++)
+            @for (int x = 0; x < 5; x++)
             {
                 string defCheck = null;
 

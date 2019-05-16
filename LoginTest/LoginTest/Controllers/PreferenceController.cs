@@ -21,7 +21,8 @@ namespace FHICTDeploymentSystem.Controllers
 
             foreach (var section in sections)
             {
-                preferences.Add(_preferenceLogic.GetSectionPreference(section, Convert.ToInt32(User.Identity.Name)));
+                Preference preference = new Preference {Task = section};
+                preferences.Add(preference);
             }
 
             TempData["Title"] = "Sections";
@@ -53,7 +54,8 @@ namespace FHICTDeploymentSystem.Controllers
 
             foreach (var unit in units)
             {
-                preferences.Add(_preferenceLogic.GetUnitPreference(unit, Convert.ToInt32(User.Identity.Name)));
+                Preference preference = new Preference { Task = unit };
+                preferences.Add(preference);
             }
 
             return View("SubmitPreferences", preferences);
@@ -82,7 +84,8 @@ namespace FHICTDeploymentSystem.Controllers
 
             foreach (var unitExec in unitExecs)
             {
-                preferences.Add(_preferenceLogic.GetUnitExecPreference(unitExec, Convert.ToInt32(User.Identity.Name)));
+                Preference preference = new Preference { Task = unitExec };
+                preferences.Add(preference);
             }
 
             return View("SubmitPreferences", preferences);
