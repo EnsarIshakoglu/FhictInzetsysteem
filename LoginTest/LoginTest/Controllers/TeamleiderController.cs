@@ -1,19 +1,19 @@
-﻿using Inzetsysteem.Models;
+﻿using FHICTDeploymentSystem.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Inzetsysteem.Controllers
+namespace FHICTDeploymentSystem.Controllers
 {
-    [Authorize(Roles = "Teamleider")]
+    [Authorize(Roles = "TeamLeader")]
     [Route("Home/Index")]
     public class TeamleiderController : Controller
     {
-        public IActionResult Docenten()
+        public IActionResult Teachers()
         {
             return View();
         }
 
-        public IActionResult TeamBeheren()
+        public IActionResult ManageTeams()
         {
             return View();
         }

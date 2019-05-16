@@ -10,7 +10,6 @@
     <!-- Font Awesome -->
     <link href="~/lib/bootstrap/dist/css/font-awesome.css" rel="stylesheet">
     <!-- Skill Progress Bar -->
-    <link href="~/lib/bootstrap/dist/css/pro-bars.css" rel="stylesheet" type="text/css" media="all" />
     <!-- Owl Carousel -->
     <link href="~/lib/bootstrap/dist/css/owl.carousel.css" rel="stylesheet" />
     <!-- Default Theme CSS File-->
@@ -25,28 +24,13 @@
     <script src="~/js/materialize.min.js"></script>
     <!-- Skill Progress Bar -->
     <script src="~/js/appear.min.js"></script>
-    <script src="~/js/pro-bars.min.js"></script>
     <!-- Owl slider -->
     <script src="~/js/owl.carousel.min.js"></script>
     <link href="~/lib/bootstrap/dist/css/owl.carousel.css" rel="stylesheet" />
     <!-- Mixit slider  -->
     <script src="http://cdn.jsdelivr.net/jquery.mixitup/latest/jquery.mixitup.min.js"></script>
     <!-- counter -->
-    @*<script src="~/js/waypoints.min.js"></script>
-    <script src="~/js/jquery.counterup.min.js"></script>*@
-
     <!-- Custom Js -->
-    @*<script src="~/js/custom.js"></script>
-    <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-    </environment>
-    <environment exclude="Development">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
-              crossorigin="anonymous"
-              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />
-    </environment>*@
     <link rel="stylesheet" href="~/css/site.css" />
     <link href="~/css/knoppen.css" rel="stylesheet" />
 </head>
@@ -59,48 +43,48 @@
             <nav>
                 <div class="container">
                     <div class="nav-wrapper">
-                        <a href='@Url.Action("Profile", "Home")' class="brand-logo"><img src="~/Images/fontys-logo.png" alt="logo img"></a>
+                        <a href='@Url.Action("Profile", "Home")' class="brand-logo" style="padding-left: 10px"><img src="~/Images/fontys-logo.png" alt="logo img"></a>
                         <ul class="right hide-on-med-and-down custom-nav menu-scroll">
-                            <li><a asp-area="" asp-controller="Home" asp-action="Profile">Profiel</a></li>
-                            @if (User.IsInRole(Roles.Docent.ToString()))
+                            <li><a asp-area="" asp-controller="Home" asp-action="Profile">Profile</a></li>
+                            @if (User.IsInRole(Roles.Teacher.ToString()))
                             {
-                                <li><a asp-area="" asp-controller="Preference" asp-action="OnderwijsTrajectPreference">Voorkeur invoeren</a></li>
-                                <li><a asp-area="" asp-controller="Home" asp-action="MijnTaken">Mijn taken</a></li>
+                                <li><a asp-area="" asp-controller="Preference" asp-action="SectionPreference">Preferences</a></li>
+                                <li><a asp-area="" asp-controller="Home" asp-action="MijnTaken">My tasks</a></li>
                             }
-                            @if (User.IsInRole(Roles.Teamleider.ToString()))
+                            @if (User.IsInRole(Roles.TeamLeader.ToString()))
                             {
-                                <li><a asp-area="" asp-controller="Team" asp-action="TeamBeheren">Team beheren</a></li>
-                                <li><a asp-area="" asp-controller="Home" asp-action="Index">Docenten</a></li>
-                            }
-                            @if (User.IsInRole(Roles.Blokeigenaar.ToString()) || User.IsInRole(Roles.Staflid.ToString()))
+                                <li><a asp-area="" asp-controller="Home"asp-action="Index">Manage team</a></li>
+                                <li><a asp-area="" asp-controller="Home"asp-action="Index">Teachers</a></li>
+                            }                                                  
+                            @if (User.IsInRole(Roles.UnitOwner.ToString()) || User.IsInRole(Roles.InstituteMember.ToString()))
                             {
-                                <li><a asp-area="" asp-controller="Home" asp-action="Movies">Taakverdeling</a></li>
+                                <li><a asp-area="" asp-controller="Home" asp-action="Movies">Algorithm results</a></li>
                             }
-                            @if (User.IsInRole(Roles.Blokeigenaar.ToString()) || User.IsInRole(Roles.Curriculumeigenaar.ToString()))
+                            @if (User.IsInRole(Roles.UnitOwner.ToString()) || User.IsInRole(Roles.InstituteMember.ToString()))
                             {
-                                <li><a asp-area="" asp-controller="Home" asp-action="Movies">Voeg taak toe</a></li>
+                                <li><a asp-area="" asp-controller="Task" asp-action="Index">Tasks</a></li>
                             }
-                            <input type="button" value="Log Out" onclick="location.href = '@Url.Action("Logout", "Home")'" class="btn btn-primary" />
+                            <input type="button" value="Log Out" onclick="location.href = '@Url.Action("Logout", "Home")'" class="btn btn-primary"/>
                         </ul>
                         <ul id="slide-out" class="side-nav menu-scroll">
-                            @if (User.IsInRole(Roles.Docent.ToString()))
+                            @if (User.IsInRole(Roles.Teacher.ToString()))
                             {
-                                <li><a asp-area="" asp-controller="Home" asp-action="Profile">Profiel</a></li>
-                                <li><a asp-area="" asp-controller="Home" asp-action="VoorkeurInvoeren">Voorkeur invoeren</a></li>
-                                <li><a asp-area="" asp-controller="Home" asp-action="MijnTaken">Mijn taken</a></li>
+                                <li><a asp-area="" asp-controller="Home" asp-action="Profile">Profile</a></li>
+                                <li><a asp-area="" asp-controller="Preference" asp-action="SectionPreference">Preferences</a></li>
+                                <li><a asp-area="" asp-controller="Home" asp-action="MijnTaken">My tasks</a></li>
                             }
-                            @if (User.IsInRole(Roles.Teamleider.ToString()))
+                            @if (User.IsInRole(Roles.TeamLeader.ToString()))
                             {
-                                <li><a asp-area=""  asp-controller="Home" asp-action="Index">Team beheren</a></li>
-                                <li><<a asp-area="" asp-controller="Home" asp-action="Index">Docenten</a></li>
+                                <li><a asp-area=""  asp-controller="Home" asp-action="Index">Manage Team</a></li>
+                                <li><<a asp-area="" asp-controller="Home" asp-action="Index">Teachers</a></li>
                             }                       
-                            @if (User.IsInRole(Roles.Blokeigenaar.ToString()) || User.IsInRole(Roles.Staflid.ToString()))
+                            @if (User.IsInRole(Roles.UnitOwner.ToString()) || User.IsInRole(Roles.InstituteMember.ToString()))
                             {
-                                <li><a asp-area="" asp-controller="Home" asp-action="Movies">Taakverdeling</a></li>
+                                <li><a asp-area="" asp-controller="Home" asp-action="Movies">Algorithm results</a></li>
                             }
-                            @if (User.IsInRole(Roles.Blokeigenaar.ToString()) || User.IsInRole(Roles.Curriculumeigenaar.ToString()))
+                            @if (User.IsInRole(Roles.UnitOwner.ToString()) || User.IsInRole(Roles.InstituteMember.ToString()))
                             {
-                                <li><a asp-area="" asp-controller="Home" asp-action="Movies">Voeg taak toe</a></li>
+                                <li><a asp-area="" asp-controller="Home" asp-action="Movies">Tasks</a></li>
                             }
                         </ul>
                         <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
@@ -117,9 +101,9 @@
     </main>
 </div>
 
-<footer class="border-top footer text-muted">
-    <div class="container">
-        &copy; 2019 - Inzetsysteem - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+<footer class="footer text-muted border-top box-shadow">
+    <div class="container ">
+        &copy; @DateTime.Today.Year - FHICTDeploymentSystem
     </div>
 </footer>
 

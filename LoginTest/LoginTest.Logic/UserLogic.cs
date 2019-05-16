@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Security.Claims;
-using Inzetsysteem.DAL;
-using Inzetsysteem.Models;
+using FHICTDeploymentSystem.DAL;
+using FHICTDeploymentSystem.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using System.Web;
 
-namespace Inzetsysteem.Logic
+namespace FHICTDeploymentSystem.Logic
 {
     public class UserLogic
     {
@@ -28,9 +28,9 @@ namespace Inzetsysteem.Logic
             return _userRepository.GetUserRoles(user);
         }
 
-        public int GetUserID(User user)
+        public int GetUserId(User user)
         {
-            return _userRepository.GetUserID(user);
+            return _userRepository.GetUserId(user);
         }
     }
 }

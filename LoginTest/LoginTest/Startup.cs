@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Inzetsysteem.DAL;
-using Inzetsysteem.Models;
+using FHICTDeploymentSystem.DAL;
+using FHICTDeploymentSystem.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Inzetsysteem
+namespace FHICTDeploymentSystem
 {
     public class Startup
     {
@@ -35,15 +35,9 @@ namespace Inzetsysteem
             });
 
             services.AddScoped<IUserContext, UserContext>();
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 
-            services.AddAuthorization(options =>
-                {
-                    options.AddPolicy("Teamleider", policy => policy.RequireRole(Roles.Teamleider.ToString()));
-                });
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

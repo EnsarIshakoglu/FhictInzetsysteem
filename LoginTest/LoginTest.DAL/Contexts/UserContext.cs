@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Text;
-using Inzetsysteem.Models;
+using FHICTDeploymentSystem.Models;
 
-namespace Inzetsysteem.DAL
+namespace FHICTDeploymentSystem.DAL
 {
     public class UserContext : IUserContext
     {
@@ -13,26 +14,30 @@ namespace Inzetsysteem.DAL
 
         public bool Login(User user)
         {
-            bool loginSuccesfull = false;
+            var loginSuccessful = false;
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 conn.Open();
 
-                SqlCommand command = new SqlCommand($"SELECT TOP 1 Id, Inlognaam,Wachtwoord from dbo.Gebruiker WHERE Inlognaam = '{user.Username}' and Wachtwoord = '{user.Password}'", conn);
-                SqlDataReader reader = command.ExecuteReader();
+                var command = new SqlCommand("GetUserData", conn) {CommandType = CommandType.StoredProcedure};
+
+                command.Parameters.Add(new SqlParameter("@Username", user.Username));
+                command.Parameters.Add(new SqlParameter("@Password", user.Password));
+
+                var reader = command.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    loginSuccesfull = true;
+                    loginSuccessful = true;
                 }
                 reader.Close();
                 conn.Close();
             }
-            return loginSuccesfull;
+            return loginSuccessful;
         }
 
-        public List<string> GetUserRoles(User user)
+        public IEnumerable<string> GetUserRoles(User user)
         {
             var roles = new List<string>();
 
@@ -40,12 +45,15 @@ namespace Inzetsysteem.DAL
             {
                 conn.Open();
 
-                SqlCommand command = new SqlCommand($"select G.Naam, A.Autorisatienaam \r\nfrom dbo.[Tussentabel gebruiker - Authorisatie] as TAG\r\ninner join Gebruiker G on TAG.GebruikerID = G.ID\r\ninner join Authorisatie A on TAG.AuthorisatieID = A.ID where G.naam = '{user.Username}'", conn);
-                SqlDataReader reader = command.ExecuteReader();
+                var command = new SqlCommand("GetUserRoles", conn) { CommandType = CommandType.StoredProcedure };
+
+                command.Parameters.Add(new SqlParameter("@Username", user.Username));
+
+                var reader = command.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    roles.Add(reader["Autorisatienaam"].ToString());
+                    roles.Add(reader["AuthName"].ToString());
                 }
                 reader.Close();
                 conn.Close();
@@ -54,16 +62,20 @@ namespace Inzetsysteem.DAL
             return roles;
         }
 
-        public int GetUserID(User user)
+        public int GetUserId(User user)
         {
-            int userId = 0;
+            var userId = 0;
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 conn.Open();
 
-                SqlCommand command = new SqlCommand($"SELECT TOP 1 Id, Inlognaam,Wachtwoord from dbo.Gebruiker WHERE Inlognaam = '{user.Username}' and Wachtwoord = '{user.Password}'", conn);
-                SqlDataReader reader = command.ExecuteReader();
+                var command = new SqlCommand("GetUserData", conn) { CommandType = CommandType.StoredProcedure };
+
+                command.Parameters.Add(new SqlParameter("@Username", user.Username));
+                command.Parameters.Add(new SqlParameter("@Password", user.Password));
+
+                var reader = command.ExecuteReader();
 
                 while (reader.Read())
                 {

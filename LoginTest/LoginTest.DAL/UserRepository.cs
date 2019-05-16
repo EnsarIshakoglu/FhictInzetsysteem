@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Inzetsysteem.Models;
+using FHICTDeploymentSystem.Models;
 
-namespace Inzetsysteem.DAL
+namespace FHICTDeploymentSystem.DAL
 {
     public class UserRepository
     {
@@ -19,14 +19,14 @@ namespace Inzetsysteem.DAL
             return _context.Login(user);
         }
 
-        public List<string> GetUserRoles(User user)
+        public IEnumerable<string> GetUserRoles(User user)
         {
             return _context.GetUserRoles(user);
         }
 
-        public int GetUserID(User user)
+        public int GetUserId(User user)
         {
-            return _context.GetUserID(user);
+            return _context.GetUserId(user);
         }
     }
 }

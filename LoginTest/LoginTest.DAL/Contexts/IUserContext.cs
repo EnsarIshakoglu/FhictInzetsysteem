@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Inzetsysteem.Models;
+using FHICTDeploymentSystem.Models;
 
-namespace Inzetsysteem.DAL
+namespace FHICTDeploymentSystem.DAL
 {
     public interface IUserContext
     {
         bool Login(User user);
-        List<string> GetUserRoles(User user);
-        int GetUserID(User user);
+        IEnumerable<string> GetUserRoles(User user);
+        int GetUserId(User user);
     }
 }

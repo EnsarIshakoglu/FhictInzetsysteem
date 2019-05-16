@@ -1,11 +1,19 @@
 ﻿using System.Collections.Generic;
-using Inzetsysteem.Models;
+using FHICTDeploymentSystem.Models;
 
-namespace Inzetsysteem.DAL.Contexts
+namespace FHICTDeploymentSystem.DAL.Contexts
 {
     public interface IPreferenceContext
     {
-        IEnumerable<OnderwijsTraject> GetAllOnderwijsTrajecten();
-        IEnumerable<Voorkeur> GetPreferencesFromTraject(OnderwijsTraject traject, int IdUser);
+        IEnumerable<EducationObject> GetAllSections();
+        void AddTaskPreference(EducationObject task, int priority, int userId);
+        void UpdateTaskPreference(EducationObject task, int priority, int userId);
+        Preference CheckTaskPreference(EducationObject task, int userId);
+        IEnumerable<EducationObject> GetAllUnits(int SectionId);
+        IEnumerable<EducationObject> GetAllTasks(int unitExecId);
+        IEnumerable<EducationObject> GetTasksFromSection(EducationObject Section);
+
+        IEnumerable<EducationObject> GetTasksFromUnit(int unitId);
+        IEnumerable<EducationObject> GetTasksFromUnitExecution(int unitExecutionId);
     }
 }

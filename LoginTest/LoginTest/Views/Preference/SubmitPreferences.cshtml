@@ -1,0 +1,134 @@
+﻿@using Microsoft.EntityFrameworkCore.Internal
+@model IEnumerable<Preference>
+<script>
+//    var preferences = @Json.Serialize(Model);
+    console.log(preferences);
+</script>
+@{
+    ViewData["Title"] = "SectionPartialView";
+}
+<h1 id="Title" style="color: #663366"></h1>
+<body>
+    <div class="parent-dit">
+        <div class="child-dit">
+            <div class="carousel-wrapper">
+
+                <div class="carousel-item item-1">
+                    <div class="parent-btn">
+                        
+                            @foreach (var Preference in @Model)
+                            {
+                                <div>
+                                    @Html.Partial("PartialViews/RadioButtons", Preference)
+                                </div>
+                            }
+
+                                <div class="parent-btn">
+
+                                    <center><button style="width: 15%;" id="saveBtn" onclick="goToSaveChecker()" class="btn-voorkeur" type="submit">Save</button></center>
+                                    <br />
+                                    @if (Model.First().Task.EducationType != EducationType.Section)
+                                    {
+                                        <center><button style="width: 15%;" onclick="goBack()" class="btn-voorkeur" type="button">Back</button></center>
+                                    }
+                                </div>
+                            @*
+                            </form>
+                            *@
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="taskExplanation" style="color: #000000; width: 15%; " class="child-dit">
+            
+        </div>
+    </div>
+</body>
+
+<style>
+    .parent-dit {
+        padding: 10px 30px;
+        display: flex;
+        justify-content: center; /* align horizontal */
+        align-items: center; 
+    }
+    .child-dit {
+        float: left;
+        margin: 0 5px;
+    }
+</style>
+
+@if (null != TempData["Title"])
+{
+    <script type="text/javascript">
+
+        var h1 = document.createElement('h1');
+        h1.innerHTML = '@TempData["Title"]';
+        console.log(h1.innerHTML);
+
+        document.getElementById('Title').appendChild(h1);
+    </script>
+}
+<script>
+    $(function() {
+        $('#saveBtn').on('click', goToSaveChecker);
+    });
+
+    function goToSaveChecker() {
+        var radioButtons = document.getElementById("Value");
+        var preferences = [];
+
+        @foreach (var preference in Model)
+        {
+            <text>
+                var radioButton = $('input[name=' + @preference.Task.Id + ']:checked').val();
+
+                console.log(radioButton);
+                var preference = {
+                    "Task": {
+                        "Id": @preference.Task.Id,
+                        "EducationType": @Json.Serialize(preference.Task.EducationType)
+                    },
+                    "Value": radioButton
+                };
+
+                preferences.push(preference);
+            </text>
+        }
+
+        console.log(preferences);
+
+        var controllerPath = '@Url.Action("SaveChecker", "Preference", new { educationType = @Model.First().Task.EducationType, id = @Model.First().Task.Id })';
+
+        console.log(JSON.stringify(preferences));
+
+        $.ajax({
+            url: controllerPath,
+            data: JSON.stringify(preferences),
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function() {
+                console.log('Success!');
+            },
+            error: function() {
+                console.log('Error');
+            }
+        });
+        window.location.reload();
+    }
+</script>
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+@*<script>
+    function showExplanation(id) {
+        var preference = preferences[id];
+        console.log(preference)
+        document.getElementById("taskExplanation").innerHTML = preference['explanation'];
+    };
+</script>*@

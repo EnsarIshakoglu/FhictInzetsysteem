@@ -1,4 +1,4 @@
-.carousel-wrapper {
+﻿.carousel-wrapper {
     height: 400px;
     position: relative;
     width: 800px;
@@ -11,15 +11,13 @@
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 25px 50px;
     opacity: 0;
     transition: all 0.5s ease-in-out;
 }
 
 .parent-btn {
-    justify-content: center;
+    padding-top: 5%;
     height: 100%;
-    padding: 2rem;
     -webkit-box-flex: 1;
     -webkit-flex: 1;
     -ms-flex: 1;
@@ -51,15 +49,20 @@
     cursor: pointer;
 }
 
+.hola {
+    padding-top: 3.5%;
+    padding-right: 3%;
+    color: black;
+    float: left;
+}
+
 .btn-voorkeur {
     border: none;
     border-radius: 20px;
-    display: block;
     height: 36px;
     line-height: 36px;
     outline: 0;
     padding: 0 2rem;
-    text-transform: uppercase;
     vertical-align: middle;
     -webkit-tap-highlight-color: transparent;
 }
@@ -99,7 +102,7 @@
 
 }
 
-/*Select every element*/
+/Select every element/
 [id^="item"] {
     display: none;
 }

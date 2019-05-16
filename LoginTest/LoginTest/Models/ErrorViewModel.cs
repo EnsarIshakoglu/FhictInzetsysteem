@@ -1,6 +1,6 @@
 using System;
 
-namespace Inzetsysteem.Models
+namespace FHICTDeploymentSystem.Models
 {
     public class ErrorViewModel
     {

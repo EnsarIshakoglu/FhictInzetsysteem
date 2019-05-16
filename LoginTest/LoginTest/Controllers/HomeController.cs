@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Security.Claims;
-using Inzetsysteem.Logic;
+using FHICTDeploymentSystem.Logic;
 using Microsoft.AspNetCore.Mvc;
-using Inzetsysteem.Models;
+using FHICTDeploymentSystem.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 
-namespace Inzetsysteem.Controllers
+namespace FHICTDeploymentSystem.Controllers
 {
     [Authorize]
     public class HomeController : Controller
@@ -42,7 +42,7 @@ namespace Inzetsysteem.Controllers
 
             if (_userLogic.Login(user))
             {
-                InitUser(user, _userLogic.GetUserID(user));
+                InitUser(user, _userLogic.GetUserId(user));
                 return RedirectToAction("Profile", "Home");   //De cookies worden pas nadat je naar een nieuwe controller bent gegaan gerefreshed, hierdoor doe ik redirecten naar de index pag van homecontroller
             }
 
@@ -55,7 +55,7 @@ namespace Inzetsysteem.Controllers
             return View();
         }
 
-        public IActionResult MijnTaken()
+        public IActionResult MyTasks()
         {
             return View();
         }
@@ -66,7 +66,7 @@ namespace Inzetsysteem.Controllers
         }
 
         [HttpGet]
-        public IActionResult VoorkeurInvoeren()
+        public IActionResult SetPreference()
         {
 
             return RedirectToAction("Index", "Preference");
@@ -108,7 +108,6 @@ namespace Inzetsysteem.Controllers
         }
         private async void LogOut(IEnumerable<string> keys)
         {
-
             await this.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         }
     }
