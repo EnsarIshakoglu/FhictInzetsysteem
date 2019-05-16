@@ -104,9 +104,7 @@
         var controllerPath = '@Url.Action("SaveChecker", "Preference", new { educationType = @Model.First().Task.EducationType, id = @Model.First().Task.Id })';
 
         console.log(JSON.stringify(preferences));
-        if (confirm('Are you sure your e-mail address is ' +
-            document.getElementById("EmailAddress").value +
-            ' . Press OK to continue, press CANCEL to cancel your reservation.')) {
+        
         $.ajax({
             url: controllerPath,
             data: JSON.stringify(preferences),
@@ -120,7 +118,6 @@
                 console.log('Error');
             }
             });
-            }
         window.location.reload();
     }
 </script>
