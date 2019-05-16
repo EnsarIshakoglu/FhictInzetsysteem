@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text;
-using Inzetsysteem.Models;
+using FHICTDeploymentSystem.Models;
 
 
-namespace Inzetsysteem.DAL.Contexts
+namespace FHICTDeploymentSystem.DAL.Contexts
 {
     public class TeamContext : ITeamContext
     {
@@ -31,7 +31,7 @@ namespace Inzetsysteem.DAL.Contexts
                 {
                     teams.Add(new Team
                     {
-                        Naam = (string) reader["Naam"],
+                        Name = (string) reader["Naam"],
                         Id = (int) reader["ID"]
                     });
                 }
@@ -52,9 +52,9 @@ namespace Inzetsysteem.DAL.Contexts
             {
                 connection.Open();
 
-                var sqlCommand = new SqlCommand("GetAlleUsersVanTeam", connection);
+                var sqlCommand = new SqlCommand("GetAllUsersFromTeam", connection);
                 sqlCommand.CommandType = CommandType.StoredProcedure;
-                sqlCommand.Parameters.Add(new SqlParameter("@TeamsID", user.TeamId));
+                sqlCommand.Parameters.Add(new SqlParameter("@TeamId", user.TeamId));
 
                 var reader = sqlCommand.ExecuteReader();
 
@@ -63,7 +63,7 @@ namespace Inzetsysteem.DAL.Contexts
                     //voeg namen van mensen toe die team id hebben
                     userList.Add(new User
                     {
-                        Name = (string)reader["Naam"]
+                        Name = (string)reader["Name"]
                     });
                 }
 
@@ -80,9 +80,9 @@ namespace Inzetsysteem.DAL.Contexts
             {
                 connection.Open();
 
-                var sqlCommand = new SqlCommand("RemoveUser", connection);
+                var sqlCommand = new SqlCommand("RemoveEmployeeFromTeam", connection);
                 sqlCommand.CommandType = CommandType.StoredProcedure;
-                sqlCommand.Parameters.Add(new SqlParameter("@ID", _user.Id));
+                sqlCommand.Parameters.Add(new SqlParameter("@Id", _user.Id));
 
                 sqlCommand.ExecuteNonQuery();
 
@@ -100,7 +100,7 @@ namespace Inzetsysteem.DAL.Contexts
 
         public string Getnaam(Team team)
         {
-            return team.Naam;
+            return team.Name;
         }
 
     }

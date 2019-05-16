@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Inzetsysteem.Logic;
-using Inzetsysteem.Models;
+using FHICTDeploymentSystem.Logic;
+using FHICTDeploymentSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Inzetsysteem.Controllers
+namespace FHICTDeploymentSystem.Controllers
 {
     public class TeamController : Controller
     {

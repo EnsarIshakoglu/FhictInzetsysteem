@@ -49,7 +49,7 @@
                             @if (User.IsInRole(Roles.Teacher.ToString()))
                             {
                                 <li><a asp-area="" asp-controller="Preference" asp-action="SectionPreference">Preferences</a></li>
-                                <li><a asp-area="" asp-controller="Home" asp-action="MijnTaken">My tasks</a></li>
+                                <li><a asp-area="" asp-controller="Home" asp-action="MyTasks">My tasks</a></li>
                             }
                             @if (User.IsInRole(Roles.TeamLeader.ToString()))
                             {
@@ -71,13 +71,13 @@
                             {
                                 <li><a asp-area="" asp-controller="Home" asp-action="Profile">Profile</a></li>
                                 <li><a asp-area="" asp-controller="Preference" asp-action="SectionPreference">Preferences</a></li>
-                                <li><a asp-area="" asp-controller="Home" asp-action="MijnTaken">My tasks</a></li>
+                                <li><a asp-area="" asp-controller="Home" asp-action="MyTasks">My tasks</a></li>
                             }
                             @if (User.IsInRole(Roles.TeamLeader.ToString()))
                             {
-                                <li><a asp-area=""  asp-controller="Home" asp-action="Index">Manage Team</a></li>
+                                <li><a asp-controller="Team" asp-action="TeamBeheren">Manage Team</a></li>
                                 <li><<a asp-area="" asp-controller="Home" asp-action="Index">Teachers</a></li>
-                            }                       
+                            }
                             @if (User.IsInRole(Roles.UnitOwner.ToString()) || User.IsInRole(Roles.InstituteMember.ToString()))
                             {
                                 <li><a asp-area="" asp-controller="Home" asp-action="Movies">Algorithm results</a></li>

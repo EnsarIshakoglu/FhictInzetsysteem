@@ -1,13 +1,12 @@
 ﻿using System;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Inzetsysteem.DAL;
-using Inzetsysteem.Models;
+using FHICTDeploymentSystem.DAL;
+using FHICTDeploymentSystem.Models;
 using Newtonsoft.Json;
 
-namespace Inzetsysteem.Logic
+namespace FHICTDeploymentSystem.Logic
 {
     public class TeamLogic
     {

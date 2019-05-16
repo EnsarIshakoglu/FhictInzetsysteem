@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Inzetsysteem.Models;
+using FHICTDeploymentSystem.Models;
 
-namespace Inzetsysteem.DAL.Contexts
+namespace FHICTDeploymentSystem.DAL.Contexts
 {
     public interface ITeamContext
     {
