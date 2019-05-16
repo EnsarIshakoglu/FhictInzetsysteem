@@ -53,7 +53,7 @@
                             }
                             @if (User.IsInRole(Roles.TeamLeader.ToString()))
                             {
-                                <li><a asp-area="" asp-controller="Home"asp-action="Index">Manage team</a></li>
+                                <li><a asp-area="" asp-controller="Team"asp-action="ManageTeam">Manage team</a></li>
                                 <li><a asp-area="" asp-controller="Home"asp-action="Index">Teachers</a></li>
                             }                                                  
                             @if (User.IsInRole(Roles.UnitOwner.ToString()) || User.IsInRole(Roles.InstituteMember.ToString()))
@@ -75,8 +75,8 @@
                             }
                             @if (User.IsInRole(Roles.TeamLeader.ToString()))
                             {
-                                <li><a asp-controller="Team" asp-action="TeamBeheren">Manage Team</a></li>
-                                <li><<a asp-area="" asp-controller="Home" asp-action="Index">Teachers</a></li>
+                                <li><a asp-area="" asp-controller="Team" asp-action="ManageTeam">Manage Team</a></li>
+                                <li><a asp-area="" asp-controller="Home" asp-action="Index">Teachers</a></li>
                             }
                             @if (User.IsInRole(Roles.UnitOwner.ToString()) || User.IsInRole(Roles.InstituteMember.ToString()))
                             {

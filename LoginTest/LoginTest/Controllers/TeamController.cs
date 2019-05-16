@@ -12,25 +12,27 @@ namespace FHICTDeploymentSystem.Controllers
     {
         private readonly TeamLogic _teamLogic = new TeamLogic(); 
 
-        public IActionResult TeamBeheren()
+        [HttpGet]
+        public IActionResult ManageTeam()
         {
             User _user = new User();
             _user.TeamId = 1;
 
-            var userlist = new List<User>();
+            var userList = new List<User>();
             var users = _teamLogic.GetTeamUsers(_user);
 
             foreach (var user in users)
             {
-                userlist.Add(user);
+                userList.Add(user);
             }
-            return View(userlist);
+            return View(userList);
         }
 
+        [HttpGet]
         public IActionResult RemoveUser(User _user)
         {
             _teamLogic.RemoveUser(_user);
-            return RedirectToAction("TeamBeheren");
+            return RedirectToAction("ManageTeam");
         }
 
 
