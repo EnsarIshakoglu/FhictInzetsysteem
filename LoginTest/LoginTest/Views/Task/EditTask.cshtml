@@ -118,20 +118,12 @@
                 <select id="units" type="text" name="field2"></select>
                 <label>Unit execution:</label>
                 <select id="execId" type="text" name="field3"></select>
-                <label>Period:</label>
-                <select id="period" type="text" name="field4">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                </select>
-                <input id="code" type="text" name="field5" placeholder="Code">
-                <input id="explanation" type="text" name="field6" placeholder="Explanation">
-                <input id="hours" type="text" name="field7" placeholder="Hours">
-                @*<input id="factor" type="number" name="field9" placeholder="Factor">*@
+                <label>Tasks:</label>
+                <select id="tasks" type="text" name="field4"></select>
             </fieldset>
-            <fieldset>
-                <textarea id="description" name="field8" placeholder="Description"></textarea>
-            </fieldset>
-            <input id="addButton" type="submit" value="Add" />
+            <fieldset></fieldset>
+            <input id="Update" type="submit" value="Update (:"/>
+            <input id="Remove" type="submit" value ="Remove ):"/>
         </form>
     </div>
 </div>
@@ -172,31 +164,40 @@
                     });
                 });
         });
-        $('#addButton').on('click', (function () {
-            var taskToAdd = {
-                "Period": $("#period option:selected").val(),
-                "EstimatedHours": $("#hours").val(),
-                "Explanation": $("#explanation").val(),
-                "Name": $("#code").val(),
-                "Description": $("#description").val(),
-                "UnitExecId": $("#execId option:selected").val()/*,
-                "Factor" : $("#factor").val()*/
-            };
 
-            $.ajax({
-                url: '@Url.Action("AddTask", "Task")',
-                data: JSON.stringify(taskToAdd),
-                type: "POST",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function() {
-                    console.log('Success!');
+        
+        $('#units').change(function() {
+            $('#execId').empty();
+            var selectedUnitId = $("#units option:selected").val();
+            $.post('@Url.Action("GetTermExecutions", "Task")',
+                {
+                    unitId: selectedUnitId
                 },
-                error: function() {
-                    console.log('Error');
-                }
-            });
-        }));
-    </script>
+                function(data) {
+                    var selectedExec = $('#execId');
+                    data.forEach(function(exec) {
+                        selectedExec.append($("<option></option>")
+                            .attr("value", exec.id)
+                            .text(exec.name));
+                    });
+                });
+        });
 
+        $('#units').change(function() {
+            $('#execId').empty();
+            var selectedUnitId = $("#units option:selected").val();
+            $.post('@Url.Action("GetTermExecutions", "Task")',
+                {
+                    unitId: selectedUnitId
+                },
+                function(data) {
+                    var selectedExec = $('#execId');
+                    data.forEach(function(exec) {
+                        selectedExec.append($("<option></option>")
+                            .attr("value", exec.id)
+                            .text(exec.name));
+                    });
+                });
+        });
+    </script>
 }

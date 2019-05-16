@@ -31,6 +31,11 @@ namespace FHICTDeploymentSystem.Controllers
             return RedirectToAction("Profile", "Home");
         }
 
+        public IActionResult EditTask()
+        {
+            return View(_preferenceLogic.GetAllSections());
+        }
+
         [HttpPost]
         public IActionResult GetUnits(int sectionId)
         {
