@@ -99,42 +99,41 @@
                 background: #e40086;
             }
 </style>
+<div style="padding-bottom: 70px; padding-top: 20px">
+    <div class="form-style-5">
+        <form>
+            <fieldset>
+                <legend style="text-align: center">Add task</legend>
+                <label>Section:</label>
+                <select id="sections" type="text" name="field1">
+                    @foreach (var section in Model)
+                    {
+                        var sectionId = section.Id;
+                        var sectionName = section.Name;
 
-<div class="form-style-5">
-    <form>
-        <fieldset>
-            <legend style="text-align: center">Add task</legend>
-            <label>Section:</label>
-            <select id="sections" type="text" name="field1">
-                @foreach (var section in Model)
-                {
-                    var sectionId = section.Id;
-                    var sectionName = section.Name;
-
-                    <option value="@sectionId">@sectionName</option>
-                }
-            </select>
-            <label>Unit:</label>
-            <select id="units" type="text" name="field2"></select>
-            <label>Term execution:</label>
-            <select id="execId" type="text" name="field3"></select>
-            <label>Period:</label>
-            <select id="period" type="text" name="field4">
-                <option value="1">1</option>
-                <option value="2">2</option>
-            </select>
-            <input id="code" type="text" name="field5" placeholder="Code">
-            <input id="explanation" type="text" name="field6" placeholder="Explanation">
-            <input id="hours" type="text" name="field7" placeholder="Hours">
-            @*<input id="factor" type="number" name="field9" placeholder="Factor">*@
-        </fieldset>
-        <fieldset>
-            <textarea id="description" name="field8" placeholder="Description"></textarea>
-        </fieldset>
-        <div style="padding-bottom: 50px">
+                        <option value="@sectionId">@sectionName</option>
+                    }
+                </select>
+                <label>Unit:</label>
+                <select id="units" type="text" name="field2"></select>
+                <label>Term execution:</label>
+                <select id="execId" type="text" name="field3"></select>
+                <label>Period:</label>
+                <select id="period" type="text" name="field4">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </select>
+                <input id="code" type="text" name="field5" placeholder="Code">
+                <input id="explanation" type="text" name="field6" placeholder="Explanation">
+                <input id="hours" type="text" name="field7" placeholder="Hours">
+                @*<input id="factor" type="number" name="field9" placeholder="Factor">*@
+            </fieldset>
+            <fieldset>
+                <textarea id="description" name="field8" placeholder="Description"></textarea>
+            </fieldset>
             <input id="addButton" type="submit" value="Add" />
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
 
 @section Scripts

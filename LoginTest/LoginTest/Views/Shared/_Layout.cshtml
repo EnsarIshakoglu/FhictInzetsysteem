@@ -43,7 +43,7 @@
             <nav>
                 <div class="container">
                     <div class="nav-wrapper">
-                        <a href='@Url.Action("Profile", "Home")' class="brand-logo"><img src="~/Images/fontys-logo.png" alt="logo img"></a>
+                        <a href='@Url.Action("Profile", "Home")' class="brand-logo" style="padding-left: 10px"><img src="~/Images/fontys-logo.png" alt="logo img"></a>
                         <ul class="right hide-on-med-and-down custom-nav menu-scroll">
                             <li><a asp-area="" asp-controller="Home" asp-action="Profile">Profile</a></li>
                             @if (User.IsInRole(Roles.Teacher.ToString()))
