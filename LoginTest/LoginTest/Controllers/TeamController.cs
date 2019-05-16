@@ -4,14 +4,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using FHICTDeploymentSystem.Logic;
 using FHICTDeploymentSystem.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FHICTDeploymentSystem.Controllers
 {
+    [Authorize]
     public class TeamController : Controller
     {
         private readonly TeamLogic _teamLogic = new TeamLogic(); 
 
+        [HttpGet]
         public IActionResult TeamBeheren()
         {
             User _user = new User();

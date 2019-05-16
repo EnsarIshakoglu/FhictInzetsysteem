@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using DAL.Contexts;
 using FHICTDeploymentSystem.DAL.Contexts;
 using FHICTDeploymentSystem.Models;
 
-namespace FHICTDeploymentSystem.DAL
+namespace DAL
 {
     public class TeamRepository
     {

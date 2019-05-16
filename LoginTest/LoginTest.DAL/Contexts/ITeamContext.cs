@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using FHICTDeploymentSystem.Models;
 
-namespace FHICTDeploymentSystem.DAL.Contexts
+namespace DAL.Contexts
 {
     public interface ITeamContext
     {

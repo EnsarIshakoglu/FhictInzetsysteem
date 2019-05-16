@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DAL;
 using FHICTDeploymentSystem.DAL;
 using FHICTDeploymentSystem.Models;
-using Newtonsoft.Json;
 
 namespace FHICTDeploymentSystem.Logic
 {
