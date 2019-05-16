@@ -1,7 +1,6 @@
 ﻿@model IEnumerable<EducationObject>
 @using FHICTDeploymentSystem.Models
 @{
-    bool lol = false;
     ViewData["Title"] = "Ingelogd";
 }
 
@@ -100,11 +99,11 @@
                 background: #e40086;
             }
 </style>
-<html>
+
 <div class="form-style-5">
     <form>
         <fieldset>
-            <center><legend>Add task</legend></center>
+            <legend style="text-align: center">Add task</legend>
             <label>Section:</label>
             <select id="sections" type="text" name="field1">
                 @foreach (var section in Model)
@@ -132,10 +131,12 @@
         <fieldset>
             <textarea id="description" name="field8" placeholder="Description"></textarea>
         </fieldset>
-        <input id="addButton" type="submit" value="Add" />
+        <div style="padding-bottom: 50px">
+            <input id="addButton" type="submit" value="Add" />
+        </div>
     </form>
 </div>
-</html>
+
 @section Scripts
     {
     <script>
