@@ -31,11 +31,16 @@ namespace FHICTDeploymentSystem.Controllers
         }
 
         public IActionResult RemoveUser(User _user)
+
         {
             _teamLogic.RemoveUser(_user);
             return RedirectToAction("ManageTeam");
         }
 
+        public IActionResult GetTeamId(User user)
+        {
+
+        }
 
     }
 }
