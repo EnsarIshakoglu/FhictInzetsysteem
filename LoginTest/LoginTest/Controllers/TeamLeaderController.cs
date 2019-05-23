@@ -6,7 +6,7 @@ namespace FHICTDeploymentSystem.Controllers
 {
     [Authorize(Roles = "TeamLeader")]
     [Route("Home/Index")]
-    public class TeamleiderController : Controller
+    public class TeamLeaderController : Controller
     {
         public IActionResult Teachers()
         {

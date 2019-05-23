@@ -74,7 +74,7 @@ namespace FHICTDeploymentSystem.DAL.Contexts
             return userList;
         }
 
-        public void RemoveUser(User _user)
+        public void RemoveUser(User user)
         {
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -83,14 +83,13 @@ namespace FHICTDeploymentSystem.DAL.Contexts
 
                 var sqlCommand = new SqlCommand("RemoveEmployeeFromTeam", connection);
                 sqlCommand.CommandType = CommandType.StoredProcedure;
-                sqlCommand.Parameters.Add(new SqlParameter("@Id", _user.Id));
+                sqlCommand.Parameters.Add(new SqlParameter("@Id", user.Id));
 
-                sqlCommand.ExecuteNonQuery();
+                sqlCommand.ExecuteNonQuery();  
 
                 connection.Close();
-
-   
             }
+            
 
         }
 

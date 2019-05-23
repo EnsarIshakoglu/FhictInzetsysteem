@@ -15,8 +15,10 @@ namespace FHICTDeploymentSystem.Controllers
         [HttpGet]
         public IActionResult ManageTeam()
         {
-            User _user = new User();
-            _user.TeamId = 1;
+            User _user = new User
+            {
+                TeamId = 1
+            };
 
             var userList = new List<User>();
             var users = _teamLogic.GetTeamUsers(_user);
@@ -28,7 +30,7 @@ namespace FHICTDeploymentSystem.Controllers
             return View(userList);
         }
 
-        [HttpGet]
+        [HttpPost]
         public IActionResult RemoveUser(User _user)
         {
             _teamLogic.RemoveUser(_user);
