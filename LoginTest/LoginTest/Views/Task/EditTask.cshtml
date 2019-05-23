@@ -190,7 +190,7 @@
                     data.forEach(function (task) {
                         selectTasks.append($("<option></option>")
                             .attr("value", task.id)
-                            .text(task.name + ": " + task.description));
+                            .text("Period: " + task.period + " | " + task.name + ": " + task.description));
                         console.log(JSON.stringify(task));
                     });
                 });
