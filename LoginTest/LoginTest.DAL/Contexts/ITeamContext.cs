@@ -13,6 +13,8 @@ namespace DAL.Contexts
 
         IEnumerable<User> GetTeamUsers(User user);
 
+        IEnumerable<User> GetAllUserNoTeam(User user);
+
         void RemoveUser(User _user);
     }
 }

@@ -87,9 +87,39 @@ namespace FHICTDeploymentSystem.DAL.Contexts
 
                 sqlCommand.ExecuteNonQuery();
 
+  
                 connection.Close();
             }
 
+
+        }
+
+        public IEnumerable<User> GetAllUserNoTeam(User user)
+        {
+            var userlist = new List<User>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                var sqlCommand = new SqlCommand("GetAllEmployeeNoTeam", connection);
+                sqlCommand.CommandType = CommandType.StoredProcedure;
+
+                var reader = sqlCommand.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    //voeg namen van mensen toe die team id NULL hebben
+                    userlist.Add(new User
+                    {
+                        Name = (string)reader["Name"],
+                    });
+                }
+
+                connection.Close();
+            }
+
+            return userlist;
 
         }
 
