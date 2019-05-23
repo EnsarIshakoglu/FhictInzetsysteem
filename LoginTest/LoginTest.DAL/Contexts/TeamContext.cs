@@ -32,8 +32,8 @@ namespace FHICTDeploymentSystem.DAL.Contexts
                 {
                     teams.Add(new Team
                     {
-                        Name = (string) reader["Naam"],
-                        Id = (int) reader["ID"]
+                        Name = (string)reader["Naam"],
+                        Id = (int)reader["ID"]
                     });
                 }
 
@@ -44,8 +44,7 @@ namespace FHICTDeploymentSystem.DAL.Contexts
         }
 
         //vraag alle users op die bij een specifiek(ID) team horen(id en naam)
-        public IEnumerable<User> GetTeamUsers(User user
-        )
+        public IEnumerable<User> GetTeamUsers(User user)
         {
             var userList = new List<User>();
 
@@ -64,7 +63,8 @@ namespace FHICTDeploymentSystem.DAL.Contexts
                     //voeg namen van mensen toe die team id hebben
                     userList.Add(new User
                     {
-                        Name = (string)reader["Name"]
+                        Name = (string)reader["Name"],
+                        Id = (int)reader["Id"]
                     });
                 }
 
@@ -85,11 +85,11 @@ namespace FHICTDeploymentSystem.DAL.Contexts
                 sqlCommand.CommandType = CommandType.StoredProcedure;
                 sqlCommand.Parameters.Add(new SqlParameter("@Id", user.Id));
 
-                sqlCommand.ExecuteNonQuery();  
+                sqlCommand.ExecuteNonQuery();
 
                 connection.Close();
             }
-            
+
 
         }
 

@@ -30,7 +30,6 @@ namespace FHICTDeploymentSystem.Controllers
             return View(userList);
         }
 
-        [HttpPost]
         public IActionResult RemoveUser(User _user)
         {
             _teamLogic.RemoveUser(_user);

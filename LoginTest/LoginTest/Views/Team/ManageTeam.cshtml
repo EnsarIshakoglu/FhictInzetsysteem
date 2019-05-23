@@ -7,32 +7,33 @@
 
 <section id="testimonial">
     <div class="container">
-    <div class="row">
-        <div class="col s12">
-            <div class="testimonial-inner">
-                <h2 class="title">Manage your Team</h2>
-                <div class="testimonial-slider-area">
-                    <div id="owl-carousel2" class="testimonial-slider row">
-                        @foreach (var item in Model)
-                        {
-                            <div class="col s3">
-                                <div class="single-testimonial">
-                                    <div class="testimonial-content">
-                                        <h3>@item.Name</h3>
-                                        <span>info</span>
-                                        <form asp-action="RemoveUser">
-                                            <div class="btn-primary">
-                                                <input type="submit" class="btn-primary" value="Remove User">
-                                            </div>
-                                        </form>
+        <div class="row">
+            <div class="col s12">
+                <div class="testimonial-inner">
+                    <h2 class="title">Manage your Team</h2>
+                    <div class="testimonial-slider-area">
+                        <div id="owl-carousel2" class="testimonial-slider row">
+                            @foreach (var item in Model)
+                            {
+                                <div class="col s3">
+                                    <div class="single-testimonial">
+                                        <div class="testimonial-content">
+                                            <h3>@item.Name</h3>
+                                            <span>info</span>
+                                            @*<form asp-action="RemoveUser">
+                                                    <div class="btn-primary">
+                                                        <input type="submit" class="btn-primary" value="Remove User">
+                                                    </div>
+                                                </form>*@
+                                            <a href="@Url.Action("RemoveUser", "Team", item)">Delete user</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        }
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-  </div>
 </section>
