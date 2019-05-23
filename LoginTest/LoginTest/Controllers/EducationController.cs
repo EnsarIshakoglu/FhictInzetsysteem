@@ -10,7 +10,7 @@ using Logic;
 
 namespace FHICTDeploymentSystem.Controllers
 {
-    public class TaskController : Controller
+    public class EducationController : Controller
     {
         private readonly PreferenceLogic _preferenceLogic = new PreferenceLogic();
         private readonly AddTaskLogic _addTaskLogic = new AddTaskLogic();

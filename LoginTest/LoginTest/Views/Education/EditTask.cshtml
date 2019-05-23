@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<EducationObject>
 @using FHICTDeploymentSystem.Models
 @{
-    ViewData["Title"] = "Tasks";
+    ViewData["Title"] = "Ingelogd";
 }
 
 <style type="text/css">
@@ -118,20 +118,12 @@
                 <select id="units" type="text" name="field2"></select>
                 <label>Unit execution:</label>
                 <select id="execId" type="text" name="field3"></select>
-                <label>Period:</label>
-                <select id="period" type="text" name="field4">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                </select>
-                <input id="code" type="text" name="field5" placeholder="Code">
-                <input id="explanation" type="text" name="field6" placeholder="Explanation">
-                <input id="hours" type="text" name="field7" placeholder="Hours">
-                @*<input id="factor" type="number" name="field9" placeholder="Factor">*@
+                <label>Tasks:</label>
+                <select id="tasks" type="text" name="field4"></select>
             </fieldset>
-            <fieldset>
-                <textarea id="description" name="field8" placeholder="Description"></textarea>
-            </fieldset>
-            <input id="addButton" type="submit" value="Add" />
+            <fieldset></fieldset>
+            <input id="Update" type="submit" value="Update (:"/>
+            <input id="Remove" type="submit" value ="Remove ):"/>
         </form>
     </div>
 </div>
@@ -141,13 +133,14 @@
     <script>
         $('#sections').change(function() {
             $('#units').empty();
+            $('#tasks').empty();
             $('#execId').empty();
             var selectedSectionId = $("#sections option:selected").val();
             var selectedUnit = $('#units');
             selectedUnit.append($("<option></option>")
                 .attr("value", "12" )
                 .text("-Select-"));
-            $.post('@Url.Action("GetUnits", "Task")',
+            $.post('@Url.Action("GetUnits", "Education")',
                 {
                     sectionId: selectedSectionId
                 },
@@ -162,13 +155,14 @@
 
         $('#units').change(function() {
             $('#execId').empty();
+            $('#tasks').empty();
             var selectedUnitId = $("#units option:selected").val();
             var selectedExec = $('#execId');
             selectedExec.append($("<option></option>")
                 .attr("value", "test")
                 .text("-Select-"));
 
-            $.post('@Url.Action("GetTermExecutions", "Task")',
+            $.post('@Url.Action("GetTermExecutions", "Education")',
                 {
                     unitId: selectedUnitId
                 },
@@ -181,31 +175,25 @@
                 });
         });
 
-        $('#addButton').on('click', (function () {
-            var taskToAdd = {
-                "Period": $("#period option:selected").val(),
-                "EstimatedHours": $("#hours").val(),
-                "Explanation": $("#explanation").val(),
-                "Name": $("#code").val(),
-                "Description": $("#description").val(),
-                "UnitExecId": $("#execId option:selected").val()/*,
-                "Factor" : $("#factor").val()*/
-            };
-
-            $.ajax({
-                url: '@Url.Action("AddTask", "Task")',
-                data: JSON.stringify(taskToAdd),
-                type: "POST",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function() {
-                    console.log('Success!');
+        $('#execId').change(function() {
+            $('#tasks').empty();
+            var selectedExecId = $("#execId option:selected").val();
+            var selectTasks = $('#tasks');
+            selectTasks.append($("<option></option>")
+                .attr("value", "Lol")
+                .text("-Select-"));
+            $.post('@Url.Action("GetTasks", "Education")',
+                {
+                    execId: selectedExecId
                 },
-                error: function() {
-                    console.log('Error');
-                }
-            });
-        }));
+                function(data) {
+                    data.forEach(function (task) {
+                        selectTasks.append($("<option></option>")
+                            .attr("value", task.id)
+                            .text("Period: " + task.period + " | " + task.name + ": " + task.description));
+                        console.log(JSON.stringify(task));
+                    });
+                });
+        });
     </script>
-
 }
