@@ -39,13 +39,13 @@ namespace FHICTDeploymentSystem.Controllers
         [HttpPost]
         public IActionResult GetTasks(int execId)
         {
-            var result = new List<EducationObject>();
+            /*var result = new List<EducationObject>();
             foreach (var termExecution in _preferenceLogic.GetAllTasks(execId))
             {
                 result.Add(termExecution);
-            }
+            }*/
 
-            return Json(result);
+            return Json(_preferenceLogic.GetAllTasks(execId));
         }
 
         [HttpPost]
