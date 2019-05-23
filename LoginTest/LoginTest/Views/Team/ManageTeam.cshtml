@@ -14,22 +14,20 @@
                     <div class="testimonial-slider-area">
                         <div id="owl-carousel2" class="testimonial-slider row">
                             @foreach (var item in Model)
-                            {
+                             {
                                 <div class="col s3">
                                     <div class="single-testimonial">
                                         <div class="testimonial-content">
                                             <h3>@item.Name</h3>
                                             <span>info</span>
-                                            @*<form asp-action="RemoveUser">
-                                                    <div class="btn-primary">
-                                                        <input type="submit" class="btn-primary" value="Remove User">
-                                                    </div>
-                                                </form>*@
-                                            <a href="@Url.Action("RemoveUser", "Team", item)">Delete user</a>
+                                            <div>
+                                                <a class="text-darken-1" href="@Url.Action("RemoveUser", "Team", item)" style="color: black">Delete user |</a>
+                                                <a class="text-darken-1" href="@Url.Action("EditUserInTeam", "Team", item)" style="color: black">Edit user</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            }
+                             }
                         </div>
                     </div>
                 </div>

@@ -64,7 +64,8 @@ namespace FHICTDeploymentSystem.DAL.Contexts
                     userList.Add(new User
                     {
                         Name = (string)reader["Name"],
-                        Id = (int)reader["Id"]
+                        Id = (int)reader["Id"],
+                        TeamId =(int)reader["TeamId"]
                     });
                 }
 
@@ -86,41 +87,23 @@ namespace FHICTDeploymentSystem.DAL.Contexts
                 sqlCommand.Parameters.Add(new SqlParameter("@Id", user.Id));
 
                 sqlCommand.ExecuteNonQuery();
-
-  
                 connection.Close();
             }
-
-
         }
 
-        public IEnumerable<User> GetAllUserNoTeam(User user)
+        public void EditUserInTeam(User user)
         {
-            var userlist = new List<User>();
-
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
 
-                var sqlCommand = new SqlCommand("GetAllEmployeeNoTeam", connection);
+                var sqlCommand = new SqlCommand("EditUserInTeam", connection);
                 sqlCommand.CommandType = CommandType.StoredProcedure;
+                sqlCommand.Parameters.Add(new SqlParameter());
 
-                var reader = sqlCommand.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    //voeg namen van mensen toe die team id NULL hebben
-                    userlist.Add(new User
-                    {
-                        Name = (string)reader["Name"],
-                    });
-                }
-
+                sqlCommand.ExecuteNonQuery();
                 connection.Close();
             }
-
-            return userlist;
-
         }
 
         public void AddTeacher()
@@ -137,6 +120,5 @@ namespace FHICTDeploymentSystem.DAL.Contexts
         {
             return team.Name;
         }
-
     }
 }
