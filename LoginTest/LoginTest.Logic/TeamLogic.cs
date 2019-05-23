@@ -32,5 +32,10 @@ namespace FHICTDeploymentSystem.Logic
             _repo.RemoveUser(_user);
         }
 
+        public void EditUserInTeam(User user)
+        {
+            _repo.EditUserInTeam(user);
+        }
+        
     }
 }

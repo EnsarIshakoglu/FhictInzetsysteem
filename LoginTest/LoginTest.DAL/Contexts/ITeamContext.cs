@@ -14,5 +14,7 @@ namespace DAL.Contexts
         IEnumerable<User> GetTeamUsers(User user);
 
         void RemoveUser(User _user);
+
+        void EditUserInTeam(User user);
     }
 }

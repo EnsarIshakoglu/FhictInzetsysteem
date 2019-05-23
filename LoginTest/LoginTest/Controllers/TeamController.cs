@@ -36,6 +36,11 @@ namespace FHICTDeploymentSystem.Controllers
             return RedirectToAction("ManageTeam");
         }
 
+        public IActionResult EditUserInTeam(User user)
+        {
+            //_teamLogic.EditUserInTeam(user);
+            return View(user);
+        }
 
     }
 }

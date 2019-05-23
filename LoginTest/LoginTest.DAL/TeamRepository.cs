@@ -30,5 +30,11 @@ namespace DAL
         {
             _context.RemoveUser(_user);
         }
+
+        public void EditUserInTeam(User user)
+        {
+            _context.EditUserInTeam(user);
+        }
+        
     }
 }
