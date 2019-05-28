@@ -42,5 +42,12 @@ namespace FHICTDeploymentSystem.Controllers
             return View(user);
         }
 
+
+        [HttpPost]
+        public IActionResult GetUserCompetences(int userId)
+        {
+            //return Json();
+            return View();
+        }
     }
 }

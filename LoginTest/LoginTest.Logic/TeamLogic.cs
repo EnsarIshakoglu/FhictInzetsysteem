@@ -22,11 +22,6 @@ namespace FHICTDeploymentSystem.Logic
             return GetTeam(id); //doe een keer iets goed leon
         }
 
-        public IEnumerable<Team> GetAllTeams()
-        {
-            return _repo.GetAllTeams();
-        }
-
         public void RemoveUser(User _user)
         {
             _repo.RemoveUser(_user);

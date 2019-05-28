@@ -14,34 +14,7 @@ namespace FHICTDeploymentSystem.DAL.Contexts
 
         private readonly string _connectionString =
             "Server=mssql.fhict.local;Database=dbi389621;User Id=dbi389621;Password=Ensar123;";
-
-        // vraag alle teams op(nummer en naam)
-        public IEnumerable<Team> GetAllTeams()
-        {
-            var teams = new List<Team>();
-
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-
-                var sqlCommand = new SqlCommand("select ID, Naam from Team", connection);
-                var reader = sqlCommand.ExecuteReader();
-
-
-                while (reader.Read())
-                {
-                    teams.Add(new Team
-                    {
-                        Name = (string)reader["Naam"],
-                        Id = (int)reader["ID"]
-                    });
-                }
-
-                connection.Close();
-            }
-
-            return teams;
-        }
+       
 
         //vraag alle users op die bij een specifiek(ID) team horen(id en naam)
         public IEnumerable<User> GetTeamUsers(User user)
@@ -55,7 +28,7 @@ namespace FHICTDeploymentSystem.DAL.Contexts
                 var sqlCommand = new SqlCommand("GetAllUsersFromTeam", connection);
                 sqlCommand.CommandType = CommandType.StoredProcedure;
                 sqlCommand.Parameters.Add(new SqlParameter("@TeamId", user.TeamId));
-
+                sqlCommand.Parameters.Add(new SqlParameter("@UserId", user.Id));
                 var reader = sqlCommand.ExecuteReader();
 
                 while (reader.Read())
@@ -68,10 +41,8 @@ namespace FHICTDeploymentSystem.DAL.Contexts
                         TeamId =(int)reader["TeamId"]
                     });
                 }
-
                 connection.Close();
             }
-
             return userList;
         }
 

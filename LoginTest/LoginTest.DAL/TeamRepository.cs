@@ -16,11 +16,6 @@ namespace DAL
             _context = new TeamContext();
         }
 
-        public IEnumerable<Team> GetAllTeams()
-        {
-            return _context.GetAllTeams();
-        }
-
         public IEnumerable<User> GetTeamUsers(User user)
         {
             return _context.GetTeamUsers(user);
