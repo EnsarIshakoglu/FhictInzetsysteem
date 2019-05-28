@@ -77,6 +77,11 @@ namespace FHICTDeploymentSystem.DAL.Contexts
             }
         }
 
+        public void AddTeacher()
+        {
+
+        }
+
         public int Getid(Team team)
         {
             return team.Id;
