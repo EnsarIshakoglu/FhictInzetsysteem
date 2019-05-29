@@ -31,9 +31,14 @@ namespace DAL
             _context.RemoveUser(_user);
         }
 
+        public void AddTeacher(User _user)
+        {
+            _context.AddTeacher(_user);
+        }
+
         public IEnumerable<User> GetAllUserNoTeam(User _user)
         {
-            return _context.GetAllUserNoTeam(_user);
+            return _context.GetAllUserWhithoutTeam(_user);
         }
     }
 }

@@ -32,7 +32,12 @@ namespace FHICTDeploymentSystem.Logic
             _repo.RemoveUser(_user);
         }
 
-        public IEnumerable<User> GetAllUserNoTeam(User _user)
+        public void AddTeacher(User _user)
+        {
+            _repo.AddTeacher(_user);
+        }
+
+        public IEnumerable<User> GetAllUserWhitoutTeam(User _user)
         {
             return _repo.GetAllUserNoTeam(_user);
         }

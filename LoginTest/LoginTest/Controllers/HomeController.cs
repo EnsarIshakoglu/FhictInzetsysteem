@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using System;
 
 namespace FHICTDeploymentSystem.Controllers
 {
@@ -94,8 +95,9 @@ namespace FHICTDeploymentSystem.Controllers
             foreach (string role in roles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));
+                
             }
-
+            claims.Add(new Claim(ClaimTypes.Sid, user.TeamId.ToString()));
             claims.Add(new Claim(ClaimTypes.Name, userId.ToString()));
 
             ClaimsPrincipal principal = new ClaimsPrincipal(new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme));

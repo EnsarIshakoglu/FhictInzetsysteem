@@ -52,9 +52,10 @@ namespace FHICTDeploymentSystem.DAL.Contexts
             {
                 connection.Open();
 
-                var sqlCommand = new SqlCommand("GetAllUsersFromTeam", connection);
+                var sqlCommand = new SqlCommand("GetAllEmployeesFromTeam", connection);
                 sqlCommand.CommandType = CommandType.StoredProcedure;
                 sqlCommand.Parameters.Add(new SqlParameter("@TeamId", user.TeamId));
+                sqlCommand.Parameters.Add(new SqlParameter("@UserId", user.Id));
 
                 var reader = sqlCommand.ExecuteReader();
 
@@ -76,7 +77,6 @@ namespace FHICTDeploymentSystem.DAL.Contexts
 
         public void RemoveUser(User user)
         {
-
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
@@ -90,11 +90,26 @@ namespace FHICTDeploymentSystem.DAL.Contexts
   
                 connection.Close();
             }
-
-
         }
 
-        public IEnumerable<User> GetAllUserNoTeam(User user)
+        public void AddTeacher(User user)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                var sqlCommand = new SqlCommand("AddEmployeeToTeam", connection);
+                sqlCommand.CommandType = CommandType.StoredProcedure;
+                sqlCommand.Parameters.Add(new SqlParameter("@UserId", user.Id));
+                sqlCommand.Parameters.Add(new SqlParameter("@TeamId", user.TeamId));
+
+                sqlCommand.ExecuteNonQuery();
+
+                connection.Close();
+            }
+        }
+
+            public IEnumerable<User> GetAllUserWhithoutTeam(User user)
         {
             var userlist = new List<User>();
 
@@ -112,7 +127,8 @@ namespace FHICTDeploymentSystem.DAL.Contexts
                     //voeg namen van mensen toe die team id NULL hebben
                     userlist.Add(new User
                     {
-                        Name = (string)reader["Name"],
+                        Id = (int)reader["Id"],
+                        Name = (string)reader["Username"],
                     });
                 }
 
