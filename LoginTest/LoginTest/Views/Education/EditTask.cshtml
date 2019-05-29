@@ -2,6 +2,7 @@
 @using FHICTDeploymentSystem.Models
 @{
     ViewData["Title"] = "Ingelogd";
+    EducationObject test;
 }
 
 <style type="text/css">
@@ -123,13 +124,13 @@
             </fieldset>
             <fieldset></fieldset>
         </form>
-        <input id="Update" type="submit" value="Update (:"/>
-        <input id="Remove" type="submit" value ="Remove ):"/>
+        <input id="Edit" type="submit" value="Update (:" />
+        <input id="Remove" type="submit" value="Remove ):" />
     </div>
 </div>
 
 @section Scripts
-    {
+{
     <script>
         $('#sections').change(function() {
             $('#units').empty();
@@ -138,7 +139,7 @@
             var selectedSectionId = $("#sections option:selected").val();
             var selectedUnit = $('#units');
             selectedUnit.append($("<option></option>")
-                .attr("value", "12" )
+                .attr("value", "12")
                 .text("-Select-"));
             $.post('@Url.Action("GetUnits", "Education")',
                 {
@@ -187,7 +188,7 @@
                     execId: selectedExecId
                 },
                 function(data) {
-                    data.forEach(function (task) {
+                    data.forEach(function(task) {
                         selectTasks.append($("<option></option>")
                             .attr("value", task.id)
                             .text("Period: " + task.period + " | " + task.name + ": " + task.description));
@@ -196,10 +197,9 @@
         });
 
 
-        $('#Remove').click(function () {
+        $('#Remove').click(function() {
 
             var selectedId = $("#tasks option:selected").val();
-
             var task = {
                 "Id": selectedId
             }
@@ -212,8 +212,33 @@
                     dataType: "json",
                     success: function(result) {
                         console.log("Success");
-                        alert(result.message);
-                        window.location.href = '@Url.Action("EditTask", "Education")';
+                        window.location.href = '@Url.Action("EditTask", "Education")/' + task;
+                    }
+                });
+            } else {
+                console.log("Non selected!");
+            }
+        });
+
+        $('#Edit').click(function() {
+
+            var selectedId = $("#tasks option:selected").val();
+
+            var task = {
+                "Id": selectedId
+            }
+            if (selectedId !== undefined) {
+                $.ajax({
+                    url: '@Url.Action("EditTaskActualTask", "Education")',
+                    data: JSON.stringify(task),
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function(result) {
+                        console.log(result.message);
+                        var url = '@Url.Action("Test", "Education", new { jsonObject = "__jsonObject__" })';
+                        window.location.href = url.replace('__jsonObject__', result.message);
+                        //window.location.href = result.message;
                     }
                 });
             } else {

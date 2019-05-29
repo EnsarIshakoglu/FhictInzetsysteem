@@ -8,5 +8,8 @@ namespace DAL.Contexts
         IEnumerable<EducationObject> GetUnitTermExecutions(int unitId);
         void AddTask(EducationObject toAddTask);
         void RemoveTask(EducationObject toRemoveTask);
+        void UpdateTask(EducationObject task);
+        EducationObject GetTaskById(EducationObject task);
+
     }
 }

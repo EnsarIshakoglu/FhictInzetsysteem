@@ -24,5 +24,15 @@ namespace Logic
         {
             return _repo.GetUnitTermExecutions(unitId);
         }
+
+        public void UpdateTask(EducationObject task)
+        {
+             _repo.UpdateTask(task);
+        }
+
+        public EducationObject GetTaskById(EducationObject task)
+        {
+            return _repo.GetTaskById(task);
+        }
     }
 }

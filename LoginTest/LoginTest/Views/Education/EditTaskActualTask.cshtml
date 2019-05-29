@@ -1,4 +1,5 @@
-﻿@model IEnumerable<EducationObject>
+﻿@model EducationObject
+@using System.Security.Cryptography.X509Certificates
 @using FHICTDeploymentSystem.Models
 @{
     ViewData["Title"] = "Tasks";
@@ -103,35 +104,21 @@
     <div class="form-style-5">
         <form>
             <fieldset>
-                <legend style="text-align: center">Add task</legend>
-                <label>Section:</label>
-                <select id="sections" type="text" name="field1">
-                    @foreach (var section in Model)
-                    {
-                        var sectionId = section.Id;
-                        var sectionName = section.Name;
-
-                        <option value="@sectionId">@sectionName</option>
-                    }
-                </select>
-                <label>Unit:</label>
-                <select id="units" type="text" name="field2"></select>
-                <label>Unit execution:</label>
-                <select id="execId" type="text" name="field3"></select>
-                <label>Period:</label>
+                <legend style="text-align: center">Update task</legend>
                 <select id="period" type="text" name="field4">
                     <option value="1">1</option>
                     <option value="2">2</option>
                 </select>
-                <input id="code" type="text" name="field5" placeholder="Code">
-                <input id="explanation" type="text" name="field6" placeholder="Explanation">
-                <input id="hours" type="text" name="field7" placeholder="Hours">
-                <input id="factor" type="number" name="field9" placeholder="Factor">
+                <input id="code" type="text" name="field5" placeholder="Code" value="@Model.Name">
+                <input id="description" type="text" name="field6" placeholder="Explanation" value="@Model.Description">
+                <input id="hours" type="text" name="field7" placeholder="Hours" value="@Model.EstimatedHours">
+                <input id="factor" type="number" name="field9" placeholder="Factor" value="@Model.Factor">
             </fieldset>
             <fieldset>
-                <textarea id="description" name="field8" placeholder="Description"></textarea>
+                <textarea id="explanation" name="field8" placeholder="Explanation">@Model.Explanation</textarea>
             </fieldset>
-            <input id="addButton" type="submit" value="Add" />
+            <input id="UpdateButton" type="submit" value="Update" />
+
         </form>
     </div>
 </div>
@@ -139,73 +126,37 @@
 @section Scripts
     {
     <script>
-        $('#sections').change(function() {
-            $('#units').empty();
-            $('#execId').empty();
-            var selectedSectionId = $("#sections option:selected").val();
-            var selectedUnit = $('#units');
-            selectedUnit.append($("<option></option>")
-                .attr("value", "12" )
-                .text("-Select-"));
-            $.post('@Url.Action("GetUnits", "Education")',
-                {
-                    sectionId: selectedSectionId
-                },
-                function(data) {
-                    data.forEach(function(section) {
-                        selectedUnit.append($("<option></option>")
-                            .attr("value", section.id)
-                            .text(section.name));
-                    });
-                });
+        $(document).ready(function() {
+            $('#period').val('@Model.Period');
         });
 
-        $('#units').change(function() {
-            $('#execId').empty();
-            var selectedUnitId = $("#units option:selected").val();
-            var selectedExec = $('#execId');
-            selectedExec.append($("<option></option>")
-                .attr("value", "test")
-                .text("-Select-"));
-
-            $.post('@Url.Action("GetTermExecutions", "Education")',
-                {
-                    unitId: selectedUnitId
-                },
-                function(data) {
-                    data.forEach(function(exec) {
-                        selectedExec.append($("<option></option>")
-                            .attr("value", exec.id)
-                            .text(exec.name));
-                    });
-                });
-        });
-
-        $('#addButton').on('click', (function () {
+        $('#UpdateButton').click(function () {
+            window.location.reload();
+            alert("Succes");
             var taskToAdd = {
+                "Id": @Model.Id,
                 "Period": $("#period option:selected").val(),
                 "EstimatedHours": $("#hours").val(),
                 "Explanation": $("#explanation").val(),
                 "Name": $("#code").val(),
                 "Description": $("#description").val(),
-                "UnitExecId": $("#execId option:selected").val(),
                 "Factor" : $("#factor").val()
             };
 
             $.ajax({
-                url: '@Url.Action("AddTask", "Education")',
+                url: '@Url.Action("UpdateTask", "Education")',
                 data: JSON.stringify(taskToAdd),
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                success: function() {
-                    console.log('Success!');
+                success: function () {
+                    window.location.reload();
                 },
                 error: function() {
                     console.log('Error');
                 }
             });
-        }));
+        });
     </script>
 
 }

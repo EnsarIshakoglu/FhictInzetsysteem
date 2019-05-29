@@ -28,5 +28,15 @@ namespace DAL
         {
             return _context.GetUnitTermExecutions(unitId);
         }
+
+        public void UpdateTask(EducationObject task)
+        {
+            _context.UpdateTask(task);
+        }
+
+        public EducationObject GetTaskById(EducationObject task)
+        {
+            return _context.GetTaskById(task);
+        }
     }
 }

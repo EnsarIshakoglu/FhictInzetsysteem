@@ -18,7 +18,7 @@ namespace DAL.Contexts
             {
                 connection.Open();
 
-                var cmd = new SqlCommand("AddTask", connection) {CommandType = CommandType.StoredProcedure};
+                var cmd = new SqlCommand("AddTask", connection) { CommandType = CommandType.StoredProcedure };
 
                 cmd.Parameters.Add(new SqlParameter("@Period", toAddTask.Period));
                 cmd.Parameters.Add(new SqlParameter("@Code", toAddTask.Name));
@@ -39,7 +39,7 @@ namespace DAL.Contexts
             {
                 connection.Open();
 
-                var cmd = new SqlCommand("RemoveTask", connection) {CommandType = CommandType.StoredProcedure};
+                var cmd = new SqlCommand("RemoveTask", connection) { CommandType = CommandType.StoredProcedure };
 
                 cmd.Parameters.Add(new SqlParameter("@TaskId", toRemoveTask.Id));
                 cmd.ExecuteNonQuery();
@@ -56,7 +56,7 @@ namespace DAL.Contexts
             {
                 connection.Open();
 
-                SqlCommand cmd = new SqlCommand("GetAllUnitTermExecutions", connection) {CommandType = CommandType.StoredProcedure,};
+                SqlCommand cmd = new SqlCommand("GetAllUnitTermExecutions", connection) { CommandType = CommandType.StoredProcedure, };
 
                 cmd.Parameters.Add(new SqlParameter("@UnitId", unitId));
 
@@ -79,6 +79,61 @@ namespace DAL.Contexts
             return unitTermExecutions;
         }
 
-     
+        public void UpdateTask(EducationObject task)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                var cmd = new SqlCommand("UpdateTask", connection) { CommandType = CommandType.StoredProcedure };
+
+                cmd.Parameters.Add(new SqlParameter("@TaskId", task.Id));
+                cmd.Parameters.Add(new SqlParameter("@Period", task.Period));
+                cmd.Parameters.Add(new SqlParameter("@Code", task.Name));
+                cmd.Parameters.Add(new SqlParameter("@Explanation", task.Explanation));
+                cmd.Parameters.Add(new SqlParameter("@Description", task.Description));
+                cmd.Parameters.Add(new SqlParameter("@Hours", task.EstimatedHours));
+
+                cmd.ExecuteNonQuery();
+
+                connection.Close();
+            }
+        }
+
+        public EducationObject GetTaskById(EducationObject task)
+        {
+            var returnValue = new EducationObject();
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                SqlCommand cmd = new SqlCommand("GetTaskFromId", connection) { CommandType = CommandType.StoredProcedure, };
+
+                cmd.Parameters.Add(new SqlParameter("@TaskId", task.Id));
+
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    returnValue = new EducationObject
+                    {
+                        Id = (int)reader["Id"],
+                        Name = reader["Code"]?.ToString(),
+                        Description = reader["Description"]?.ToString(),
+                        EducationType = EducationType.Task,
+                        Factor = (int)reader["Factor"],
+                        EstimatedHours = (int)reader["Hours"],
+                        Period = (int)reader["Period"],
+                        Explanation = reader["Explanation"]?.ToString()
+                    };
+                }
+                reader.Close();
+                connection.Close();
+            }
+
+            return returnValue;
+        }
+
     }
 }
