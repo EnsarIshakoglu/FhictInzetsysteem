@@ -13,7 +13,7 @@ namespace Algorithm
         private readonly string _connectionString =
             "Server=mssql.fhict.local;Database=dbi389621;User Id=dbi389621;Password=Ensar123;";
 
-        public IEnumerable<EducationObject> GetAllTasks(EducationObject section)
+        public IEnumerable<EducationObject> GetAllTasks()
         {
             var tasks = new List<EducationObject>();
 
@@ -21,11 +21,8 @@ namespace Algorithm
             {
                 connection.Open();
 
-                SqlCommand cmd = new SqlCommand("GetTasksWithinSection", connection);
-
+                SqlCommand cmd = new SqlCommand("GetAllTasks", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.Add(new SqlParameter("@SectionId", section.Id));
 
                 var reader = cmd.ExecuteReader();
 
@@ -34,8 +31,11 @@ namespace Algorithm
                     tasks.Add(new EducationObject
                     {
                         Id = (int)reader["Id"],
-                        Name = reader["Code"]?.ToString(),
-                        EducationType = EducationType.Task
+                        UnitExecId = (int)reader["UnitExecId"],
+                        UnitId = (int)reader["UnitId"],
+                        SectionId = (int)reader["SectionId"],
+                        EstimatedHours = (int)reader["Hours"],
+                        Factor = (int)reader["Factor"]
                     });
                 }
 
@@ -43,6 +43,96 @@ namespace Algorithm
             }
 
             return tasks;
+        }
+
+
+        public IEnumerable<Employee> GetAllEmployees()
+        {
+            var employees = new List<Employee>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                SqlCommand cmd = new SqlCommand("GetAllEmployees", connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    employees.Add(new Employee
+                    {
+                        Id = (int)reader["Id"],
+                        HoursP1 = (int)reader["HoursPeriod1"],
+                        HoursP2 = (int)reader["HoursPeriod2"]
+                    });
+                }
+
+                connection.Close();
+            }
+
+            return employees;
+        }
+
+        public IEnumerable<Competence> GetEmployeeCompetences(int employeeId)
+        {
+            var competences = new List<Competence>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                SqlCommand cmd = new SqlCommand("GetEmployeeCompetences", connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(new SqlParameter("@EmployeeId", employeeId));
+
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    competences.Add(new Competence
+                    {
+                        TaskId = (reader["TaskId"] as int?).GetValueOrDefault(),
+                        UnitTermExecId = (reader["UnitTermExecId"] as int?).GetValueOrDefault(),
+                        UnitId = (reader["UnitId"] as int?).GetValueOrDefault(),
+                        SectionId = (reader["SectionId"] as int?).GetValueOrDefault()
+                    });
+                }
+
+                connection.Close();
+            }
+
+            return competences;
+        }
+
+        public IEnumerable<Preference> GetEmployeePreferences(int employeeId)
+        {
+            var preferences = new List<Preference>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                SqlCommand cmd = new SqlCommand("GetEmployeePreferences", connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(new SqlParameter("@EmployeeId", employeeId));
+
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    preferences.Add(new Preference
+                    {
+                        Task = new EducationObject{Id = (reader["TaskId"] as int?).GetValueOrDefault()},
+                        Value = (int)reader["Priority"],
+                    });
+                }
+
+                connection.Close();
+            }
+
+            return preferences;
         }
     }
 }

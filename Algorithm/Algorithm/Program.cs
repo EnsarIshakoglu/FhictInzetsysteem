@@ -14,22 +14,8 @@ namespace Algorithm
         {
             Console.WriteLine("Welcome to out algorithm program!");
 
-            var tasks = GetAllTasks();
-
-            foreach (var task in tasks)
-            {
-
-            }
 
             Console.ReadKey();
-        }
-
-        static IEnumerable<EducationObject> GetAllTasks()
-        {
-            return _logic.GetAllTasks(new EducationObject
-            {
-                Id = 3
-            });
         }
     }
 }
