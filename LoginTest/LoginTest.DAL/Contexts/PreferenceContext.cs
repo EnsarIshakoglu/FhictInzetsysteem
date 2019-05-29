@@ -82,7 +82,7 @@ namespace FHICTDeploymentSystem.DAL.Contexts
             {
                 connection.Open();
 
-                SqlCommand cmd = new SqlCommand("GetAllTasks", connection);
+                SqlCommand cmd = new SqlCommand("GetAllTasksFromUnitExecId", connection);
 
                 cmd.CommandType = CommandType.StoredProcedure;
 

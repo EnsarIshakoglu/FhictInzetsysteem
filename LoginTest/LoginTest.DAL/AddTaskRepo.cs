@@ -20,6 +20,10 @@ namespace DAL
             _context.AddTask(toAddTask);
         }
 
+        public void RemoveTask(EducationObject toRemoveTask)
+        {
+            _context.RemoveTask(toRemoveTask);
+        }
         public IEnumerable<EducationObject> GetUnitTermExecutions(int unitId)
         {
             return _context.GetUnitTermExecutions(unitId);

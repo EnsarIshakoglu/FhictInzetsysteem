@@ -122,9 +122,9 @@
                 <select id="tasks" type="text" name="field4"></select>
             </fieldset>
             <fieldset></fieldset>
-            <input id="Update" type="submit" value="Update (:"/>
-            <input id="Remove" type="submit" value ="Remove ):"/>
         </form>
+        <input id="Update" type="submit" value="Update (:"/>
+        <input id="Remove" type="submit" value ="Remove ):"/>
     </div>
 </div>
 
@@ -191,9 +191,34 @@
                         selectTasks.append($("<option></option>")
                             .attr("value", task.id)
                             .text("Period: " + task.period + " | " + task.name + ": " + task.description));
-                        console.log(JSON.stringify(task));
                     });
                 });
+        });
+
+
+        $('#Remove').click(function () {
+
+            var selectedId = $("#tasks option:selected").val();
+
+            var task = {
+                "Id": selectedId
+            }
+            if (selectedId !== undefined) {
+                $.ajax({
+                    url: '@Url.Action("RemoveTask", "Education")',
+                    data: JSON.stringify(task),
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function(result) {
+                        console.log("Success");
+                        alert(result.message);
+                        window.location.href = '@Url.Action("EditTask", "Education")';
+                    }
+                });
+            } else {
+                console.log("Non selected!");
+            }
         });
     </script>
 }

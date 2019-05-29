@@ -33,6 +33,21 @@ namespace DAL.Contexts
             }
         }
 
+        public void RemoveTask(EducationObject toRemoveTask)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                var cmd = new SqlCommand("RemoveTask", connection) {CommandType = CommandType.StoredProcedure};
+
+                cmd.Parameters.Add(new SqlParameter("@TaskId", toRemoveTask.Id));
+                cmd.ExecuteNonQuery();
+
+                connection.Close();
+            }
+        }
+
         public IEnumerable<EducationObject> GetUnitTermExecutions(int unitId)
         {
             var unitTermExecutions = new List<EducationObject>();
@@ -41,7 +56,7 @@ namespace DAL.Contexts
             {
                 connection.Open();
 
-                SqlCommand cmd = new SqlCommand("GetAllUnitTermExecutions", connection) {CommandType = CommandType.StoredProcedure};
+                SqlCommand cmd = new SqlCommand("GetAllUnitTermExecutions", connection) {CommandType = CommandType.StoredProcedure,};
 
                 cmd.Parameters.Add(new SqlParameter("@UnitId", unitId));
 
@@ -63,5 +78,7 @@ namespace DAL.Contexts
 
             return unitTermExecutions;
         }
+
+     
     }
 }

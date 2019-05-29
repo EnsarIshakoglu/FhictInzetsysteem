@@ -15,6 +15,11 @@ namespace Logic
             _repo.AddTask(toAddTask);
         }
 
+        public void RemoveTask(EducationObject toRemoveTask)
+        {
+            _repo.RemoveTask(toRemoveTask);
+        }
+
         public IEnumerable<EducationObject> GetUnitTermExecutions(int unitId)
         {
             return _repo.GetUnitTermExecutions(unitId);

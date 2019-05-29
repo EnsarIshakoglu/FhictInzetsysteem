@@ -71,5 +71,12 @@ namespace FHICTDeploymentSystem.Controllers
             }
             return Json(result);
         }
+
+        [HttpPost]
+        public IActionResult RemoveTask([FromBody] EducationObject task)
+        {
+            _addTaskLogic.RemoveTask(task);
+            return new JsonResult(new { message = "Success" });
+        }
     }
 }
