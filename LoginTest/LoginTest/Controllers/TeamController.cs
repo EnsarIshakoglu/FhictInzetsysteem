@@ -60,6 +60,11 @@ namespace FHICTDeploymentSystem.Controllers
             _teamLogic.AddTeacher(_user);
             return RedirectToAction("ManageTeam");
         }
+        
+        public IActionResult EditUserInTeam(User user)
+        {
+            return View();
+        }
 
     }
 }

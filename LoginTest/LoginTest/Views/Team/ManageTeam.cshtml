@@ -4,10 +4,10 @@
     ViewData["Title"] = "Team Beheren";
 }
 <h1>Team</h1>
-
+<button class="btn-voorkeur"><a asp-controller="Team" asp-action="ShowTeachers">Add teachers</a></button><br /><br />
 <section id="testimonial">
     <div class="container">
-        <div class="row">
+        <div class="row">            
             <div class="col s12">
                 <div class="testimonial-inner">
                     <h2 class="title">Manage your Team</h2>
@@ -20,10 +20,10 @@
                                         <div class="testimonial-content">
                                             <h3>@item.Name</h3>
                                             <span>info</span>
-                                                <div class="btn-primary">
-                                                    <input id="RemoveUser" onclick="RemoveUser(@item.Id)" type="submit" class="btn-primary" value="Remove teacher">
-                                                </div>
-                                            <li style="color:black;"><a asp-area="" asp-controller="Team" asp-action="ShowTeachers">Manage Team</a></li>
+                                            <div class="btn-primary">
+                                                <button class="btn-voorkeur"><a id="RemoveUser" onclick="RemoveUser(@item.Id)" type="submit" value="Remove teacher">Remove teacher</a></button><br /><br />
+                                                <button class="btn-voorkeur"><a asp-controller="Team" asp-action="EditUserInTeam">Edit teacher</a></button>
+</div>
                                         </div>
                                     </div>
                                 </div>
