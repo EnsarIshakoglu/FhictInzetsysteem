@@ -10,11 +10,21 @@
     <div class="form-style-5">
         <form>
             <fieldset>
-                <legend style="text-align: center">Edit teacher</legend>
-                <label>ID:</label>
-                <input id="sections" type="text" name="field1">
-                <label>Name:</label>
-                <input id="sections" type="text" name="field1">
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" name="Name" placeholder="@Model.Name" readonly class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Id" class="control-label"></label>
+                    <input asp-for="Id" name="Name" placeholder="@Model.Id" readonly class="form-control" />
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TeamId" class="control-label"></label>
+                    <input asp-for="TeamId" name="Name" placeholder="@Model.TeamId" readonly class="form-control" />
+                    <span asp-validation-for="TeamId" class="text-danger"></span>
+                </div>
                 @*@foreach (var section in Model)
         {
             var sectionId = section.Id;
@@ -22,7 +32,6 @@
 
             <option value="@sectionId">@sectionName</option>
         }*@
-                </input>
                 <label>Bekwaamheden:</label>
                 <select id="period" type="text" name="field4">
                     <option value="1">1</option>

@@ -22,7 +22,7 @@
                                             <span>info</span>
                                             <div class="btn-primary">
                                                 <button class="btn-voorkeur"><a id="RemoveUser" onclick="RemoveUser(@item.Id)" type="submit" value="Remove teacher">Remove teacher</a></button><br /><br />
-                                                <button class="btn-voorkeur"><a asp-controller="Team" asp-action="EditUserInTeam">Edit teacher</a></button>
+                                                <button class="btn-voorkeur"><a href="@Url.Action("EditUserInTeam", "Team", item)">Edit teacher</a></button>
 </div>
                                         </div>
                                     </div>

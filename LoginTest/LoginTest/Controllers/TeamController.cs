@@ -63,7 +63,7 @@ namespace FHICTDeploymentSystem.Controllers
         
         public IActionResult EditUserInTeam(User user)
         {
-            return View();
+            return View(user);
         }
 
     }
