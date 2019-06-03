@@ -46,9 +46,10 @@
     <Compile Include="Models\Competence.cs" />
     <Compile Include="Context\Context.cs" />
     <Compile Include="Models\EducationObject.cs" />
-    <Compile Include="Models\EducationType.cs" />
+    <Compile Include="Models\Enums\EducationType.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Logic\Logic.cs" />
+    <Compile Include="Models\Enums\PreferencePoints.cs" />
     <Compile Include="Models\Preference.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

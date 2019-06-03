@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Algorithm.Enums;
 
 namespace Algorithm
 {
@@ -18,8 +20,8 @@ namespace Algorithm
             GetAllData();
             foreach (var task in AllTasks)
             {
-                List<Employee> tempList = GetCompetentEmployees(task);
-                AddValueToEmployeePreferences(tempList);
+                List<Employee> tempEmployeeList = GetCompetentEmployees(task);
+                AddValueToEmployeePreferences(tempEmployeeList, task);
             }
         }
 
@@ -36,17 +38,17 @@ namespace Algorithm
 
         private List<Employee> GetCompetentEmployees(EducationObject task)
         {
-            List<Employee> tempList = new List<Employee>();
+            List<Employee> tempEmployeeList = new List<Employee>();
 
             foreach (var employee in Employees)
             {
                 if (CheckTaskCompetence(task, employee) || CheckUnitCompetence(task, employee) || CheckUnitExecCompetence(task, employee) || CheckSectionCompetence(task, employee))
                 {
-                    tempList.Add(employee);
+                    tempEmployeeList.Add(employee);
                 }
             }
 
-            return tempList;
+            return tempEmployeeList;
         }
 
         private bool CheckTaskCompetence(EducationObject task, Employee employee)
@@ -67,6 +69,18 @@ namespace Algorithm
         private bool CheckSectionCompetence(EducationObject task, Employee employee)
         {
             return employee.Competences.Any(e => e.SectionId == task.SectionId);
+        }
+
+        public void AddValueToEmployeePreferences(IEnumerable<Employee> tempEmployeeList, EducationObject task)
+        {
+            var enumValues = Enum.GetValues(typeof(PreferencePoints));
+
+            foreach (var employee in tempEmployeeList)
+            {
+                var preferenceValue = employee.Preferences.First(p => p.Task.Equals(task)).Value;
+
+                employee.Points += (int)enumValues.GetValue(preferenceValue);
+            }
         }
     }
 }
