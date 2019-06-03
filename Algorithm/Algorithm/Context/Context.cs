@@ -75,9 +75,9 @@ namespace Algorithm
             return employees;
         }
 
-        public IEnumerable<Competence> GetEmployeeCompetences(int employeeId)
+        public IEnumerable<EducationObject> GetEmployeeCompetences(int employeeId)
         {
-            var competences = new List<Competence>();
+            var competences = new List<EducationObject>();
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -91,12 +91,9 @@ namespace Algorithm
 
                 while (reader.Read())
                 {
-                    competences.Add(new Competence
+                    competences.Add(new EducationObject()
                     {
-                        TaskId = (reader["TaskId"] as int?).GetValueOrDefault(),
-                        UnitTermExecId = (reader["UnitTermExecId"] as int?).GetValueOrDefault(),
-                        UnitId = (reader["UnitId"] as int?).GetValueOrDefault(),
-                        SectionId = (reader["SectionId"] as int?).GetValueOrDefault()
+                        Id = (reader["TaskId"] as int?).GetValueOrDefault(),
                     });
                 }
 

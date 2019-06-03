@@ -22,6 +22,7 @@ namespace Algorithm
             {
                 List<Employee> tempEmployeeList = GetCompetentEmployees(task);
                 AddValueToEmployeePreferences(tempEmployeeList, task);
+                AddPointsToEmployeesUsingCompetences(tempEmployeeList);
             }
         }
 
@@ -42,7 +43,7 @@ namespace Algorithm
 
             foreach (var employee in Employees)
             {
-                if (CheckTaskCompetence(task, employee) || CheckUnitCompetence(task, employee) || CheckUnitExecCompetence(task, employee) || CheckSectionCompetence(task, employee))
+                if (employee.Competences.Any(e => e.Id == task.Id))
                 {
                     tempEmployeeList.Add(employee);
                 }
@@ -51,27 +52,7 @@ namespace Algorithm
             return tempEmployeeList;
         }
 
-        private bool CheckTaskCompetence(EducationObject task, Employee employee)
-        {
-            return employee.Competences.Any(e => e.TaskId == task.Id);
-        }
-
-        private bool CheckUnitCompetence(EducationObject task, Employee employee)
-        {
-            return employee.Competences.Any(e => e.UnitId == task.UnitId);
-        }
-
-        private bool CheckUnitExecCompetence(EducationObject task, Employee employee)
-        {
-            return employee.Competences.Any(e => e.UnitTermExecId == task.UnitExecId);
-        }
-
-        private bool CheckSectionCompetence(EducationObject task, Employee employee)
-        {
-            return employee.Competences.Any(e => e.SectionId == task.SectionId);
-        }
-
-        public void AddValueToEmployeePreferences(IEnumerable<Employee> tempEmployeeList, EducationObject task)
+        private void AddValueToEmployeePreferences(IEnumerable<Employee> tempEmployeeList, EducationObject task)
         {
             var enumValues = Enum.GetValues(typeof(PreferencePoints));
 
@@ -81,6 +62,11 @@ namespace Algorithm
 
                 employee.Points += (int)enumValues.GetValue(preferenceValue);
             }
+        }
+
+        private void AddPointsToEmployeesUsingCompetences(IEnumerable<Employee> tempEmployeeList)
+        {
+            
         }
     }
 }
