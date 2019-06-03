@@ -10,6 +10,7 @@ namespace Algorithm
 {
     public class Logic
     {
+        //todo factor, fixatie, openuren
         private readonly Context _context = new Context();
         public IEnumerable<EducationObject> AllTasks { get; private set; }
         public IEnumerable<EducationObject> AssignedTasks { get; private set; }
@@ -66,7 +67,15 @@ namespace Algorithm
 
         private void AddPointsToEmployeesUsingCompetences(IEnumerable<Employee> tempEmployeeList)
         {
-            
+            List<Employee> sortedEmployeeList = tempEmployeeList.OrderByDescending(e => e.Competences.Count()).ToList();
+            int points = 1;
+            foreach (var employee in sortedEmployeeList)
+            {
+                tempEmployeeList.First(e => e.Id == employee.Id).Points += points;
+                points++;
+            }
+
+
         }
     }
 }
