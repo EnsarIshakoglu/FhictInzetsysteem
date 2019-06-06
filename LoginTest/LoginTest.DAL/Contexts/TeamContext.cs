@@ -120,5 +120,10 @@ namespace FHICTDeploymentSystem.DAL.Contexts
         {
             return team.Name;
         }
+
+        public IEnumerable<User> GetAllUserNoTeam(User user)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

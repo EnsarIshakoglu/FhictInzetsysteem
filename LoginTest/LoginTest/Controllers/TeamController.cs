@@ -30,12 +30,14 @@ namespace FHICTDeploymentSystem.Controllers
             return View(userList);
         }
 
+        [HttpGet]
         public IActionResult RemoveUser(User _user)
         {
             _teamLogic.RemoveUser(_user);
             return RedirectToAction("ManageTeam");
         }
 
+        [HttpGet]
         public IActionResult EditUserInTeam(User user)
         {
             //_teamLogic.EditUserInTeam(user);
