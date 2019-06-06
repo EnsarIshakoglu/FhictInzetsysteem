@@ -132,5 +132,32 @@ namespace Algorithm
 
             return preferences;
         }
+
+        public IEnumerable<EducationObject> GetAllAssignedTasks()
+        {
+            var assignedTasks = new List<EducationObject>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                SqlCommand cmd = new SqlCommand("GetAllAssignedTasks", connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    assignedTasks.Add(new EducationObject
+                    {
+                        Id = (int)reader["TaskId"]
+                    });
+                }
+
+                connection.Close();
+            }
+
+            return assignedTasks;
+        }
     }
 }

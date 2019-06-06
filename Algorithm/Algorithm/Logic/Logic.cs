@@ -10,9 +10,11 @@ namespace Algorithm
 {
     public class Logic
     {
+        //todo factor, fixatie, openuren
         private readonly Context _context = new Context();
         public IEnumerable<EducationObject> AllTasks { get; private set; }
         public IEnumerable<EducationObject> AssignedTasks { get; private set; }
+        public IEnumerable<EducationObject> FixedTasks { get; private set; }
         public IEnumerable<Employee> Employees { get; private set; }
 
         public void StartAlgorithm()
@@ -20,16 +22,20 @@ namespace Algorithm
             GetAllData();
             foreach (var task in AllTasks)
             {
-                List<Employee> tempEmployeeList = GetCompetentEmployees(task);
-                AddValueToEmployeePreferences(tempEmployeeList, task);
-                AddPointsToEmployeesUsingCompetences(tempEmployeeList);
-                AddPointsToEmployeesUsingAvailability(tempEmployeeList, task);
+                int factor = task.Factor - FixedTasks.Count(t => t.Id == task.Id);
+                if (factor > 0)
+                {
+                    List<Employee> tempEmployeeList = GetCompetentEmployees(task);
+                    AddValueToEmployeePreferences(tempEmployeeList, task);
+                    AddPointsToEmployeesUsingCompetences(tempEmployeeList);
+                }
             }
         }
 
         private void GetAllData()
         {
             AllTasks = _context.GetAllTasks();
+            FixedTasks = _context.GetAllAssignedTasks();
             Employees = _context.GetAllEmployees();
             foreach (var employee in Employees)
             {
@@ -65,15 +71,18 @@ namespace Algorithm
             }
         }
 
-        private void AddPointsToEmployeesUsingAvailability(IEnumerable<Employee> tempEmployeeList, EducationObject task)
+        private void AddPointsToEmployeesUsingCompetences(IEnumerable<Employee> tempEmployeeList)
         {
-            foreach (var employee in tempEmployeeList)
+            List<Employee> sortedEmployeeList = tempEmployeeList.OrderByDescending(e => e.Competences.Count()).ToList();
+            int points = 1;
+            int factor = (50 / sortedEmployeeList.Count());
+            foreach (var employee in sortedEmployeeList)
             {
-                var openHours = employee.OpenHours[task.Period - 1];
-                var points = openHours / 10;
-
-                employee.Points += points;
+                tempEmployeeList.First(e => e.Id == employee.Id).Points += (points * factor);
+                points++;
             }
+
+
         }
     }
 }
