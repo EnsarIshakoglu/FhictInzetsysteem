@@ -23,6 +23,7 @@ namespace Algorithm
                 List<Employee> tempEmployeeList = GetCompetentEmployees(task);
                 AddValueToEmployeePreferences(tempEmployeeList, task);
                 AddPointsToEmployeesUsingCompetences(tempEmployeeList);
+                AddPointsToEmployeesUsingAvailability(tempEmployeeList, task);
             }
         }
 
@@ -64,9 +65,15 @@ namespace Algorithm
             }
         }
 
-        private void AddPointsToEmployeesUsingCompetences(IEnumerable<Employee> tempEmployeeList)
+        private void AddPointsToEmployeesUsingAvailability(IEnumerable<Employee> tempEmployeeList, EducationObject task)
         {
-            
+            foreach (var employee in tempEmployeeList)
+            {
+                var openHours = employee.OpenHours[task.Period - 1];
+                var points = openHours / 10;
+
+                employee.Points += points;
+            }
         }
     }
 }

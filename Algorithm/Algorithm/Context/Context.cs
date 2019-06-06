@@ -35,7 +35,8 @@ namespace Algorithm
                         UnitId = (int)reader["UnitId"],
                         SectionId = (int)reader["SectionId"],
                         EstimatedHours = (int)reader["Hours"],
-                        Factor = (int)reader["Factor"]
+                        Factor = (int)reader["Factor"],
+                        Period = (int)reader["Period"]
                     });
                 }
 

@@ -14,6 +14,6 @@ namespace Algorithm
         public int UnitId { get; set; }
         public int EstimatedHours { get; set; }
         public int Factor { get; set; }
-        
+        public int Period { get; set; }
     }
 }
