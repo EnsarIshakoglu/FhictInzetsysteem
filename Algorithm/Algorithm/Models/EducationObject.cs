@@ -9,9 +9,6 @@ namespace Algorithm
     public class EducationObject
     {
         public int Id { get; set; }
-        public int SectionId { get; set; }
-        public int UnitExecId { get; set; }
-        public int UnitId { get; set; }
         public int EstimatedHours { get; set; }
         public int Factor { get; set; }
         public int Period { get; set; }

@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\Context.cs" />
+    <Compile Include="Models\AssignedTask.cs" />
     <Compile Include="Models\EducationObject.cs" />
     <Compile Include="Models\Enums\EducationType.cs" />
     <Compile Include="Models\Employee.cs" />

@@ -14,7 +14,7 @@ namespace Algorithm
         {
             Console.WriteLine("Welcome to out algorithm program!");
 
-
+            _logic.StartAlgorithm();
 
             Console.ReadKey();
         }

@@ -13,7 +13,7 @@ namespace Algorithm
         private readonly string _connectionString =
             "Server=mssql.fhict.local;Database=dbi389621;User Id=dbi389621;Password=Ensar123;";
 
-        public IEnumerable<EducationObject> GetAllTasks()
+        public List<EducationObject> GetAllTasks()
         {
             var tasks = new List<EducationObject>();
 
@@ -31,9 +31,6 @@ namespace Algorithm
                     tasks.Add(new EducationObject
                     {
                         Id = (int)reader["Id"],
-                        UnitExecId = (int)reader["UnitExecId"],
-                        UnitId = (int)reader["UnitId"],
-                        SectionId = (int)reader["SectionId"],
                         EstimatedHours = (int)reader["Hours"],
                         Factor = (int)reader["Factor"],
                         Period = (int)reader["Period"]
@@ -65,8 +62,7 @@ namespace Algorithm
                     employees.Add(new Employee
                     {
                         Id = (int)reader["Id"],
-                        HoursP1 = (int)reader["HoursPeriod1"],
-                        HoursP2 = (int)reader["HoursPeriod2"]
+                        OpenHours = new int[] { (int)reader["HoursPeriod1"], (int)reader["HoursPeriod2"] }
                     });
                 }
 
@@ -122,7 +118,7 @@ namespace Algorithm
                 {
                     preferences.Add(new Preference
                     {
-                        Task = new EducationObject{Id = (reader["TaskId"] as int?).GetValueOrDefault()},
+                        Task = new EducationObject { Id = (reader["TaskId"] as int?).GetValueOrDefault() },
                         Value = (int)reader["Priority"],
                     });
                 }
