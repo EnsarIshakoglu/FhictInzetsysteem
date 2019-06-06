@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Win32;
 
 namespace Algorithm
 {
@@ -154,6 +155,38 @@ namespace Algorithm
             }
 
             return assignedTasks;
+        }
+
+        public void FixateTask(EducationObject task, Employee emp)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                var sqlCommand = new SqlCommand($"FixateTask", connection) { CommandType = CommandType.StoredProcedure };
+
+                sqlCommand.Parameters.AddWithValue("@EmployeeId", emp.Id);
+                sqlCommand.Parameters.AddWithValue("@TaskId", task.Id);
+                sqlCommand.ExecuteNonQuery();
+
+                connection.Close();
+            }
+        }
+
+        public void AssignTask(EducationObject task, Employee emp)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                var sqlCommand = new SqlCommand($"AssignTask", connection) { CommandType = CommandType.StoredProcedure };
+
+                sqlCommand.Parameters.AddWithValue("@EmployeeId", emp.Id);
+                sqlCommand.Parameters.AddWithValue("@TaskId", task.Id);
+                sqlCommand.ExecuteNonQuery();
+
+                connection.Close();
+            }
         }
     }
 }
