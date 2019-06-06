@@ -12,9 +12,11 @@ namespace Algorithm
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to out algorithm program!");
+            Console.WriteLine("Welcome to our algorithm program!");
 
             _logic.StartAlgorithm();
+
+            Console.WriteLine("Ik ben klaar! :D");
 
             Console.ReadKey();
         }

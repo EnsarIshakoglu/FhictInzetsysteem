@@ -13,7 +13,6 @@ namespace Algorithm
     {
         private readonly Context _context = new Context();
         public List<EducationObject> AllTasks { get; private set; }
-        public List<AssignedTask> AssignedTasks { get; private set; }
         public IEnumerable<EducationObject> FixedTasks { get; private set; }
         public IEnumerable<Employee> Employees { get; private set; }
 
@@ -29,7 +28,7 @@ namespace Algorithm
                     AddValueToEmployeePreferences(tempEmployeeList, task);
                     AddPointsToEmployeesUsingCompetences(tempEmployeeList);
                     AddPointsToEmployeesUsingAvailability(tempEmployeeList, task);
-                    AssignTask(task);
+                    AssignTask(tempEmployeeList, task);
                 }
             }
         }
@@ -54,7 +53,13 @@ namespace Algorithm
             {
                 if (employee.Competences.Any(e => e.Id == task.Id))
                 {
-                    tempEmployeeList.Add(employee);
+                    tempEmployeeList.Add(new Employee()
+                    {
+                        Id = employee.Id,
+                        OpenHours = employee.OpenHours,
+                        Preferences = employee.Preferences,
+                        Competences = employee.Competences
+                    });
                 }
             }
 
@@ -67,8 +72,12 @@ namespace Algorithm
 
             foreach (var employee in tempEmployeeList)
             {
-                var preferenceValue = employee.Preferences.First(p => p.Task.Equals(task)).Value;
-
+                int preferenceValue = 0;
+                if (employee.Preferences.FirstOrDefault(p => p.Task.Equals(task)) != null)
+                {
+                    preferenceValue = employee.Preferences.First(p => p.Task.Equals(task)).Value;
+                }
+                
                 employee.Points += (int)enumValues.GetValue(preferenceValue);
             }
         }
@@ -90,27 +99,31 @@ namespace Algorithm
             foreach (var employee in tempEmployeeList)
             {
                 var openHours = employee.OpenHours[task.Period - 1];
-                var points = openHours / 10;
+                int points = 0;
+                if (openHours > 0)
+                {
+                    points = openHours / 10;
+                }
+                else
+                {
+                    points = openHours;
+                }
 
                 employee.Points += points;
             }
         }
 
-        private void AssignTask(EducationObject task)
+        private void AssignTask(IEnumerable<Employee> tempEmployeeList, EducationObject task)
         {
-            List<Employee> sortedEmployeeList = Employees.OrderByDescending(e => e.Points).ToList();
+            List<Employee> sortedEmployeeList = tempEmployeeList.OrderByDescending(e => e.Points).ToList();
             int factor = task.Factor;
-            for (int i = 0; i < (factor - 1); i++)
+            for (int i = 0; i < factor; i++)
             {
                 if (i < sortedEmployeeList.Count)
                 {
                     var employee = sortedEmployeeList[i];
-                    AssignedTasks.Add(new AssignedTask()
-                    {
-                        Employee = employee,
-                        Task = task
-                    });
-                    employee.OpenHours[task.Period - 1] -= task.EstimatedHours;
+                    _context.AssignTask(task, employee);
+                    Employees.First(e => e.Id == employee.Id).OpenHours[task.Period - 1] -= task.EstimatedHours;
                     task.Factor--;
                 }
             }
