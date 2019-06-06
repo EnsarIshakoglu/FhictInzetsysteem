@@ -32,10 +32,21 @@ namespace FHICTDeploymentSystem.Logic
             _repo.RemoveUser(_user);
         }
 
-        public void EditUserInTeam(User user)
+        public void AddTeacher(User _user)
         {
-            _repo.EditUserInTeam(user);
+            _repo.AddTeacher(_user);
         }
-        
+
+        public IEnumerable<User> GetAllUserWhitoutTeam(User _user)
+        {
+            return _repo.GetAllUserNoTeam(_user);
+        }
+
+        public IEnumerable<User> GetEmployeeCompetences(User _user)
+        {
+            return _repo.GetEmployeeCompetences(_user);
+
+        }
+
     }
 }

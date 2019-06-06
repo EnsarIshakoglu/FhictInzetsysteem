@@ -1,33 +1,32 @@
 ﻿@model IEnumerable<FHICTDeploymentSystem.Models.User>
-
 @{
-    ViewData["Title"] = "Team Beheren";
+    ViewData["Title"] = "Add";
 }
-<h1>Team</h1>
-<button class="btn-voorkeur"><a asp-controller="Team" asp-action="ShowTeachers">Add teachers</a></button><br /><br />
+
+<h1>Add</h1>
+
 <section id="testimonial">
     <div class="container">
-        <div class="row">            
+        <div class="row">
             <div class="col s12">
                 <div class="testimonial-inner">
                     <h2 class="title">Manage your Team</h2>
                     <div class="testimonial-slider-area">
                         <div id="owl-carousel2" class="testimonial-slider row">
                             @foreach (var item in Model)
-                            {
-                                <div class="col s3">
-                                    <div class="single-testimonial">
-                                        <div class="testimonial-content">
-                                            <h3>@item.Name</h3>
-                                            <span>info</span>
-                                            <div class="btn-primary">
-                                                <button class="btn-voorkeur"><a id="RemoveUser" onclick="RemoveUser(@item.Id)" type="submit" value="Remove teacher">Remove teacher</a></button><br /><br />
-                                                <button class="btn-voorkeur"><a href="@Url.Action("EditUserInTeam", "Team", item)">Edit teacher</a></button>
-</div>
+                                {
+                                    <div class="col s3">
+                                        <div class="single-testimonial">
+                                            <div class="testimonial-content">
+                                                <h3>@item.Name</h3>
+                                                <span>info</span>
+                                                        <div class="btn-primary">                                                            
+                                                            <button class="btn-voorkeur"><a id="AddTeacher" onclick="AddTeacher(@item.Id)" type="submit" class="btn-primary">Add teacher</a></button>
+                                                        </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            }
+                                }
                         </div>
                     </div>
                 </div>
@@ -37,12 +36,12 @@
 </section>
 
 <script>
-    function RemoveUser(teacherId) {
+    function AddTeacher(teacherId) {
         console.log(teacherId);
         var teacher = {
             'Id': teacherId
         }
-        var controllerPath = '@Url.Action("RemoveUser", "Team")';
+        var controllerPath = '@Url.Action("AddTeacher", "Team")';
         $.ajax({
             url: controllerPath,
             data: JSON.stringify(teacher),
