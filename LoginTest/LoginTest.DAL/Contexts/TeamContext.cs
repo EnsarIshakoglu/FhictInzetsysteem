@@ -87,7 +87,7 @@ namespace FHICTDeploymentSystem.DAL.Contexts
 
                 sqlCommand.ExecuteNonQuery();
 
-  
+
                 connection.Close();
             }
         }
@@ -109,7 +109,7 @@ namespace FHICTDeploymentSystem.DAL.Contexts
             }
         }
 
-            public IEnumerable<User> GetAllUserWhithoutTeam(User user)
+        public IEnumerable<User> GetAllUserWhithoutTeam(User user)
         {
             var userlist = new List<User>();
 
@@ -137,6 +137,38 @@ namespace FHICTDeploymentSystem.DAL.Contexts
 
             return userlist;
 
+        }
+
+
+        public IEnumerable<User> GetEmployeeCompetences(User _user)
+        {
+            var userList = new List<User>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                var sqlCommand = new SqlCommand("GetAllEmployeesFromTeam", connection);
+                sqlCommand.CommandType = CommandType.StoredProcedure;
+                sqlCommand.Parameters.Add(new SqlParameter("@TeamId", user.TeamId));
+                sqlCommand.Parameters.Add(new SqlParameter("@UserId", user.Id));
+
+                var reader = sqlCommand.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    //voeg namen van mensen toe die team id hebben
+                    userList.Add(new User
+                    {
+                        Name = (string)reader["Name"],
+                        Id = (int)reader["Id"]
+                    });
+                }
+
+                connection.Close();
+            }
+
+            return userList;
         }
 
         public int Getid(Team team)

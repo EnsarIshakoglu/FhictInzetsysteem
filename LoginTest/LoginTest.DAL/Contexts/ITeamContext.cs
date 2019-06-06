@@ -17,5 +17,7 @@ namespace DAL.Contexts
 
         void RemoveUser(User _user);
         void AddTeacher(User _user);
+
+        IEnumerable<User> GetEmployeeCompetences(User _user);
     }
 }

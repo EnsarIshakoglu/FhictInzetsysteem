@@ -42,5 +42,11 @@ namespace FHICTDeploymentSystem.Logic
             return _repo.GetAllUserNoTeam(_user);
         }
 
+        public IEnumerable<User> GetEmployeeCompetences(User _user)
+        {
+            return _repo.GetEmployeeCompetences(_user);
+
+        }
+
     }
 }

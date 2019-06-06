@@ -40,5 +40,11 @@ namespace DAL
         {
             return _context.GetAllUserWhithoutTeam(_user);
         }
+
+        public IEnumerable<User> GetEmployeeCompetences(User _user)
+        {
+            return _context.GetEmployeeCompetences(_user);
+
+        }
     }
 }
