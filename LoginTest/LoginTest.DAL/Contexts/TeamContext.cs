@@ -140,7 +140,7 @@ namespace FHICTDeploymentSystem.DAL.Contexts
         }
 
 
-        public IEnumerable<User> GetEmployeeCompetences(User _user)
+        public IEnumerable<User> GetEmployeeCompetences(User user)
         {
             var userList = new List<User>();
 

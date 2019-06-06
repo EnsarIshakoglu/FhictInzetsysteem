@@ -67,5 +67,12 @@ namespace FHICTDeploymentSystem.Controllers
             return View(user);
         }
 
+        [HttpPost]
+        public IActionResult PreferenceControler([FromBody]User user)
+        {
+            _teamLogic.AddTeacher(user);
+            return RedirectToAction("ManageTeam");
+        }
+
     }
 }

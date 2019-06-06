@@ -1,4 +1,4 @@
-﻿@model FHICTDeploymentSystem.Models.User
+﻿@model IEnumerable<EducationObject>
 
 @{
     ViewData["Title"] = "Edit User In Team";
@@ -9,7 +9,7 @@
 <div style="padding-bottom: 70px; padding-top: 20px">
     <div class="form-style-5">
         <form>
-            <fieldset>
+            @*<fieldset>
                 <div class="form-group">
                     <label asp-for="Name" class="control-label"></label>
                     <input asp-for="Name" name="Name" placeholder="@Model.Name" readonly class="form-control" />
@@ -25,28 +25,34 @@
                     <input asp-for="TeamId" name="Name" placeholder="@Model.TeamId" readonly class="form-control" />
                     <span asp-validation-for="TeamId" class="text-danger"></span>
                 </div>
-                @*@foreach (var section in Model)
+            </fieldset>*@
+                @foreach (var section in Model)
         {
             var sectionId = section.Id;
             var sectionName = section.Name;
 
             <option value="@sectionId">@sectionName</option>
-        }*@
-                <label>Bekwaamheden:</label>
-                <select id="period" type="text" name="field4">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                </select>
-            </fieldset>
+        }
+            
+                @*<label>Bekwaamheden:</label>
+                <select id="period" size="20">
+                    @foreach (var item in Model)
+                    {
+                        <option value="@item.Value">@item.Value</option>
+                    }
+                </select>*@
+            
             <fieldset>
                 <textarea id="description" name="field8" placeholder="Description"></textarea>
             </fieldset>
-            <input id="addButton" type="submit" value="Save" />
+            <input onclick="RemovePreference()" id="addButton" type="submit" value="Save" />
         </form>
     </div>
 </div>
     <style type="text/css" >
+        .period {
+            width: 5.5em;
+        }
     .form-style-5 {
         max-width: 500px;
         padding: 10px 20px;
@@ -116,7 +122,7 @@
 
     .form-style-5 select {
         -webkit-appearance: menulist-button;
-        height: 35px;
+        height: 250px;
     }
 
     .form-style-5 input[type="submit"],
@@ -141,6 +147,32 @@
             background: #e40086;
         }
 </style>
+
+    <script>
+        function RemovePreference() {    
+        var z = document.getElementById("period"), myElementValue = z.value;
+        var x = {
+            'Id': myElementValue
+        }        
+        var controllerPath = '@Url.Action("PreferenceControler", "Team")';
+        $.ajax({
+            url: controllerPath,
+            data: JSON.stringify(myElementValue),
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function() {
+                console.log('Success!');
+            },
+            error: function() {
+                console.log('Error');
+            }
+        });
+        window.location.reload();
+    }
+    </script>
+
+
 @section Scripts {
 
   
