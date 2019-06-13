@@ -14,7 +14,7 @@ namespace Logic
         public IEnumerable<EducationObject> FixedTasks { get; private set; }
         public IEnumerable<Employee> Employees { get; private set; }
 
-        public void StartAlgorithm()
+        public IEnumerable<EducationObject> StartAlgorithm()
         {
             GetAllData();
             foreach (var task in AllTasks)
@@ -29,6 +29,8 @@ namespace Logic
                     AssignTask(tempEmployeeList, task);
                 }
             }
+
+            return AllTasks.Where(t => t.Factor > 0).ToList();
         }
 
         private void GetAllData()
@@ -84,7 +86,7 @@ namespace Logic
         {
             List<Employee> sortedEmployeeList = tempEmployeeList.OrderByDescending(e => e.Competences.Count()).ToList();
             int points = 1;
-            int factor = (50 / sortedEmployeeList.Count());
+            int factor = (50 / Math.Max(1, sortedEmployeeList.Count()));
             foreach (var employee in sortedEmployeeList)
             {
                 tempEmployeeList.First(e => e.Id == employee.Id).Points += (points * factor);

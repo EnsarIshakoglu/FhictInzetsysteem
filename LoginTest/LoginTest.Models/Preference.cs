@@ -8,6 +8,5 @@ namespace Models
     {
         public EducationObject Task { get; set; }
         public int Value { get; set; } = -1;
-        public bool ValueIsAverage { get; set; } = false;
     }
 }

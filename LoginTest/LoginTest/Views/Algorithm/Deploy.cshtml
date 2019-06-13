@@ -1,0 +1,31 @@
+﻿@using Models
+@model IEnumerable<EducationObject>
+
+
+@{
+    ViewData["Title"] = "Algorithm";
+}
+
+<h1 id="Title" style="color: #663366">Deploy System</h1>
+
+<div>
+    <form asp-controller="Algorithm" asp-action="StartAlgorithm" method="post" enctype="multipart/form-data">
+        <div class="form-group" style="margin-top: 60px">
+            <input type="submit" value="Start Algorithm" class="btn btn-danger btn-sm" />
+        </div>
+    </form>
+</div>
+
+<div style="margin-top: 30px">
+    <h5>Left Over Tasks:</h5>
+    <select size="5" style="height: 500px; width: 1000px">
+        @{
+            var index = 1;
+            foreach (var task in @Model)
+            {
+                <option value="@index">@task.Id: @task.Description</option>
+                index++;
+            }
+        }
+    </select>
+</div>
