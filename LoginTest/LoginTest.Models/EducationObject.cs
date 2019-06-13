@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Models.Enums;
 
-namespace FHICTDeploymentSystem.Models
+namespace Models
 {
     public class EducationObject
     {

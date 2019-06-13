@@ -4,11 +4,10 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using FHICTDeploymentSystem.Logic;
-using FHICTDeploymentSystem.Models;
 using Logic;
+using Models;
 
-namespace FHICTDeploymentSystem.Controllers
+namespace Controllers
 {
     public class TaskController : Controller
     {

@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Security.Claims;
-using FHICTDeploymentSystem.Logic;
-using Microsoft.AspNetCore.Mvc;
 using FHICTDeploymentSystem.Models;
+using Logic;
+using Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 
-namespace FHICTDeploymentSystem.Controllers
+namespace Controllers
 {
     [Authorize]
     public class HomeController : Controller

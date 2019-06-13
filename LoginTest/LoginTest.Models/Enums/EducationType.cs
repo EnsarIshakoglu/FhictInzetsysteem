@@ -1,4 +1,4 @@
-﻿namespace FHICTDeploymentSystem.Models
+﻿namespace Models.Enums
 {
     public enum EducationType
     {

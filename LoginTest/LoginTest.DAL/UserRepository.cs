@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using FHICTDeploymentSystem.Models;
+using DAL.Contexts;
+using Models;
 
-namespace FHICTDeploymentSystem.DAL
+namespace DAL
 {
     public class UserRepository
     {

@@ -1,5 +1,3 @@
-using System;
-
 namespace FHICTDeploymentSystem.Models
 {
     public class ErrorViewModel

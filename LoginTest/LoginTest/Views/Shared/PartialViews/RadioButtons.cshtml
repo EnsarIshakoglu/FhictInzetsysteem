@@ -1,8 +1,9 @@
-﻿@using FHICTDeploymentSystem.Controllers
-@using FHICTDeploymentSystem.Logic
-@using FHICTDeploymentSystem.Models
+﻿@using Controllers
+@using Logic
+@using Models
+@using Models.Enums
 @using Microsoft.EntityFrameworkCore.Infrastructure
-@using Task = FHICTDeploymentSystem.Models.EducationObject
+@using Task = Models.EducationObject
 @model Preference
 
 <div class="col l12">
@@ -70,7 +71,7 @@
             }
         </div>
     </div>
-    </div>
+</div>
 
 
 
@@ -96,7 +97,7 @@
 
 <script>
     function toggleVisibility(id) {
-            $("#").toggle();
+        $("#").toggle();
     }
-    
+
 </script>
