@@ -150,8 +150,8 @@ namespace FHICTDeploymentSystem.DAL.Contexts
 
                 var sqlCommand = new SqlCommand("GetAllEmployeesFromTeam", connection);
                 sqlCommand.CommandType = CommandType.StoredProcedure;
-                sqlCommand.Parameters.Add(new SqlParameter("@TeamId", user.TeamId));
-                sqlCommand.Parameters.Add(new SqlParameter("@UserId", user.Id));
+                sqlCommand.Parameters.Add(new SqlParameter("@TeamId", _user.TeamId));
+                sqlCommand.Parameters.Add(new SqlParameter("@UserId", _user.Id));
 
                 var reader = sqlCommand.ExecuteReader();
 
@@ -169,6 +169,20 @@ namespace FHICTDeploymentSystem.DAL.Contexts
             }
 
             return userList;
+        }
+
+        public void CreateVacancy(User user)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                var sqlCommand = new SqlCommand("CreateVacancy", connection);
+                sqlCommand.CommandType = CommandType.StoredProcedure;
+                sqlCommand.Parameters.Add(new SqlParameter("@teamid", user.TeamId));
+                sqlCommand.ExecuteNonQuery();
+                connection.Close();
+            }
         }
 
         public int Getid(Team team)

@@ -46,5 +46,10 @@ namespace DAL
             return _context.GetEmployeeCompetences(_user);
 
         }
+
+        public void CreateVacancy(User user)
+        {
+            _context.CreateVacancy(user);
+        }
     }
 }

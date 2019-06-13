@@ -67,5 +67,14 @@ namespace FHICTDeploymentSystem.Controllers
             return View(user);
         }
 
+        public IActionResult CreateVacancy(User user)
+        {
+            var sid = User.Claims.First(c => c.Type.Equals(ClaimTypes.Sid)).Value;
+            int.TryParse(sid, out int teamId);
+            user.TeamId = teamId;
+            _teamLogic.CreateVacancy(user);
+            return RedirectToAction("ManageTeam");
+        }
+
     }
 }

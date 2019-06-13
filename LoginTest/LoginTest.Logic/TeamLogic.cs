@@ -48,5 +48,10 @@ namespace FHICTDeploymentSystem.Logic
 
         }
 
+        public void CreateVacancy(User user)
+        {
+           _repo.CreateVacancy(user);
+        }
+
     }
 }
