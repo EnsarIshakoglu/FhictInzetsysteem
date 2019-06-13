@@ -53,9 +53,9 @@
                             }
                             @if (User.IsInRole(Roles.TeamLeader.ToString()))
                             {
-                                <li><a asp-area="" asp-controller="Home"asp-action="Index">Manage team</a></li>
-                                <li><a asp-area="" asp-controller="Home"asp-action="Index">Teachers</a></li>
-                            }                                                  
+                                <li><a asp-area="" asp-controller="Home" asp-action="Index">Manage team</a></li>
+                                <li><a asp-area="" asp-controller="Home" asp-action="Index">Teachers</a></li>
+                            }
                             @if (User.IsInRole(Roles.UnitOwner.ToString()) || User.IsInRole(Roles.InstituteMember.ToString()))
                             {
                                 <li><a asp-area="" asp-controller="Home" asp-action="Movies">Algorithm results</a></li>
@@ -69,8 +69,15 @@
                                         <a asp-area="" asp-controller="Education" asp-action="EditTask">Edit Task</a>
                                     </div>
                                 </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link text-dark dropButton">Term Execution</a>
+                                    <div class="dropdown-content">
+                                        <a asp-area="" asp-controller="Education" asp-action="Index">Add term execution</a>
+                                        <a asp-area="" asp-controller="Education" asp-action="EditTask">Edit term execution</a>
+                                    </div>
+                                </li>
                             }
-                            <input type="button" value="Log Out" onclick="location.href = '@Url.Action("Logout", "Home")'" class="btn btn-primary"/>
+                            <input type="button" value="Log Out" onclick="location.href = '@Url.Action("Logout", "Home")'" class="btn btn-primary" />
                         </ul>
                         <ul id="slide-out" class="side-nav menu-scroll">
                             @if (User.IsInRole(Roles.Teacher.ToString()))

@@ -18,7 +18,7 @@ namespace FHICTDeploymentSystem.Controllers
 
         public IActionResult Index()
         {
-            return View(_preferenceLogic.GetAllSections());
+            return View("AddTask", _preferenceLogic.GetAllSections());
         }
 
         [HttpPost]
