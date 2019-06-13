@@ -26,6 +26,7 @@ namespace DAL.Contexts
                 cmd.Parameters.Add(new SqlParameter("@UnitExecId", toAddTask.UnitExecId));
                 cmd.Parameters.Add(new SqlParameter("@Description", toAddTask.Description));
                 cmd.Parameters.Add(new SqlParameter("@Hours", toAddTask.EstimatedHours));
+                cmd.Parameters.Add(new SqlParameter("@Factor", toAddTask.Factor));
 
                 cmd.ExecuteNonQuery();
 

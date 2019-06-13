@@ -228,19 +228,24 @@
                 "Id": selectedId
             }
             if (selectedId !== undefined) {
-                $.ajax({
-                    url: '@Url.Action("EditTaskActualTask", "Education")',
-                    data: JSON.stringify(task),
-                    type: "POST",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function(result) {
-                        console.log(result.message);
-                        var url = '@Url.Action("Test", "Education", new { jsonObject = "__jsonObject__" })';
-                        window.location.href = url.replace('__jsonObject__', result.message);
-                        //window.location.href = result.message;
-                    }
-                });
+                console.log('aaaaaaaaaaaaaaaa');
+//                $.ajax({
+//                    url: '',
+//                    data: JSON.stringify(task),
+//                    type: "POST",
+//                    contentType: "application/json; charset=utf-8",
+//                    dataType: "json",
+//                    success: function(result) {
+//                        console.log(result.message);
+//                        var url = '';
+//                        window.location = url.replace('__jsonObject__', result.message);
+//                        //window.location.href = result.message;
+//                    }
+//                });
+                var url = '@Url.Action("GetTaskFromId", "Education", new { taskId = "__jsonObject__" })';
+
+                window.location.href = url.replace('__jsonObject__', selectedId);
+                return false;
             } else {
                 console.log("Non selected!");
             }

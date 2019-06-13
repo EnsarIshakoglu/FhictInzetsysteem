@@ -40,12 +40,6 @@ namespace FHICTDeploymentSystem.Controllers
         [HttpPost]
         public IActionResult GetTasks(int execId)
         {
-            /*var result = new List<EducationObject>();
-            foreach (var termExecution in _preferenceLogic.GetAllTasks(execId))
-            {
-                result.Add(termExecution);
-            }*/
-
             return Json(_preferenceLogic.GetAllTasks(execId));
         }
 
@@ -77,29 +71,27 @@ namespace FHICTDeploymentSystem.Controllers
         public IActionResult RemoveTask([FromBody] EducationObject task)
         {
             _addTaskLogic.RemoveTask(task);
-            return new JsonResult(new { message = "Success" });
-        }
-        [HttpPost]
-        public IActionResult UpdateTask([FromBody] EducationObject task)
-        {
-            _addTaskLogic.UpdateTask(task);
+
             return new JsonResult(new { message = "Success" });
         }
 
-        public IActionResult EditTaskActualTask([FromBody] EducationObject model)
-        {
-            var task = _addTaskLogic.GetTaskById(model);
-            return new JsonResult(new
-            {
-                message = JsonConvert.SerializeObject(task)
-            });
-        }
-       
-        public IActionResult Test(string jsonObject)
+        public IActionResult UpdateTask(string jsonObject)
         {
             var task = JsonConvert.DeserializeObject<EducationObject>(jsonObject);
 
-            return View("EditTaskActualTask", task);
+            _addTaskLogic.UpdateTask(task);
+
+            return View("EditTask", _preferenceLogic.GetAllSections());
+        }
+
+        public IActionResult GetTaskFromId(int taskId)
+        {
+            var task = new EducationObject
+            {
+                Id = taskId
+            };
+            task = _addTaskLogic.GetTaskById(task);
+            return View("ActualEditTask", task);
         }
     }
 }
