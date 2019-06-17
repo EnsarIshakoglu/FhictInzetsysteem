@@ -14,6 +14,7 @@ namespace FHICTDeploymentSystem.Controllers
     public class TeamController : Controller
     {
         private readonly TeamLogic _teamLogic = new TeamLogic();
+        private readonly PreferenceLogic _preferenceLogic = new PreferenceLogic();
 
         [HttpGet]
         public IActionResult ManageTeam()
@@ -86,7 +87,7 @@ namespace FHICTDeploymentSystem.Controllers
             int[] idArray = JsonConvert.DeserializeObject<int[]>(jsonding);
             foreach (int id in idArray)
             {
-                _teamLogic.RemoveCompetence(id);
+                _teamLogic.RemoveCompetence(id, employeeId);
             }
             return new JsonResult(new { message = "Succes"});
         }
@@ -94,7 +95,7 @@ namespace FHICTDeploymentSystem.Controllers
         [HttpPost]
         public IActionResult AddSectionCompetence(int id, int employeeId)
         {
-            _teamLogic.AddSectionCompetence(id);
+            _teamLogic.AddSectionCompetence(id, employeeId);
             return new JsonResult(new { message = "Succesfully added all tasks in section to competences" });
         }
 
@@ -102,7 +103,7 @@ namespace FHICTDeploymentSystem.Controllers
         [HttpPost]
         public IActionResult AddUnitCompetence(int id, int employeeId)
         {
-            _teamLogic.AddUnitCompetence(id);
+            _teamLogic.AddUnitCompetence(id, employeeId);
             return new JsonResult(new { message = "Succesfully added all tasks in Unit competences" });
         }
 
@@ -110,18 +111,22 @@ namespace FHICTDeploymentSystem.Controllers
         [HttpPost]
         public IActionResult AddUnitExecCompetence(int id, int employeeId)
         {
-            _teamLogic.AddUnitExecCompetence(id);
+            _teamLogic.AddUnitExecCompetence(id, employeeId);
             return new JsonResult(new { message = "Succesfully added all tasks in UnitExec competences" });
         }
 
 
         [HttpPost]
-        public IActionResult AddTasksCompetence(int id)
+        public IActionResult AddTasksCompetence(int id, int employeeId)
         {
-            _teamLogic.AddTasksCompetence(id);
+            _teamLogic.AddTasksCompetence(id, employeeId);
             return new JsonResult(new { message = "Succesfully added task to competences" });
         }
 
+        public IActionResult AddCompetences()
+        {
+            return View(_preferenceLogic.GetAllSections());
+        }
 
     }
 }

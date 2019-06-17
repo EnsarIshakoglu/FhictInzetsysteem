@@ -57,32 +57,32 @@ namespace FHICTDeploymentSystem.Logic
             _repo.SaveHours(user, hours);
         }
 
-        public void RemoveCompetence(int id)
+        public void RemoveCompetence(int id, int employeeId)
         {
-            _repo.RemoveCompetence(id);
+            _repo.RemoveCompetence(id, employeeId);
         }
 
-        public void AddSectionCompetence(int id)
+        public void AddSectionCompetence(int id, int employeeId)
         {
-            _repo.AddSectionCompetence(id);
-        }
-
-
-        public void AddUnitCompetence(int id)
-        {
-            _repo.AddUnitCompetence(id);
+            _repo.AddSectionCompetence(id, employeeId);
         }
 
 
-        public void AddUnitExecCompetence(int id)
+        public void AddUnitCompetence(int id, int employeeId)
         {
-            _repo.AddUnitExecCompetence(id);
+            _repo.AddUnitCompetence(id, employeeId);
         }
 
 
-        public void AddTasksCompetence(int id)
+        public void AddUnitExecCompetence(int id, int employeeId)
         {
-            _repo.AddTasksCompetence(id);
+            _repo.AddUnitExecCompetence(id, employeeId);
+        }
+
+
+        public void AddTasksCompetence(int id, int employeeId)
+        {
+            _repo.AddTasksCompetence(id, employeeId);
         }
     }
 }

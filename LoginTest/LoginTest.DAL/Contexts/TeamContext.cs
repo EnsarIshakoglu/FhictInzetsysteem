@@ -224,88 +224,93 @@ namespace FHICTDeploymentSystem.DAL.Contexts
 
 
         //TODO maak alles hieronder bro
-        public void AddSectionCompetence(int id)
+        public void AddSectionCompetence(int id, int employeeId)
         {
-            /*using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
 
                 var sqlCommand = new SqlCommand("SetHours", connection);
                 sqlCommand.CommandType = CommandType.StoredProcedure;
-                sqlCommand.Parameters.Add(new SqlParameter("@EmployeeId", user.Id));
+                sqlCommand.Parameters.Add(new SqlParameter("@EmployeeId", employeeId));
+                sqlCommand.Parameters.Add(new SqlParameter("@SectionId", id));
 
                 sqlCommand.ExecuteNonQuery();
 
                 connection.Close();
-            }*/
+            }
         }
 
-        public void AddUnitCompetence(int id)
+        public void AddUnitCompetence(int id, int employeeId)
         {
-            /*using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
 
                 var sqlCommand = new SqlCommand("SetHours", connection);
                 sqlCommand.CommandType = CommandType.StoredProcedure;
-                sqlCommand.Parameters.Add(new SqlParameter("@EmployeeId", user.Id));
+                sqlCommand.Parameters.Add(new SqlParameter("@EmployeeId", employeeId));
+                sqlCommand.Parameters.Add(new SqlParameter("@SectionId", id));
 
 
                 sqlCommand.ExecuteNonQuery();
 
                 connection.Close();
-            }*/
+            }
         }
 
-        public void AddUnitExecCompetence(int id)
+        public void AddUnitExecCompetence(int id, int employeeId)
         {
-            /*using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
 
                 var sqlCommand = new SqlCommand("SetHours", connection);
                 sqlCommand.CommandType = CommandType.StoredProcedure;
-                sqlCommand.Parameters.Add(new SqlParameter("@EmployeeId", user.Id));
+                sqlCommand.Parameters.Add(new SqlParameter("@EmployeeId", employeeId));
+                sqlCommand.Parameters.Add(new SqlParameter("@SectionId", id));
 
 
                 sqlCommand.ExecuteNonQuery();
 
                 connection.Close();
-            }*/
+            }
         }
 
-        public void AddTasksCompetence(int id)
+        public void AddTasksCompetence(int id, int employeeId)
         {
-/*            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
 
                 var sqlCommand = new SqlCommand("SetHours", connection);
                 sqlCommand.CommandType = CommandType.StoredProcedure;
-                sqlCommand.Parameters.Add(new SqlParameter("@EmployeeId", user.Id));
+                sqlCommand.Parameters.Add(new SqlParameter("@EmployeeId", employeeId));
+                sqlCommand.Parameters.Add(new SqlParameter("@SectionId", id));
 
 
                 sqlCommand.ExecuteNonQuery();
 
                 connection.Close();
-            }*/
+            }
         }
 
-        public void RemoveCompetence(int id)
+        public void RemoveCompetence(int id, int employeeId)
         {
-/*            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
 
-                var sqlCommand = new SqlCommand("SetHours", connection);
+                var sqlCommand = new SqlCommand("DeleteCompetence", connection);
                 sqlCommand.CommandType = CommandType.StoredProcedure;
-                sqlCommand.Parameters.Add(new SqlParameter("@EmployeeId", user.Id));
-    
+                sqlCommand.Parameters.Add(new SqlParameter("@EmployeeId", employeeId));
+                sqlCommand.Parameters.Add(new SqlParameter("@SectionId", id));
+
 
                 sqlCommand.ExecuteNonQuery();
 
                 connection.Close();
-            }*/
+            }
         }
 
     }

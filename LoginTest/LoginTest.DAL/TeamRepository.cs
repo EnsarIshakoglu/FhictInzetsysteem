@@ -56,32 +56,32 @@ namespace DAL
             _context.SaveHours(user, hours);
         }
 
-        public void RemoveCompetence(int id)
+        public void RemoveCompetence(int id, int employeeId)
         {
-            _context.RemoveCompetence(id);
+            _context.RemoveCompetence(id, employeeId);
         }
 
-        public void AddSectionCompetence(int id)
+        public void AddSectionCompetence(int id, int employeeId)
         {
-            _context.AddSectionCompetence(id);
-        }
-
-
-        public void AddUnitCompetence(int id)
-        {
-            _context.AddUnitCompetence(id);
+            _context.AddSectionCompetence(id, employeeId);
         }
 
 
-        public void AddUnitExecCompetence(int id)
+        public void AddUnitCompetence(int id, int employeeId)
         {
-            _context.AddUnitExecCompetence(id);
+            _context.AddUnitCompetence(id, employeeId);
         }
 
 
-        public void AddTasksCompetence(int id)
+        public void AddUnitExecCompetence(int id, int employeeId)
         {
-            _context.AddTasksCompetence(id);
+            _context.AddUnitExecCompetence(id, employeeId);
+        }
+
+
+        public void AddTasksCompetence(int id, int employeeId)
+        {
+            _context.AddTasksCompetence(id, employeeId);
         }
     }
 }
