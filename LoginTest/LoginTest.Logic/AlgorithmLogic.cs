@@ -14,7 +14,7 @@ namespace Logic
         public IEnumerable<EducationObject> FixedTasks { get; private set; }
         public IEnumerable<Employee> Employees { get; private set; }
 
-        public IEnumerable<EducationObject> StartAlgorithm()
+        public void StartAlgorithm()
         {
             GetAllData();
             foreach (var task in AllTasks)
@@ -29,8 +29,6 @@ namespace Logic
                     AssignTask(tempEmployeeList, task);
                 }
             }
-
-            return AllTasks.Where(t => t.Factor > 0).ToList();
         }
 
         private void GetAllData()
@@ -128,6 +126,23 @@ namespace Logic
                 Employees.First(e => e.Id == employee.Id).OpenHours[task.Period - 1] -= task.EstimatedHours;
                 task.Factor--;
             }
+        }
+
+        public IEnumerable<Employee> GetAllAssignedTasks()
+        {
+            var employees = _context.GetAllEmployees();
+
+            foreach (var employee in employees)
+            {
+                employee.AssignedTasks = _context.GetAssignedTasksFromEmployee(employee);
+            }
+
+            return employees;
+        }
+
+        public IEnumerable<EducationObject> GetAllLeftOverTasks()
+        {
+            return _context.GetLeftOverTasks();
         }
     }
 }
