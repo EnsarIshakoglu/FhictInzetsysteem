@@ -64,6 +64,7 @@ namespace DAL.Contexts
                     employees.Add(new Employee
                     {
                         Id = (int)reader["Id"],
+                        Name = (string)reader["Abbreviation"],
                         OpenHours = new int[] { openHoursP1, openHoursP2 },
                         MaxOvertime = new int[] { (int)(openHoursP1 * 0.2), (int)(openHoursP2 * 0.2)}
                     });
@@ -173,6 +174,69 @@ namespace DAL.Contexts
 
                 connection.Close();
             }
+        }
+
+        public IEnumerable<EducationObject> GetAssignedTasksFromEmployee(Employee emp)
+        {
+            var assignedTasks = new List<EducationObject>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                SqlCommand cmd = new SqlCommand("GetAssignedTasksFromEmployee", connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@EmployeeId", emp.Id);
+
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    assignedTasks.Add(new EducationObject
+                    {
+                        Id = (int)reader["TaskId"],
+                        Name = (string)reader["Code"],
+                        Period =  (int)reader["Period"],
+                        EstimatedHours = (int)reader["EstimatedHours"]
+                    });
+                }
+
+                connection.Close();
+            }
+
+            return assignedTasks;
+        }
+
+        public IEnumerable<EducationObject> GetLeftOverTasks()
+        {
+            var assignedTasks = new List<EducationObject>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                SqlCommand cmd = new SqlCommand("GetLeftOverTasks", connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    assignedTasks.Add(new EducationObject
+                    {
+                        Id = (int)reader["TaskId"],
+                        Name = (string)reader["Code"],
+                        Period = (int)reader["Period"],
+                        EstimatedHours = (int)reader["EstimatedHours"],
+                        Factor = (int)reader["LeftOverCount"]
+                    });
+                }
+
+                connection.Close();
+            }
+
+            return assignedTasks;
         }
     }
 }
