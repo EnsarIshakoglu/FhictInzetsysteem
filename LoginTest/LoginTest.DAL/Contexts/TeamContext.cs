@@ -6,7 +6,6 @@ using System.Text;
 using DAL.Contexts;
 using FHICTDeploymentSystem.Models;
 
-
 namespace FHICTDeploymentSystem.DAL.Contexts
 {
     public class TeamContext : ITeamContext
@@ -140,35 +139,32 @@ namespace FHICTDeploymentSystem.DAL.Contexts
         }
 
 
-        public IEnumerable<User> GetEmployeeCompetences(User user)
+        public IEnumerable<EducationObject> GetTeamMemberCompetences(User user)
         {
-            var userList = new List<User>();
+            var userCompetenceList = new List<EducationObject>();
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
 
-                var sqlCommand = new SqlCommand("GetAllEmployeesFromTeam", connection);
+                var sqlCommand = new SqlCommand("GetTeamMemberCompetences", connection);
                 sqlCommand.CommandType = CommandType.StoredProcedure;
-                sqlCommand.Parameters.Add(new SqlParameter("@TeamId", user.TeamId));
-                sqlCommand.Parameters.Add(new SqlParameter("@UserId", user.Id));
+                sqlCommand.Parameters.Add(new SqlParameter("@EmployeeId", user.Id));
 
                 var reader = sqlCommand.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    //voeg namen van mensen toe die team id hebben
-                    userList.Add(new User
+                    userCompetenceList.Add(new EducationObject
                     {
-                        Name = (string)reader["Name"],
-                        Id = (int)reader["Id"]
+
                     });
                 }
 
                 connection.Close();
             }
 
-            return userList;
+            return userCompetenceList;
         }
 
         public int Getid(Team team)
