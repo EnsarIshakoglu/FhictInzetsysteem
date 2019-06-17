@@ -7,6 +7,7 @@ using FHICTDeploymentSystem.Logic;
 using FHICTDeploymentSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
+using Newtonsoft.Json;
 
 namespace FHICTDeploymentSystem.Controllers
 {
@@ -80,8 +81,9 @@ namespace FHICTDeploymentSystem.Controllers
             return View();
         }
 
-        public IActionResult RemoveCompetence(int[] idArray, int employeeId)
+        public IActionResult RemoveCompetence(string jsonding, int employeeId)
         {
+            int[] idArray = JsonConvert.DeserializeObject<int[]>(jsonding);
             foreach (int id in idArray)
             {
                 _teamLogic.RemoveCompetence(id);

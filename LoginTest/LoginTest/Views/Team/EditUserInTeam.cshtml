@@ -380,11 +380,13 @@
                 }
             });
             console.log(idsToDelete);
+            var q = JSON.stringify(idsToDelete);
+            console.log("En nu q : " + q);
             if (idsToDelete.length > 0) {
                 $.ajax({
                     url: '@Url.Action("RemoveCompetence", "Team")',
                     data: {
-                        idArray: idsToDelete, //TODO FIX DEZE
+                        jsonding: q, //TODO FIX DEZE
                         employeeId: @Model.ID
                     },
                     type: "GET",
