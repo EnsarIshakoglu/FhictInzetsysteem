@@ -3,7 +3,7 @@ using FHICTDeploymentSystem.Models;
 
 namespace DAL.Contexts
 {
-    public interface IAddTaskContext
+    public interface ITaskContext
     {
         IEnumerable<EducationObject> GetUnitTermExecutions(int unitId);
         void AddTask(EducationObject toAddTask);

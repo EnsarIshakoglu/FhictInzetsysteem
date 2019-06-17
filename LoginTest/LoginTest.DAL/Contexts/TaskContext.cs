@@ -7,7 +7,7 @@ using FHICTDeploymentSystem.Models;
 
 namespace DAL.Contexts
 {
-    public class AddTaskContext : IAddTaskContext
+    public class TaskContext : ITaskContext
     {
         private readonly string _connectionString =
             "Server=mssql.fhict.local;Database=dbi389621;User Id=dbi389621;Password=Ensar123;";

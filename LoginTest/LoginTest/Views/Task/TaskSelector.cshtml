@@ -1,7 +1,8 @@
 ﻿@model IEnumerable<EducationObject>
 @using FHICTDeploymentSystem.Models
 @{
-    ViewData["Title"] = "AddTermExec";
+    ViewData["Title"] = "Ingelogd";
+    EducationObject test;
 }
 
 <style type="text/css">
@@ -116,29 +117,31 @@
                 </select>
                 <label>Unit:</label>
                 <select id="units" type="text" name="field2"></select>
-                <input id="code" type="text" name="field5" placeholder="Code">
-                <input id="estimatedClasses" type="number" name="field9" placeholder="Estimated Classes">
+                <label>Unit execution:</label>
+                <select id="execId" type="text" name="field3"></select>
+                <label>Tasks:</label>
+                <select id="tasks" type="text" name="field4"></select>
             </fieldset>
-            <fieldset>
-                <textarea id="description" name="field8" placeholder="Description"></textarea>
-            </fieldset>
-            <input id="addButton" type="submit" value="Add" />
+            <fieldset></fieldset>
         </form>
+        <input id="Edit" type="submit" value="Update task" />
+        <input id="Remove" type="submit" value="Remove task" />
     </div>
 </div>
 
 @section Scripts
-    {
+{
     <script>
         $('#sections').change(function() {
             $('#units').empty();
+            $('#tasks').empty();
             $('#execId').empty();
             var selectedSectionId = $("#sections option:selected").val();
             var selectedUnit = $('#units');
             selectedUnit.append($("<option></option>")
-                .attr("value", "12" )
+                .attr("value", "12")
                 .text("-Select-"));
-            $.post('@Url.Action("GetUnits", "Education")',
+            $.post('@Url.Action("GetUnits", "Task")',
                 {
                     sectionId: selectedSectionId
                 },
@@ -151,27 +154,101 @@
                 });
         });
 
-        $('#addButton').on('click', (function () {
-            var termExecToAdd = {
-                "Name": $("#code").val(),
-                "UnitId": $("#units option:selected").val(),
-                "Factor" : $("#estimatedClasses").val()
-            };
+        $('#units').change(function() {
+            $('#execId').empty();
+            $('#tasks').empty();
+            var selectedUnitId = $("#units option:selected").val();
+            var selectedExec = $('#execId');
+            selectedExec.append($("<option></option>")
+                .attr("value", "test")
+                .text("-Select-"));
 
-            $.ajax({
-                url: '@Url.Action("AddTask", "Education")',
-                data: JSON.stringify(taskToAdd),
-                type: "POST",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function() {
-                    console.log('Success!');
+            $.post('@Url.Action("GetTermExecutions", "Task")',
+                {
+                    unitId: selectedUnitId
                 },
-                error: function() {
-                    console.log('Error');
-                }
-            });
-        }));
-    </script>
+                function(data) {
+                    data.forEach(function(exec) {
+                        selectedExec.append($("<option></option>")
+                            .attr("value", exec.id)
+                            .text(exec.name));
+                    });
+                });
+        });
 
+        $('#execId').change(function() {
+            $('#tasks').empty();
+            var selectedExecId = $("#execId option:selected").val();
+            var selectTasks = $('#tasks');
+            selectTasks.append($("<option></option>")
+                .attr("value", "Lol")
+                .text("-Select-"));
+            $.post('@Url.Action("GetTasks", "Task")',
+                {
+                    execId: selectedExecId
+                },
+                function(data) {
+                    data.forEach(function(task) {
+                        selectTasks.append($("<option></option>")
+                            .attr("value", task.id)
+                            .text("Period: " + task.period + " | " + task.name + ": " + task.description));
+                    });
+                });
+        });
+
+
+        $('#Remove').click(function() {
+
+            var selectedId = $("#tasks option:selected").val();
+            var task = {
+                "Id": selectedId
+            }
+            if (selectedId !== undefined) {
+                $.ajax({
+                    url: '@Url.Action("RemoveTask", "Task")',
+                    data: JSON.stringify(task),
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function(result) {
+                        console.log("Success");
+                        window.location.href = '@Url.Action("TaskSelector", "Task")/' + task;
+                    }
+                });
+            } else {
+                console.log("Non selected!");
+            }
+        });
+
+        $('#Edit').click(function() {
+
+            var selectedId = $("#tasks option:selected").val();
+
+            var task = {
+                "Id": selectedId
+            }
+            if (selectedId !== undefined) {
+                console.log('aaaaaaaaaaaaaaaa');
+//                $.ajax({
+//                    url: '',
+//                    data: JSON.stringify(task),
+//                    type: "POST",
+//                    contentType: "application/json; charset=utf-8",
+//                    dataType: "json",
+//                    success: function(result) {
+//                        console.log(result.message);
+//                        var url = '';
+//                        window.location = url.replace('__jsonObject__', result.message);
+//                        //window.location.href = result.message;
+//                    }
+//                });
+                var url = '@Url.Action("GetTaskFromId", "Task", new { taskId = "__jsonObject__" })';
+
+                window.location.href = url.replace('__jsonObject__', selectedId);
+                return false;
+            } else {
+                console.log("Non selected!");
+            }
+        });
+    </script>
 }

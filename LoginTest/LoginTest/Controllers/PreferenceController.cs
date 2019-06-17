@@ -11,7 +11,7 @@ namespace FHICTDeploymentSystem.Controllers
     public class PreferenceController : Controller
     {
         private readonly PreferenceLogic _preferenceLogic = new PreferenceLogic();
-        private readonly AddTaskLogic _addTaskLogic = new AddTaskLogic();
+        private readonly TaskLogic _taskLogic = new TaskLogic();
 
         [HttpGet]
         public IActionResult SectionPreference()
@@ -80,7 +80,7 @@ namespace FHICTDeploymentSystem.Controllers
         public IActionResult UnitExecutionPreference(int unitExecId)
         {
             var preferences = new List<Preference>();
-            var unitExecs = _addTaskLogic.GetUnitTermExecutions(unitExecId);
+            var unitExecs = _taskLogic.GetUnitTermExecutions(unitExecId);
 
             foreach (var unitExec in unitExecs)
             {

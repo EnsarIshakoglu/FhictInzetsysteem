@@ -6,13 +6,13 @@ using FHICTDeploymentSystem.Models;
 
 namespace DAL
 {
-    public class AddTaskRepo
+    public class TaskRepo
     {
-        private readonly IAddTaskContext _context;
+        private readonly ITaskContext _context;
 
-        public AddTaskRepo()
+        public TaskRepo()
         {
-            _context = new AddTaskContext();
+            _context = new TaskContext();
         }
 
         public void AddTask(EducationObject toAddTask)

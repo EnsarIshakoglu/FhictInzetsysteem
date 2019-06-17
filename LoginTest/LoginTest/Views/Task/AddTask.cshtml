@@ -1,5 +1,4 @@
-﻿@model EducationObject
-@using System.Security.Cryptography.X509Certificates
+﻿@model IEnumerable<EducationObject>
 @using FHICTDeploymentSystem.Models
 @{
     ViewData["Title"] = "Tasks";
@@ -104,21 +103,35 @@
     <div class="form-style-5">
         <form>
             <fieldset>
-                <legend style="text-align: center">Update task</legend>
+                <legend style="text-align: center">Add task</legend>
+                <label>Section:</label>
+                <select id="sections" type="text" name="field1">
+                    @foreach (var section in Model)
+                    {
+                        var sectionId = section.Id;
+                        var sectionName = section.Name;
+
+                        <option value="@sectionId">@sectionName</option>
+                    }
+                </select>
+                <label>Unit:</label>
+                <select id="units" type="text" name="field2"></select>
+                <label>Unit execution:</label>
+                <select id="execId" type="text" name="field3"></select>
+                <label>Period:</label>
                 <select id="period" type="text" name="field4">
                     <option value="1">1</option>
                     <option value="2">2</option>
                 </select>
-                <input id="code" type="text" name="field5" placeholder="Code" value="@Model.Name">
-                <input id="description" type="text" name="field6" placeholder="Explanation" value="@Model.Description">
-                <input id="hours" type="text" name="field7" placeholder="Hours" value="@Model.EstimatedHours">
-                <input id="factor" type="number" name="field9" placeholder="Factor" value="@Model.Factor">
+                <input id="code" type="text" name="field5" placeholder="Code">
+                <input id="explanation" type="text" name="field6" placeholder="Explanation">
+                <input id="hours" type="text" name="field7" placeholder="Hours">
+                <input id="factor" type="number" name="field9" placeholder="Factor">
             </fieldset>
             <fieldset>
-                <textarea id="explanation" name="field8" placeholder="Explanation">@Model.Explanation</textarea>
+                <textarea id="description" name="field8" placeholder="Description"></textarea>
             </fieldset>
-            <input id="EditButton" type="submit" value="Edit" />
-
+            <input id="addButton" type="submit" value="Add" />
         </form>
     </div>
 </div>
@@ -126,41 +139,73 @@
 @section Scripts
     {
     <script>
-        $(document).ready(function() {
-            $('#period').val('@Model.Period');
+        $('#sections').change(function() {
+            $('#units').empty();
+            $('#execId').empty();
+            var selectedSectionId = $("#sections option:selected").val();
+            var selectedUnit = $('#units');
+            selectedUnit.append($("<option></option>")
+                .attr("value", "12" )
+                .text("-Select-"));
+            $.post('@Url.Action("GetUnits", "Task")',
+                {
+                    sectionId: selectedSectionId
+                },
+                function(data) {
+                    data.forEach(function(section) {
+                        selectedUnit.append($("<option></option>")
+                            .attr("value", section.id)
+                            .text(section.name));
+                    });
+                });
         });
 
-        $('#EditButton').click(function () {
-            /*alert("Success");*/
-            console.log('bbbbbbbbbbbbbbbbb');
-            var taskToEdit = {
-                "Id": @Model.Id,
+        $('#units').change(function() {
+            $('#execId').empty();
+            var selectedUnitId = $("#units option:selected").val();
+            var selectedExec = $('#execId');
+            selectedExec.append($("<option></option>")
+                .attr("value", "test")
+                .text("-Select-"));
+
+            $.post('@Url.Action("GetTermExecutions", "Task")',
+                {
+                    unitId: selectedUnitId
+                },
+                function(data) {
+                    data.forEach(function(exec) {
+                        selectedExec.append($("<option></option>")
+                            .attr("value", exec.id)
+                            .text(exec.name));
+                    });
+                });
+        });
+
+        $('#addButton').on('click', (function () {
+            var taskToAdd = {
                 "Period": $("#period option:selected").val(),
                 "EstimatedHours": $("#hours").val(),
                 "Explanation": $("#explanation").val(),
                 "Name": $("#code").val(),
                 "Description": $("#description").val(),
+                "UnitExecId": $("#execId option:selected").val(),
                 "Factor" : $("#factor").val()
             };
-            var url = '@Url.Action("UpdateTask", "Education", new{jsonObject = "__a__"})';
-            console.log(url.replace("__a__", JSON.stringify(taskToEdit)));
 
-            window.location.href = url.replace("__a__", JSON.stringify(taskToEdit));
-            return false;
-//            $.ajax({
-//                url: '',
-//                data: JSON.stringify(taskToEdit),
-//                type: "POST",
-//                contentType: "application/json; charset=utf-8",
-//                dataType: "json",
-//                success: function () {
-//                    window.location.reload();
-//                },
-//                error: function() {
-//                    console.log('Error');
-//                }
-//            });
-        });
+            $.ajax({
+                url: '@Url.Action("AddTask", "Task")',
+                data: JSON.stringify(taskToAdd),
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function() {
+                    console.log('Success!');
+                },
+                error: function() {
+                    console.log('Error');
+                }
+            });
+        }));
     </script>
 
 }

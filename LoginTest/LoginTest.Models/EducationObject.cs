@@ -17,5 +17,6 @@ namespace FHICTDeploymentSystem.Models
         public int UnitExecId { get; set; }
         public int UnitId { get; set; }
         public string TermExecution { get; set; }
+        public int TeamId { get; set; }
     }
 }

@@ -6,9 +6,9 @@ using FHICTDeploymentSystem.Models;
 
 namespace Logic
 {
-    public class AddTaskLogic
+    public class TaskLogic
     {
-        private readonly AddTaskRepo _repo = new AddTaskRepo();
+        private readonly TaskRepo _repo = new TaskRepo();
 
         public void AddTask(EducationObject toAddTask)
         {
