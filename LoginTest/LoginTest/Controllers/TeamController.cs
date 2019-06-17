@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FHICTDeploymentSystem.Logic;
 using FHICTDeploymentSystem.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 
 namespace FHICTDeploymentSystem.Controllers
 {
@@ -64,6 +65,7 @@ namespace FHICTDeploymentSystem.Controllers
         public IActionResult EditUserInTeam(User user)
         {
             var Model = new TeacherModel();
+            Model.ID = user.Id;
             Model.Bewkaamheden = _teamLogic.GetTeamMemberCompetences(user);
             Model.Uren = _teamLogic.GetTeamMemberHours(user.Id);
             return View(Model);
@@ -77,7 +79,47 @@ namespace FHICTDeploymentSystem.Controllers
             _teamLogic.SaveHours(user, hours);
             return View();
         }
-       
+
+        public IActionResult RemoveCompetence(int[] idArray, int employeeId)
+        {
+            foreach (int id in idArray)
+            {
+                _teamLogic.RemoveCompetence(id);
+            }
+            return new JsonResult(new { message = "Succes"});
+        }
+
+        [HttpPost]
+        public IActionResult AddSectionCompetence(int id, int employeeId)
+        {
+            _teamLogic.AddSectionCompetence(id);
+            return new JsonResult(new { message = "Succesfully added all tasks in section to competences" });
+        }
+
+
+        [HttpPost]
+        public IActionResult AddUnitCompetence(int id, int employeeId)
+        {
+            _teamLogic.AddUnitCompetence(id);
+            return new JsonResult(new { message = "Succesfully added all tasks in Unit competences" });
+        }
+
+
+        [HttpPost]
+        public IActionResult AddUnitExecCompetence(int id, int employeeId)
+        {
+            _teamLogic.AddUnitExecCompetence(id);
+            return new JsonResult(new { message = "Succesfully added all tasks in UnitExec competences" });
+        }
+
+
+        [HttpPost]
+        public IActionResult AddTasksCompetence(int id)
+        {
+            _teamLogic.AddTasksCompetence(id);
+            return new JsonResult(new { message = "Succesfully added task to competences" });
+        }
+
 
     }
 }

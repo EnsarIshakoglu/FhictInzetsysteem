@@ -48,18 +48,24 @@
                         <i class="material-icons">arrow_drop_down_circle</i>
                         Section
                     </div>
-                    <div id ="12" class="collapsible-body">
-                        @foreach (var section in Model.Bewkaamheden)
-                        {
-                            var sectionId = section.Id;
-                            var sectionName = section.Name;
-
-                            <input type="hidden" value="@sectionId">
-                            <label>
-                                <input checked="checked" type="checkbox" />
-                                <span>@sectionName</span>
-                            </label>
-                        }
+                    <div id="competences" class="collapsible-body">
+                       
+                      @if (Model.Bewkaamheden.Count() > 0)
+                      {
+                          foreach (var section in Model.Bewkaamheden)
+                          {
+                          var sectionId = section.Id;
+                          var sectionName = section.Name;
+                          <label>
+                              <input checked="checked" type="checkbox" value="@sectionId"/>
+                              <span>@sectionName</span>
+                          </label>
+                          }
+                      }
+                      else
+                      {
+                          <p>No Competences</p>
+                      }
                     </div>
                 </li>
                 <li>
@@ -367,11 +373,34 @@
 
     <script>
         function SaveSettings() {
-            var i = $('#12 input').val();
-            console.log(i);
+            var idsToDelete = [];
+            $('input[type="checkbox"]').each(function() {
+                if (!$(this).is(':checked')) {
+                    idsToDelete.push(($(this).val()));
+                }
+            });
+            console.log(idsToDelete);
+            if (idsToDelete.length > 0) {
+                $.ajax({
+                    url: '@Url.Action("RemoveCompetence", "Team")',
+                    data: {
+                        idArray: idsToDelete, //TODO FIX DEZE
+                        employeeId: @Model.ID
+                    },
+                    type: "GET",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function() {
+                        console.log('Success!');
+                        //TODO reload page vind code idk
+                    },
+                    error: function() {
+                        alert('Unsuccesfull');
+                    }
+                });
+            }
         };
-</script>
-
-
+    </script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
 }

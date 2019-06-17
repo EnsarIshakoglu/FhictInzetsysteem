@@ -21,5 +21,10 @@ namespace DAL.Contexts
         IEnumerable<EducationObject> GetTeamMemberCompetences(User _user);
         EducationObject GetTeamMemberHours(int ID);
         void SaveHours(User user, EducationObject hours);
+        void AddSectionCompetence(int id);
+        void AddUnitCompetence(int id);
+        void AddUnitExecCompetence(int id);
+        void AddTasksCompetence(int id);
+        void RemoveCompetence(int id);
     }
 }
