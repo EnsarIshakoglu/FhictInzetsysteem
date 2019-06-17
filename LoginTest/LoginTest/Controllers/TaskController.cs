@@ -49,7 +49,7 @@ namespace FHICTDeploymentSystem.Controllers
         }
 
         [HttpPost]
-        public IActionResult GetTermExecutions(int unitId)
+        public IActionResult GetUnitTermExecutions(int unitId)
         {
             var result = new List<EducationObject>();
 

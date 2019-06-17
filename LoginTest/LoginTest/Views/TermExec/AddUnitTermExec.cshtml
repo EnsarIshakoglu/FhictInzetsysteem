@@ -1,7 +1,7 @@
-﻿@using Models
-@model IEnumerable<EducationObject>
+﻿@model AddUnitTermExecViewModel
+@using FHICTDeploymentSystem.Models
 @{
-    ViewData["Title"] = "Tasks";
+    ViewData["Title"] = "AddTermExec";
 }
 
 <style type="text/css">
@@ -103,10 +103,22 @@
     <div class="form-style-5">
         <form>
             <fieldset>
-                <legend style="text-align: center">Add task</legend>
+                <legend style="text-align: center">Add term execution</legend>
+                <label>Term execution:</label>
+                <select id="termExec" type="text" name="field1">
+                    @foreach (var termExec in Model.TermExecs)
+                    {
+                        var termExecId = termExec.Id;
+                        var termExecName = termExec.Name;
+                        var termExecYear = termExec.Year;
+                        var termExecSeason = termExec.Period;
+
+                        <option value="@termExecId">@termExecName @termExecYear Season: @termExecSeason</option>
+                    }
+                </select>
                 <label>Section:</label>
                 <select id="sections" type="text" name="field1">
-                    @foreach (var section in Model)
+                    @foreach (var section in Model.Sections)
                     {
                         var sectionId = section.Id;
                         var sectionName = section.Name;
@@ -116,20 +128,8 @@
                 </select>
                 <label>Unit:</label>
                 <select id="units" type="text" name="field2"></select>
-                <label>Unit execution:</label>
-                <select id="execId" type="text" name="field3"></select>
-                <label>Period:</label>
-                <select id="period" type="text" name="field4">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                </select>
                 <input id="code" type="text" name="field5" placeholder="Code">
-                <input id="explanation" type="text" name="field6" placeholder="Explanation">
-                <input id="hours" type="text" name="field7" placeholder="Hours">
-                <input id="factor" type="number" name="field9" placeholder="Factor">
-            </fieldset>
-            <fieldset>
-                <textarea id="description" name="field8" placeholder="Description"></textarea>
+                <input id="estimatedClasses" type="number" name="field9" placeholder="Estimated Classes">
             </fieldset>
             <input id="addButton" type="submit" value="Add" />
         </form>
@@ -160,41 +160,17 @@
                 });
         });
 
-        $('#units').change(function() {
-            $('#execId').empty();
-            var selectedUnitId = $("#units option:selected").val();
-            var selectedExec = $('#execId');
-            selectedExec.append($("<option></option>")
-                .attr("value", "test")
-                .text("-Select-"));
-
-            $.post('@Url.Action("GetUnitTermExecutions", "Task")',
-                {
-                    unitId: selectedUnitId
-                },
-                function(data) {
-                    data.forEach(function(exec) {
-                        selectedExec.append($("<option></option>")
-                            .attr("value", exec.id)
-                            .text(exec.name));
-                    });
-                });
-        });
-
         $('#addButton').on('click', (function () {
-            var taskToAdd = {
-                "Period": $("#period option:selected").val(),
-                "EstimatedHours": $("#hours").val(),
-                "Explanation": $("#explanation").val(),
+            var termExecToAdd = {
                 "Name": $("#code").val(),
-                "Description": $("#description").val(),
-                "UnitExecId": $("#execId option:selected").val(),
-                "Factor" : $("#factor").val()
+                "UnitId": $("#units option:selected").val(),
+                "Factor": $("#estimatedClasses").val(),
+                "Id": $("#termExec option:selected").val()
             };
 
             $.ajax({
-                url: '@Url.Action("AddTask", "Task")',
-                data: JSON.stringify(taskToAdd),
+                url: '@Url.Action("AddTermExec", "TermExec")',
+                data: JSON.stringify(termExecToAdd),
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",

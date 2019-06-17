@@ -163,7 +163,7 @@
                 .attr("value", "test")
                 .text("-Select-"));
 
-            $.post('@Url.Action("GetTermExecutions", "Task")',
+            $.post('@Url.Action("GetUnitTermExecutions", "Task")',
                 {
                     unitId: selectedUnitId
                 },

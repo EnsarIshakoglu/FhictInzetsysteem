@@ -19,5 +19,6 @@ namespace Models
         public int UnitId { get; set; }
         public string TermExecution { get; set; }
         public int TeamId { get; set; }
+        public int Year { get; set; }
     }
 }

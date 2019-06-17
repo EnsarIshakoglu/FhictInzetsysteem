@@ -1,7 +1,8 @@
-﻿@model IEnumerable<EducationObject>
+﻿@model AddUnitTermExecViewModel
+@using System.Security.Cryptography.X509Certificates
 @using FHICTDeploymentSystem.Models
 @{
-    ViewData["Title"] = "AddTermExec";
+    ViewData["Title"] = "EditUnitTermExec";
 }
 
 <style type="text/css">
@@ -104,9 +105,21 @@
         <form>
             <fieldset>
                 <legend style="text-align: center">Add term execution</legend>
+                <label>Term execution:</label>
+                <select id="termExec" type="text" name="field1">
+                    @foreach (var termExec in Model.TermExecs)
+                    {
+                        var termExecId = termExec.Id;
+                        var termExecName = termExec.Name;
+                        var termExecYear = termExec.Year;
+                        var termExecSeason = termExec.Period;
+
+                        <option value="@termExecId">@termExecName @termExecYear Season: @termExecSeason</option>
+                    }
+                </select>
                 <label>Section:</label>
                 <select id="sections" type="text" name="field1">
-                    @foreach (var section in Model)
+                    @foreach (var section in Model.Sections)
                     {
                         var sectionId = section.Id;
                         var sectionName = section.Name;
@@ -119,10 +132,8 @@
                 <input id="code" type="text" name="field5" placeholder="Code">
                 <input id="estimatedClasses" type="number" name="field9" placeholder="Estimated Classes">
             </fieldset>
-            <fieldset>
-                <textarea id="description" name="field8" placeholder="Description"></textarea>
-            </fieldset>
-            <input id="addButton" type="submit" value="Add" />
+            <input id="EditButton" type="submit" value="Edit" />
+
         </form>
     </div>
 </div>
@@ -130,48 +141,41 @@
 @section Scripts
     {
     <script>
-        $('#sections').change(function() {
-            $('#units').empty();
-            $('#execId').empty();
-            var selectedSectionId = $("#sections option:selected").val();
-            var selectedUnit = $('#units');
-            selectedUnit.append($("<option></option>")
-                .attr("value", "12" )
-                .text("-Select-"));
-            $.post('@Url.Action("GetUnits", "Task")',
-                {
-                    sectionId: selectedSectionId
-                },
-                function(data) {
-                    data.forEach(function(section) {
-                        selectedUnit.append($("<option></option>")
-                            .attr("value", section.id)
-                            .text(section.name));
-                    });
-                });
+        $(document).ready(function() {
+            $('#period').val('@Model.Period');
         });
 
-        $('#addButton').on('click', (function () {
-            var termExecToAdd = {
+        $('#EditButton').click(function () {
+            /*alert("Success");*/
+            console.log('bbbbbbbbbbbbbbbbb');
+            var termExecToEdit = {
+                "Id": @Model.Id,
+                "Period": $("#period option:selected").val(),
+                "EstimatedHours": $("#hours").val(),
+                "Explanation": $("#explanation").val(),
                 "Name": $("#code").val(),
-                "UnitId": $("#units option:selected").val(),
-                "Factor" : $("#estimatedClasses").val()
+                "Description": $("#description").val(),
+                "Factor" : $("#factor").val()
             };
+            var url = '@Url.Action("UpdateTask", "Task", new{jsonObject = "__a__"})';
+            console.log(url.replace("__a__", JSON.stringify(taskToEdit)));
 
-            $.ajax({
-                url: '@Url.Action("AddTermExec", "TermExec")',
-                data: JSON.stringify(termExecToAdd),
-                type: "POST",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function() {
-                    console.log('Success!');
-                },
-                error: function() {
-                    console.log('Error');
-                }
-            });
-        }));
+            window.location.href = url.replace("__a__", JSON.stringify(taskToEdit));
+            return false;
+//            $.ajax({
+//                url: '',
+//                data: JSON.stringify(taskToEdit),
+//                type: "POST",
+//                contentType: "application/json; charset=utf-8",
+//                dataType: "json",
+//                success: function () {
+//                    window.location.reload();
+//                },
+//                error: function() {
+//                    console.log('Error');
+//                }
+//            });
+        });
     </script>
 
 }

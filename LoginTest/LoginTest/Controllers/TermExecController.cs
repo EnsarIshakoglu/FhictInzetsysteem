@@ -1,4 +1,6 @@
-﻿using Logic;
+﻿using System.Collections.Generic;
+using FHICTDeploymentSystem.Models;
+using Logic;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 
@@ -11,7 +13,13 @@ namespace FHICTDeploymentSystem.Controllers
 
         public IActionResult AddTermExec()
         {
-            return View(_preferenceLogic.GetAllSections());
+            var viewModel = new AddUnitTermExecViewModel
+            {
+                Sections = _preferenceLogic.GetAllSections(),
+                TermExecs = _termExecLogic.GetAllTermExecs()
+            };
+
+            return View(viewModel);
         }
 
         [HttpPost]

@@ -22,5 +22,9 @@ namespace Logic
         {
             _repo.EditTermExec(termExec);
         }
+        public IEnumerable<EducationObject> GetAllTermExecs()
+        {
+            return _repo.GetAllTermExecs();
+        }
     }
 }

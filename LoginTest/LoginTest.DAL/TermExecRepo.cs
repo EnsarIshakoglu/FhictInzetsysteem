@@ -27,5 +27,10 @@ namespace DAL
         {
             _context.EditTermExec(termExec);
         }
+
+        public IEnumerable<EducationObject> GetAllTermExecs()
+        {
+            return _context.GetAllTermExecs();
+        }
     }
 }
