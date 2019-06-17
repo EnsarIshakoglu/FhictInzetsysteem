@@ -11,7 +11,7 @@ namespace FHICTDeploymentSystem.Controllers
 {
     public class TeamController : Controller
     {
-        private readonly TeamLogic _teamLogic = new TeamLogic(); 
+        private readonly TeamLogic _teamLogic = new TeamLogic();
 
         [HttpGet]
         public IActionResult ManageTeam()
@@ -63,16 +63,21 @@ namespace FHICTDeploymentSystem.Controllers
         
         public IActionResult EditUserInTeam(User user)
         {
-            _teamLogic.GetTeamMemberCompetences(user);
-            return View(user);
+            var Model = new TeacherModel();
+            Model.Bewkaamheden = _teamLogic.GetTeamMemberCompetences(user);
+            Model.Uren = _teamLogic.GetTeamMemberHours(user.Id);
+            return View(Model);
         }
 
-        [HttpPost]
-        public IActionResult PreferenceControler([FromBody]User user)
+        public IActionResult SaveHours([FromBody]User user, EducationObject hours)
         {
-            _teamLogic.AddTeacher(user);
-            return RedirectToAction("ManageTeam");
+            user.Id = 1;
+            hours.EstimatedHours = 5;
+            hours.EstimatedHours2 = 5;
+            _teamLogic.SaveHours(user, hours);
+            return View();
         }
+       
 
     }
 }

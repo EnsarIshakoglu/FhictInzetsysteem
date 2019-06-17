@@ -45,5 +45,15 @@ namespace DAL
         {
             return _context.GetTeamMemberCompetences(user);
         }
+
+        public EducationObject GetTeamMemberHours(int ID)
+        {
+            return _context.GetTeamMemberHours(ID);
+        }
+
+        public void SaveHours(User user, EducationObject hours)
+        {
+            _context.SaveHours(user, hours);
+        }
     }
 }
