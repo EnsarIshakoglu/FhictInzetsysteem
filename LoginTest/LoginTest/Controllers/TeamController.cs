@@ -12,7 +12,7 @@ namespace FHICTDeploymentSystem.Controllers
     public class TeamController : Controller
     {
         private readonly TeamLogic _teamLogic = new TeamLogic();
-
+        private readonly PreferenceLogic _preferencesLogic = new PreferenceLogic();
         [HttpGet]
         public IActionResult ManageTeam()
         {
@@ -77,7 +77,12 @@ namespace FHICTDeploymentSystem.Controllers
             _teamLogic.SaveHours(user, hours);
             return View();
         }
-       
+
+        public IActionResult AddCompetences()
+        {
+            return View(_preferencesLogic.GetAllSections());
+        }
+
 
     }
 }
