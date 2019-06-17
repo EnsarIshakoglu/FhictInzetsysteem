@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using FHICTDeploymentSystem.Logic;
-using FHICTDeploymentSystem.Models;
 using Logic;
 using Microsoft.AspNetCore.Mvc;
+using Models;
 using Newtonsoft.Json;
 
 namespace FHICTDeploymentSystem.Controllers

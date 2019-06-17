@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using DAL.Contexts;
-using FHICTDeploymentSystem.Models;
+using Models;
 
 namespace DAL
 {

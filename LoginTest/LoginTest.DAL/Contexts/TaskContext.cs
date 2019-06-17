@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text;
-using FHICTDeploymentSystem.Models;
+using Models;
+using Models.Enums;
 
 namespace DAL.Contexts
 {

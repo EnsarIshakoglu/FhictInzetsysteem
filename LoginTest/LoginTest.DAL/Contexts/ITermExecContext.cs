@@ -1,4 +1,4 @@
-﻿using FHICTDeploymentSystem.Models;
+﻿using Models;
 
 namespace DAL.Contexts
 {
