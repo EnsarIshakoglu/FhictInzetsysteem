@@ -13,6 +13,7 @@ namespace Models
         public IEnumerable<Preference> Preferences { get; set; }
         public IEnumerable<EducationObject> Competences { get; set; }
         public int[] OpenHours { get; set; }
+        public int[] MaxOvertime { get; set; }
         public int Points { get; set; } = 0;
 
     }

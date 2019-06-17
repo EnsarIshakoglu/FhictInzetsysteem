@@ -57,6 +57,7 @@ namespace Logic
                     {
                         Id = employee.Id,
                         OpenHours = employee.OpenHours,
+                        MaxOvertime = employee.MaxOvertime,
                         Preferences = employee.Preferences,
                         Competences = employee.Competences
                     });
@@ -116,16 +117,16 @@ namespace Logic
         private void AssignTask(IEnumerable<Employee> tempEmployeeList, EducationObject task)
         {
             List<Employee> sortedEmployeeList = tempEmployeeList.OrderByDescending(e => e.Points).ToList();
+
             int factor = task.Factor;
-            for (int i = 0; i < factor; i++)
+            var selectedEmployees = sortedEmployeeList.Where(e =>
+                e.OpenHours[task.Period - 1] - task.EstimatedHours >= -e.MaxOvertime[task.Period - 1]).Take(factor);
+            
+            foreach (var employee in selectedEmployees)
             {
-                if (i < sortedEmployeeList.Count)
-                {
-                    var employee = sortedEmployeeList[i];
-                    _context.AssignTask(task, employee);
-                    Employees.First(e => e.Id == employee.Id).OpenHours[task.Period - 1] -= task.EstimatedHours;
-                    task.Factor--;
-                }
+                _context.AssignTask(task, employee);
+                Employees.First(e => e.Id == employee.Id).OpenHours[task.Period - 1] -= task.EstimatedHours;
+                task.Factor--;
             }
         }
     }

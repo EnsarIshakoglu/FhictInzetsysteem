@@ -58,10 +58,14 @@ namespace DAL.Contexts
 
                 while (reader.Read())
                 {
+                    var openHoursP1 = (int) reader["HoursPeriod1"];
+                    var openHoursP2 = (int) reader["HoursPeriod2"];
+
                     employees.Add(new Employee
                     {
                         Id = (int)reader["Id"],
-                        OpenHours = new int[] { (int)reader["HoursPeriod1"], (int)reader["HoursPeriod2"] }
+                        OpenHours = new int[] { openHoursP1, openHoursP2 },
+                        MaxOvertime = new int[] { (int)(openHoursP1 * 0.2), (int)(openHoursP2 * 0.2)}
                     });
                 }
 
