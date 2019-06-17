@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 using FHICTDeploymentSystem.Logic;
 using FHICTDeploymentSystem.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
+using Newtonsoft.Json;
 
 namespace FHICTDeploymentSystem.Controllers
 {
     public class TeamController : Controller
     {
         private readonly TeamLogic _teamLogic = new TeamLogic();
-        private readonly PreferenceLogic _preferencesLogic = new PreferenceLogic();
+
         [HttpGet]
         public IActionResult ManageTeam()
         {
@@ -64,6 +66,7 @@ namespace FHICTDeploymentSystem.Controllers
         public IActionResult EditUserInTeam(User user)
         {
             var Model = new TeacherModel();
+            Model.ID = user.Id;
             Model.Bewkaamheden = _teamLogic.GetTeamMemberCompetences(user);
             Model.Uren = _teamLogic.GetTeamMemberHours(user.Id);
             return View(Model);
@@ -78,9 +81,45 @@ namespace FHICTDeploymentSystem.Controllers
             return View();
         }
 
-        public IActionResult AddCompetences()
+        public IActionResult RemoveCompetence(string jsonding, int employeeId)
         {
-            return View(_preferencesLogic.GetAllSections());
+            int[] idArray = JsonConvert.DeserializeObject<int[]>(jsonding);
+            foreach (int id in idArray)
+            {
+                _teamLogic.RemoveCompetence(id);
+            }
+            return new JsonResult(new { message = "Succes"});
+        }
+
+        [HttpPost]
+        public IActionResult AddSectionCompetence(int id, int employeeId)
+        {
+            _teamLogic.AddSectionCompetence(id);
+            return new JsonResult(new { message = "Succesfully added all tasks in section to competences" });
+        }
+
+
+        [HttpPost]
+        public IActionResult AddUnitCompetence(int id, int employeeId)
+        {
+            _teamLogic.AddUnitCompetence(id);
+            return new JsonResult(new { message = "Succesfully added all tasks in Unit competences" });
+        }
+
+
+        [HttpPost]
+        public IActionResult AddUnitExecCompetence(int id, int employeeId)
+        {
+            _teamLogic.AddUnitExecCompetence(id);
+            return new JsonResult(new { message = "Succesfully added all tasks in UnitExec competences" });
+        }
+
+
+        [HttpPost]
+        public IActionResult AddTasksCompetence(int id)
+        {
+            _teamLogic.AddTasksCompetence(id);
+            return new JsonResult(new { message = "Succesfully added task to competences" });
         }
 
 

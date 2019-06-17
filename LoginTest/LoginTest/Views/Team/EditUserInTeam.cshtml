@@ -10,204 +10,209 @@
 
 <div style="padding-bottom: 70px; padding-top: 20px">
     <div class="form-style-5">
-        @*<fieldset>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" name="Name" placeholder="@Model.Name" readonly class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" name="Name" placeholder="@Model.Id" readonly class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TeamId" class="control-label"></label>
-                <input asp-for="TeamId" name="Name" placeholder="@Model.TeamId" readonly class="form-control" />
-                <span asp-validation-for="TeamId" class="text-danger"></span>
-            </div>
-        </fieldset>*@
-        <label>Bekwaamheden:</label>
+            @*<fieldset>
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" name="Name" placeholder="@Model.Name" readonly class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Id" class="control-label"></label>
+                        <input asp-for="Id" name="Name" placeholder="@Model.Id" readonly class="form-control" />
+                        <span asp-validation-for="Id" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TeamId" class="control-label"></label>
+                        <input asp-for="TeamId" name="Name" placeholder="@Model.TeamId" readonly class="form-control" />
+                        <span asp-validation-for="TeamId" class="text-danger"></span>
+                    </div>
+                </fieldset>*@
+            <label>Bekwaamheden:</label>
 
-        @*@foreach (var section in Model.Bewkaamheden)
-        {
-            var sectionId = section.Id;
-            var sectionName = section.Name;
+            @*@foreach (var section in Model.Bewkaamheden)
+                {
+                    var sectionId = section.Id;
+                    var sectionName = section.Name;
 
-            <option value="@sectionId">@sectionName</option>
-            <input type="hidden" value="@sectionId">
-            <label>
-                <input checked="checked" type="checkbox" />
-                <span>@sectionName</span>
-            </label>
-        }*@
+                    <option value="@sectionId">@sectionName</option>
+                    <input type="hidden" value="@sectionId">
+                    <label>
+                        <input checked="checked" type="checkbox" />
+                        <span>@sectionName</span>
+                    </label>
+                }*@
 
-        <ul class="collapsible">
-            <li>
-                <div class="collapsible-header">
-                    <i class="material-icons">arrow_drop_down_circle</i>
-                    Section
-                </div>
-                <div id="12" class="collapsible-body">
-                    @foreach (var section in Model.Bewkaamheden)
-                    {
-                        var sectionId = section.Id;
-                        var sectionName = section.Name;
+            <ul class="collapsible">
+                <li>
+                    <div class="collapsible-header">
+                        <i class="material-icons">arrow_drop_down_circle</i>
+                        Section
+                    </div>
+                    <div id="competences" class="collapsible-body">
+                       
+                      @if (Model.Bewkaamheden.Count() > 0)
+                      {
+                          foreach (var section in Model.Bewkaamheden)
+                          {
+                          var sectionId = section.Id;
+                          var sectionName = section.Name;
+                          <label>
+                              <input checked="checked" type="checkbox" value="@sectionId"/>
+                              <span>@sectionName</span>
+                          </label>
+                          }
+                      }
+                      else
+                      {
+                          <p>No Competences</p>
+                      }
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header">
+                        <i class="material-icons">arrow_drop_down_circle</i>
+                        All preferences
+                    </div>
+                    <div class="collapsible-body">
+                        <p></p>
+                    </div>
+                </li>
 
-                        <input type="hidden" value="@sectionId">
-                        <label>
-                            <input checked="checked" type="checkbox" />
-                            <span>@sectionName</span>
-                        </label>
-                    }
-                </div>
-            </li>
-            <li>
-                <div class="collapsible-header">
-                    <i class="material-icons">arrow_drop_down_circle</i>
-                    All preferences
-                </div>
-                <div class="collapsible-body">
-                    <p></p>
-                </div>
-            </li>
+                <li>
+                    <div class="collapsible-header">
+                        <i class="material-icons">arrow_drop_down_circle</i>
+                        Teacher's preferences
+                    </div>
+                    <div class="collapsible-body">
+                        <ul id="myUL">
+                            <li>
+                                <span class="caret">Section 1</span>
+                                <ul class="nested">
+                                    <li>
+                                        <span class="caret">Unit 1</span>
+                                        <ul class="nested">
+                                            <li>
+                                                <span class="caret">UnitExecutive 1</span>
+                                                <ul class="nested">
+                                                    <li>Task 1</li>
+                                                    <li>Task 2</li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <span class="caret">UnitExecutive 2</span>
+                                                <ul class="nested">
+                                                    <li>Task 1</li>
+                                                    <li>Task 2</li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <span class="caret">UnitExecutive 3</span>
+                                                <ul class="nested">
+                                                    <li>Task 1</li>
+                                                    <li>Task 2</li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <span class="caret">Unit 2</span>
+                                        <ul class="nested">
+                                            <li>
+                                                <span class="caret">UnitExecutive 1</span>
+                                                <ul class="nested">
+                                                    <li>Task 1</li>
+                                                    <li>Task 2</li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <span class="caret">UnitExecutive 2</span>
+                                                <ul class="nested">
+                                                    <li>Task 1</li>
+                                                    <li>Task 2</li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <span class="caret">UnitExecutive 3</span>
+                                                <ul class="nested">
+                                                    <li>Task 1</li>
+                                                    <li>Task 2</li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <span class="caret">Section 2</span>
+                                <ul class="nested">
+                                    <li>
+                                        <span class="caret">Unit 1</span>
+                                        <ul class="nested">
+                                            <li>
+                                                <span class="caret">UnitExecutive 1</span>
+                                                <ul class="nested">
+                                                    <li>Task 1</li>
+                                                    <li>Task 2</li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <span class="caret">UnitExecutive 2</span>
+                                                <ul class="nested">
+                                                    <li>Task 1</li>
+                                                    <li>Task 2</li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <span class="caret">UnitExecutive 3</span>
+                                                <ul class="nested">
+                                                    <li>Task 1</li>
+                                                    <li>Task 2</li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <span class="caret">Unit 2</span>
+                                        <ul class="nested">
+                                            <li>
+                                                <span class="caret">UnitExecutive 1</span>
+                                                <ul class="nested">
+                                                    <li>Task 1</li>
+                                                    <li>Task 2</li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <span class="caret">UnitExecutive 2</span>
+                                                <ul class="nested">
+                                                    <li>Task 1</li>
+                                                    <li>Task 2</li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <span class="caret">UnitExecutive 3</span>
+                                                <ul class="nested">
+                                                    <li>Task 1</li>
+                                                    <li>Task 2</li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
 
-            <li>
-                <div class="collapsible-header">
-                    <i class="material-icons">arrow_drop_down_circle</i>
-                    Teacher's preferences
+            <fieldset>
+                <div class="quantity">
+                    <span>Hours period 1</span><br />
+                    <input type="text" value="@Model.Uren.EstimatedHours"><br />
+                    <span>Hours period 2</span>
+                    <input type="text" value="@Model.Uren.EstimatedHours2">
                 </div>
-                <div class="collapsible-body">
-                    <ul id="myUL">
-                        <li>
-                            <span class="caret">Section 1</span>
-                            <ul class="nested">
-                                <li>
-                                    <span class="caret">Unit 1</span>
-                                    <ul class="nested">
-                                        <li>
-                                            <span class="caret">UnitExecutive 1</span>
-                                            <ul class="nested">
-                                                <li>Task 1</li>
-                                                <li>Task 2</li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <span class="caret">UnitExecutive 2</span>
-                                            <ul class="nested">
-                                                <li>Task 1</li>
-                                                <li>Task 2</li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <span class="caret">UnitExecutive 3</span>
-                                            <ul class="nested">
-                                                <li>Task 1</li>
-                                                <li>Task 2</li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <span class="caret">Unit 2</span>
-                                    <ul class="nested">
-                                        <li>
-                                            <span class="caret">UnitExecutive 1</span>
-                                            <ul class="nested">
-                                                <li>Task 1</li>
-                                                <li>Task 2</li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <span class="caret">UnitExecutive 2</span>
-                                            <ul class="nested">
-                                                <li>Task 1</li>
-                                                <li>Task 2</li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <span class="caret">UnitExecutive 3</span>
-                                            <ul class="nested">
-                                                <li>Task 1</li>
-                                                <li>Task 2</li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <span class="caret">Section 2</span>
-                            <ul class="nested">
-                                <li>
-                                    <span class="caret">Unit 1</span>
-                                    <ul class="nested">
-                                        <li>
-                                            <span class="caret">UnitExecutive 1</span>
-                                            <ul class="nested">
-                                                <li>Task 1</li>
-                                                <li>Task 2</li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <span class="caret">UnitExecutive 2</span>
-                                            <ul class="nested">
-                                                <li>Task 1</li>
-                                                <li>Task 2</li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <span class="caret">UnitExecutive 3</span>
-                                            <ul class="nested">
-                                                <li>Task 1</li>
-                                                <li>Task 2</li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <span class="caret">Unit 2</span>
-                                    <ul class="nested">
-                                        <li>
-                                            <span class="caret">UnitExecutive 1</span>
-                                            <ul class="nested">
-                                                <li>Task 1</li>
-                                                <li>Task 2</li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <span class="caret">UnitExecutive 2</span>
-                                            <ul class="nested">
-                                                <li>Task 1</li>
-                                                <li>Task 2</li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <span class="caret">UnitExecutive 3</span>
-                                            <ul class="nested">
-                                                <li>Task 1</li>
-                                                <li>Task 2</li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-        </ul>
-
-        <fieldset>
-            <div class="quantity">
-                <span>Hours period 1</span><br />
-                <input type="text" value="@Model.Uren.EstimatedHours"><br />
-                <span>Hours period 2</span>
-                <input type="text" value="@Model.Uren.EstimatedHours2">
-            </div>
-        </fieldset>
-        <input onclick="SaveSettings()" id="addButton" type="submit" value="Save" />
-        <button class="btn-voorkeur"><a asp-controller="Team" asp-action="AddCompetences">Knop de druk</a></button>
+            </fieldset>
+            <input onclick="SaveSettings()" id="addButton" type="submit" value="Save" />
     </div>
 </div>
 
@@ -368,11 +373,36 @@
 
     <script>
         function SaveSettings() {
-            var i = $('#12 input').val();
-            console.log(i);
+            var idsToDelete = [];
+            $('input[type="checkbox"]').each(function() {
+                if (!$(this).is(':checked')) {
+                    idsToDelete.push(($(this).val()));
+                }
+            });
+            console.log(idsToDelete);
+            var q = JSON.stringify(idsToDelete);
+            console.log("En nu q : " + q);
+            if (idsToDelete.length > 0) {
+                $.ajax({
+                    url: '@Url.Action("RemoveCompetence", "Team")',
+                    data: {
+                        jsonding: q, //TODO FIX DEZE
+                        employeeId: @Model.ID
+                    },
+                    type: "GET",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function() {
+                        console.log('Success!');
+                        //TODO reload page vind code idk
+                    },
+                    error: function() {
+                        alert('Unsuccesfull');
+                    }
+                });
+            }
         };
-</script>
-
-
+    </script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
 }
