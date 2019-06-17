@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using FHICTDeploymentSystem.Models;
+using Models;
 
-namespace FHICTDeploymentSystem.DAL
+namespace DAL.Contexts
 {
     public interface IUserContext
     {

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using FHICTDeploymentSystem.Models;
+using Models;
 
 namespace DAL.Contexts
 {

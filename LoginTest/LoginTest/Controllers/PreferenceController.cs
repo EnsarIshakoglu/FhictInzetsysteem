@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using FHICTDeploymentSystem.Logic;
-using FHICTDeploymentSystem.Models;
 using Logic;
+using Models;
+using Models.Enums;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FHICTDeploymentSystem.Controllers
+namespace Controllers
 {
     public class PreferenceController : Controller
     {

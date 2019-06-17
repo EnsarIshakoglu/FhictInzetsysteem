@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FHICTDeploymentSystem.Models
+namespace Models
 {
     public class Team
     {

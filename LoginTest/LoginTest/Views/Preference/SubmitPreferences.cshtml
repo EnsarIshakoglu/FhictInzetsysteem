@@ -1,5 +1,6 @@
 ﻿@using Microsoft.EntityFrameworkCore.Internal
-@model IEnumerable<Preference>
+@using Models.Enums
+@model IEnumerable<Models.Preference>
 <script>
 //    var preferences = @Json.Serialize(Model);
     console.log(preferences);
@@ -27,7 +28,7 @@
 
                                     <center><button style="width: 15%;" id="saveBtn" onclick="goToSaveChecker()" class="btn-preference" type="submit">Save</button></center>
                                     <br />
-                                    @if (Model.First().Task.EducationType != EducationType.Section)
+                                    @if (Model.FirstOrDefault() != null && Model.First().Task.EducationType != EducationType.Section)
                                     {
                                         <center><button style="width: 15%;" onclick="goBack()" class="btn-preference" type="button">Back</button></center>
                                     }
@@ -100,8 +101,14 @@
 
         console.log(preferences);
 
-        var controllerPath = '@Url.Action("SaveChecker", "Preference", new { educationType = @Model.First().Task.EducationType, id = @Model.First().Task.Id })';
 
+        @if (Model.FirstOrDefault() != null)
+        {
+            <text>
+            var controllerPath = '@Url.Action("SaveChecker", "Preference", new { educationType = @Model.FirstOrDefault().Task.EducationType, id = @Model.FirstOrDefault().Task.Id })';
+            </text>
+        }
+        
         console.log(JSON.stringify(preferences));
 
         $.ajax({

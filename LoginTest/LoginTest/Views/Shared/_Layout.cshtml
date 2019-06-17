@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Models.Enums
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -58,7 +59,7 @@
                             }
                             @if (User.IsInRole(Roles.UnitOwner.ToString()) || User.IsInRole(Roles.InstituteMember.ToString()))
                             {
-                                <li><a asp-area="" asp-controller="Home" asp-action="Movies">Algorithm results</a></li>
+                                <li><a asp-area="" asp-controller="Algorithm" asp-action="Deploy">Deploy</a></li>
                             }
                             @if (User.IsInRole(Roles.UnitOwner.ToString()) || User.IsInRole(Roles.InstituteMember.ToString()))
                             {
@@ -93,7 +94,7 @@
                             }                       
                             @if (User.IsInRole(Roles.UnitOwner.ToString()) || User.IsInRole(Roles.InstituteMember.ToString()))
                             {
-                                <li><a asp-area="" asp-controller="Home" asp-action="Movies">Algorithm results</a></li>
+                                <li><a asp-area="" asp-controller="Algorithm" asp-action="Deploy">Deploy</a></li>
                             }
                             @if (User.IsInRole(Roles.UnitOwner.ToString()) || User.IsInRole(Roles.InstituteMember.ToString()))
                             {

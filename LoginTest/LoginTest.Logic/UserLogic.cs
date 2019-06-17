@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Security.Claims;
-using FHICTDeploymentSystem.DAL;
-using FHICTDeploymentSystem.Models;
+using DAL;
+using Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using System.Web;
 
-namespace FHICTDeploymentSystem.Logic
+namespace Logic
 {
     public class UserLogic
     {
