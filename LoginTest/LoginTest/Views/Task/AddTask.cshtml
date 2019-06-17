@@ -1,0 +1,211 @@
+﻿@using Models
+@model IEnumerable<EducationObject>
+@{
+    ViewData["Title"] = "Tasks";
+}
+
+<style type="text/css">
+    .form-style-5 {
+        max-width: 500px;
+        padding: 10px 20px;
+        background: #f4f7f8;
+        margin: 10px auto;
+        padding: 20px;
+        background: #f4f7f8;
+        border-radius: 8px;
+        font-family: Georgia, "Times New Roman", Times, serif;
+    }
+
+        .form-style-5 fieldset {
+            border: none;
+        }
+
+        .form-style-5 legend {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+        }
+
+        .form-style-5 label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .form-style-5 input[type="text"],
+        .form-style-5 input[type="date"],
+        .form-style-5 input[type="datetime"],
+        .form-style-5 input[type="email"],
+        .form-style-5 input[type="number"],
+        .form-style-5 input[type="search"],
+        .form-style-5 input[type="time"],
+        .form-style-5 input[type="url"],
+        .form-style-5 textarea,
+        .form-style-5 select {
+            font-family: Georgia, "Times New Roman", Times, serif;
+            background: rgba(255,255,255,.1);
+            border: none;
+            border-radius: 4px;
+            font-size: 15px;
+            margin: 0;
+            outline: 0;
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            background-color: #e8eeef;
+            color: #8a97a0;
+            -webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+            box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+            margin-bottom: 30px;
+        }
+
+            .form-style-5 input[type="text"]:focus,
+            .form-style-5 input[type="date"]:focus,
+            .form-style-5 input[type="datetime"]:focus,
+            .form-style-5 input[type="email"]:focus,
+            .form-style-5 input[type="number"]:focus,
+            .form-style-5 input[type="search"]:focus,
+            .form-style-5 input[type="time"]:focus,
+            .form-style-5 input[type="url"]:focus,
+            .form-style-5 textarea:focus,
+            .form-style-5 select:focus {
+                background: #d2d9dd;
+            }
+
+        .form-style-5 select {
+            -webkit-appearance: menulist-button;
+            height: 35px;
+        }
+
+        .form-style-5 input[type="submit"],
+        .form-style-5 input[type="button"] {
+            position: relative;
+            display: block;
+            padding: 19px 39px 18px 39px;
+            color: #FFF;
+            margin: 0 auto;
+            background: #663366;
+            font-size: 18px;
+            text-align: center;
+            font-style: normal;
+            width: 100%;
+            border: 1px solid #663366;
+            border-width: 1px 1px 3px;
+            margin-bottom: 10px;
+        }
+
+            .form-style-5 input[type="submit"]:hover,
+            .form-style-5 input[type="button"]:hover {
+                background: #e40086;
+            }
+</style>
+<div style="padding-bottom: 70px; padding-top: 20px">
+    <div class="form-style-5">
+        <form>
+            <fieldset>
+                <legend style="text-align: center">Add task</legend>
+                <label>Section:</label>
+                <select id="sections" type="text" name="field1">
+                    @foreach (var section in Model)
+                    {
+                        var sectionId = section.Id;
+                        var sectionName = section.Name;
+
+                        <option value="@sectionId">@sectionName</option>
+                    }
+                </select>
+                <label>Unit:</label>
+                <select id="units" type="text" name="field2"></select>
+                <label>Unit execution:</label>
+                <select id="execId" type="text" name="field3"></select>
+                <label>Period:</label>
+                <select id="period" type="text" name="field4">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </select>
+                <input id="code" type="text" name="field5" placeholder="Code">
+                <input id="explanation" type="text" name="field6" placeholder="Explanation">
+                <input id="hours" type="text" name="field7" placeholder="Hours">
+                <input id="factor" type="number" name="field9" placeholder="Factor">
+            </fieldset>
+            <fieldset>
+                <textarea id="description" name="field8" placeholder="Description"></textarea>
+            </fieldset>
+            <input id="addButton" type="submit" value="Add" />
+        </form>
+    </div>
+</div>
+
+@section Scripts
+    {
+    <script>
+        $('#sections').change(function() {
+            $('#units').empty();
+            $('#execId').empty();
+            var selectedSectionId = $("#sections option:selected").val();
+            var selectedUnit = $('#units');
+            selectedUnit.append($("<option></option>")
+                .attr("value", "12" )
+                .text("-Select-"));
+            $.post('@Url.Action("GetUnits", "Task")',
+                {
+                    sectionId: selectedSectionId
+                },
+                function(data) {
+                    data.forEach(function(section) {
+                        selectedUnit.append($("<option></option>")
+                            .attr("value", section.id)
+                            .text(section.name));
+                    });
+                });
+        });
+
+        $('#units').change(function() {
+            $('#execId').empty();
+            var selectedUnitId = $("#units option:selected").val();
+            var selectedExec = $('#execId');
+            selectedExec.append($("<option></option>")
+                .attr("value", "test")
+                .text("-Select-"));
+
+            $.post('@Url.Action("GetTermExecutions", "Task")',
+                {
+                    unitId: selectedUnitId
+                },
+                function(data) {
+                    data.forEach(function(exec) {
+                        selectedExec.append($("<option></option>")
+                            .attr("value", exec.id)
+                            .text(exec.name));
+                    });
+                });
+        });
+
+        $('#addButton').on('click', (function () {
+            var taskToAdd = {
+                "Period": $("#period option:selected").val(),
+                "EstimatedHours": $("#hours").val(),
+                "Explanation": $("#explanation").val(),
+                "Name": $("#code").val(),
+                "Description": $("#description").val(),
+                "UnitExecId": $("#execId option:selected").val(),
+                "Factor" : $("#factor").val()
+            };
+
+            $.ajax({
+                url: '@Url.Action("AddTask", "Task")',
+                data: JSON.stringify(taskToAdd),
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function() {
+                    console.log('Success!');
+                },
+                error: function() {
+                    console.log('Error');
+                }
+            });
+        }));
+    </script>
+
+}
