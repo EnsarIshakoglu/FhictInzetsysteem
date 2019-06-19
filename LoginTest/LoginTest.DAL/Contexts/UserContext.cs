@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text;
-using FHICTDeploymentSystem.Models;
+using Models;
 
-namespace FHICTDeploymentSystem.DAL
+namespace DAL.Contexts
 {
     public class UserContext : IUserContext
     {

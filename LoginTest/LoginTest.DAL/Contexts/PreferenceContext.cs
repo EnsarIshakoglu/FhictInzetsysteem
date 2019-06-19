@@ -5,9 +5,10 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using FHICTDeploymentSystem.Models;
+using Models;
+using Models.Enums;
 
-namespace FHICTDeploymentSystem.DAL.Contexts
+namespace DAL.Contexts
 {
     public class PreferenceContext : IPreferenceContext
     {
@@ -82,7 +83,7 @@ namespace FHICTDeploymentSystem.DAL.Contexts
             {
                 connection.Open();
 
-                SqlCommand cmd = new SqlCommand("GetAllTasks", connection);
+                SqlCommand cmd = new SqlCommand("GetAllTasksFromUnitExecId", connection);
 
                 cmd.CommandType = CommandType.StoredProcedure;
 

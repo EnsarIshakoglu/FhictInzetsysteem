@@ -1,0 +1,89 @@
+﻿@using FHICTDeploymentSystem.Models
+@model AlgorithmViewModel
+
+
+@{
+    ViewData["Title"] = "Algorithm";
+}
+
+<h1 id="Title" style="color: #663366">Deployment System</h1>
+
+<div>
+    <form asp-controller="Algorithm" asp-action="StartAlgorithm" method="post" enctype="multipart/form-data">
+        <div class="form-group" style="margin-top: 60px">
+            <input type="submit" value="Start Algorithm" class="btn btn-danger btn-sm" />
+        </div>
+    </form>
+</div>
+
+<div style="margin-top: 30px">
+    <h5>Assigned Employees:</h5>
+    <table>
+        <tr style="border-bottom: solid darkgray 1px">
+            <th>ID</th>
+            <th>Name</th>
+            <th>Hours P1</th>
+            <th>Assigned P1</th>
+            <th>Hours P2</th>
+            <th>Assigned P2</th>
+            <th>Assigned Tasks</th>
+        </tr>
+        @{
+            foreach (var Employee in @Model.Employees.OrderBy(e => e.Id))
+            {
+                if (Employee.AssignedTasks.Any())
+                {
+                    <tr style="border: solid darkgray 1px">
+                        <td style="margin: 0; padding: 0">@Employee.Id</td>
+                        <td style="margin: 0; padding: 0">@Employee.Name</td>
+                        <td style="margin: 0; padding: 0">@Employee.OpenHours[0]</td>
+                        <td style="margin: 0; padding: 0">@Employee.AssignedTasks.Where(e => e.Period == 1).Sum(e => e.EstimatedHours)</td>
+                        <td style="margin: 0; padding: 0">@Employee.OpenHours[1]</td>
+                        <td style="margin: 0; padding: 0">@Employee.AssignedTasks.Where(e => e.Period == 2).Sum(e => e.EstimatedHours)</td>
+                        <td style="margin: 0; padding: 4px">
+                            <select style="height: auto; border-color: darkgray">
+                                @foreach (var task in Employee.AssignedTasks.OrderBy(t => t.Period))
+                                {
+                                    <option>Period @task.Period | @task.Name | Hours: @task.EstimatedHours</option>
+                                }
+                            </select>
+                        </td>
+                    </tr>
+                }
+            }
+        }
+    </table>
+</div>
+
+<div style="margin-top: 75px; margin-bottom: 100px">
+    <h5>Left Over Tasks:</h5>
+    <table>
+        <tr style="border-bottom: solid darkgray 1px">
+            <th>ID</th>
+            <th>Period</th>
+            <th>Code</th>
+            <th>Hours</th>
+            <th>Factor Left</th>
+        </tr>
+        @{
+            foreach (var task in @Model.Tasks.OrderBy(t => t.Id))
+            {
+                {
+                    <tr style="border: solid darkgray 1px">
+                        <td style="margin: 0; padding: 3px">@task.Id</td>
+                        <td style="margin: 0; padding: 3px">@task.Period</td>
+                        <td style="margin: 0; padding: 3px">@task.Name</td>
+                        <td style="margin: 0; padding: 3px">@task.EstimatedHours</td>
+                        <td style="margin: 0; padding: 3px">@task.Factor</td>
+                    </tr>
+                }
+            }
+        }
+    </table>
+</div>
+
+<style>
+    tr:nth-child(even) {
+        background-color: whitesmoke;
+    }
+</style>

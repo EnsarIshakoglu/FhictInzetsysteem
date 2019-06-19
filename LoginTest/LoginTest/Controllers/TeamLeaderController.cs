@@ -1,8 +1,8 @@
-﻿using FHICTDeploymentSystem.Models;
+﻿using Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FHICTDeploymentSystem.Controllers
+namespace Controllers
 {
     [Authorize(Roles = "TeamLeader")]
     [Route("Home/Index")]

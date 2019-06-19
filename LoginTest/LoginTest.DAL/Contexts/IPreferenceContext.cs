@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using FHICTDeploymentSystem.Models;
+using Models;
 
-namespace FHICTDeploymentSystem.DAL.Contexts
+namespace DAL.Contexts
 {
     public interface IPreferenceContext
     {
