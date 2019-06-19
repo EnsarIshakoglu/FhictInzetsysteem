@@ -213,7 +213,8 @@
             </div>
         </fieldset>
         <input onclick="SaveSettings()" id="addButton" type="submit" value="Save" />
-        <button class="btn-voorkeur"><a asp-area="" asp-controller="Team" asp-action="AddCompetences" asp-route-id="">Add</a></button>
+        <button class="btn-voorkeur">@Html.ActionLink("Wow", "AddCompetences", "Team", routeValues: new {id = @Model.ID})</button>
+    
     </div>
 </div>
 
@@ -387,7 +388,7 @@
                 $.ajax({
                     url: '@Url.Action("RemoveCompetence", "Team")',
                     data: {
-                        jsonding: q, //TODO FIX DEZE
+                        jsonding: q,
                         employeeId: @Model.ID
                     },
                     type: "GET",

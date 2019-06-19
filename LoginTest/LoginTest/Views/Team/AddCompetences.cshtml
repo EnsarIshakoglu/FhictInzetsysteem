@@ -104,8 +104,7 @@
         <fieldset>
             <legend style="text-align: center">Add task</legend>
             <label style="float:left;">Section:</label><button id="AddSectionCompetence" style="float:right;margin-bottom:5%;" class="btn-voorkeur">Add Section</button>
-            <select id="sections" type="text" name="field1">
-            </select>
+            <select id="sections" type="text" name="field1"></select>
             <label style="float:left;">Unit:</label><button id="AddUnitCompetence" style="float:right;margin-bottom:5%;" class="btn-voorkeur">Add Unit</button>
             <select id="units" type="text" name="field2"></select>
             <label style="float:left;">Term execution:</label><button id="AddTermExecutionCompetence" style="float:right;margin-bottom:5%;" class="btn-voorkeur">Add Term execution</button>
@@ -116,23 +115,34 @@
     </div>
 </div>
 
-
-
-
 @section Scripts
     {
     <script>
 
-        $(document.onload)
-        {
-
-        }
-        $('#sections').change(function() {
-            $('#units').empty();
-            var selectedSectionId = $("#sections option:selected").val();
-            $.post('@Url.Action("GetUnits", "Task")',
+        $(document).ready(function() {
+            $.post('@Url.Action("GetSectionsWhereUserIsNotCompetentFor", "Team")',
                 {
-                    sectionId: selectedSectionId
+                    employeeid: '@Model'
+                },
+                function(data) {
+                    var selectedExec = $('#sections');
+                    data.forEach(function(exec) {
+                        selectedExec.append($("<option></option>")
+                            .attr("value", exec.id)
+                            .text(exec.name));
+                    });
+                });
+        });
+
+        $('#sections').click(function() {
+            $('#units').empty();
+            $('#execId').empty();
+            $('#taskId').empty();
+            var selectedSectionId = $("#sections option:selected").val();
+            $.post('@Url.Action("GetUnitWhereUserIsNotCompetentFor", "Team")',
+                {
+                    id: selectedSectionId,
+                    employeeid: @Model
                 },
                 function(data) {
                     var selectedUnit = $('#units');
@@ -144,12 +154,14 @@
                 });
         });
 
-        $('#units').change(function() {
+        $('#units').click(function() {
             $('#execId').empty();
+            $('#taskId').empty();
             var selectedUnitId = $("#units option:selected").val();
-            $.post('@Url.Action("GetTermExecutions", "Task")',
+            $.post('@Url.Action("GetTermExecsWhereUserIsNotCompetentFor", "Team")',
                 {
-                    unitId: selectedUnitId
+                    id: selectedUnitId,
+                    employeeid: @Model
                 },
                 function(data) {
                     var selectedExec = $('#execId');
@@ -161,12 +173,13 @@
                 });
         });
 
-        $('#execId').change(function() {
+        $('#execId').click(function() {
             $('#taskId').empty();
             var selectedUnitId = $("#units option:selected").val();
-            $.post('@Url.Action("get", "Task")',
+            $.post('@Url.Action("GetTasksWhereUserIsNotCompetentFor", "Team")',
                 {
-                    unitId: selectedUnitId // fix deze
+                    id: selectedUnitId,
+                    employeeid: @Model
                 },
                 function(data) {
                     var selectedExec = $('#task');
@@ -179,79 +192,100 @@
         });
 
         $('#AddSectionCompetence').on('click', (function () {
-                $.ajax({
-                    url: '@Url.Action("AddSectionCompetence", "Team")',
-                    data: $('#sections').val(),// todo ,--- verander deze
-                    type: "POST",
+                var data = {
+                    id: $('#sections').val(),
+                    employeeId: @Model.ToString()
+                }
+            console.log(data);
+            $.ajax({
+                url: '@Url.Action("AddSectionCompetence", "Team")',
+                data: data,
+                    type: "GET",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function() {
                         console.log('Success!');
                         alert("Succes");
+                        location.reload();
                     },
                     error: function() {
                         console.log('Error');
-                    }
+                    }   
                 });
             })
         );
 
         $('#AddTermExecutionCompetence').on('click', (function () {
+                var data = {
+                    id: $('#execId').val(),
+                    employeeId: @Model.ToString()
+                }
+            console.log(data);
                 $.ajax({
                     url: '@Url.Action("AddUnitExecCompetence", "Team")',
-                    data: $('#execId').val(),// todo ,--- verander deze
-                    type: "POST",
+                    data: data,
+                    type: "GET",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function() {
                         console.log('Success!');
                         alert("Succes");
+                        location.reload();
                     },
                     error: function() {
                         console.log('Error');
                     }
                 });
-            })
-        );
-        $('#AddTaskCompetence').on('click', (function () {
-                $.ajax({
-                    url: '@Url.Action("AddTasksCompetence", "Team")',
-                    data: {
-                        id: $('#task').val(),
-                        employeeId: @Model.
-                    },
-                    type: "POST",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function() {
-                        console.log('Success!');
-                        alert("Succes");
-                    },
-                    error: function() {
-                        console.log('Error');
-                    }
-                });
-            })
-        );
-        $('#AddUnitCompetence').on('click', (function () {
-                $.ajax({
-                    url: '@Url.Action("AddUnitCompetence", "Team")',
-                    data: $('#units').val(),// todo ,--- verander deze
-                    type: "POST",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function() {
-                        console.log('Success!');
-                        alert("Succes");
-                    },
-                    error: function() {
-                        console.log('Error');
-                    }
-                });
-                console.log();
             })
         );
 
+        $('#AddTaskCompetence').on('click', (function () {
+                var data = {
+                    id: $('#task').val(),
+                    employeeId: @Model.ToString()
+                }
+                 console.log(data);
+                $.ajax({
+                    url: '@Url.Action("AddTasksCompetence", "Team")',
+                    data: data,
+                    type: "GET",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function() {
+                        console.log('Success!');
+                        alert("Succes");
+                        location.reload();
+                    },
+                    error: function() {
+                        console.log('Error');
+                    }
+                });
+            })
+        );
+
+        $('#AddUnitCompetence').on('click', (function () {
+            var data = {
+                id: $('#units').val(),
+                employeeId: @Model.ToString()
+            }
+            console.log(data);
+            $.ajax({
+                url: '@Url.Action("AddUnitCompetence", "Team")',
+                data: data,
+                    type: "GET",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function() {
+                        console.log('Success!');
+                        alert("Succes");
+                        location.reload();
+                    },
+                    error: function() {
+                        console.log('Error');
+                    }
+                });
+            })
+        );
 
     </script>
 

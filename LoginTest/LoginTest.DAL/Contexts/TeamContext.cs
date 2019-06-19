@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Text;
 using DAL.Contexts;
 using Models;
+using Models.Enums;
 
 namespace FHICTDeploymentSystem.DAL.Contexts
 {
@@ -222,15 +223,13 @@ namespace FHICTDeploymentSystem.DAL.Contexts
         }
 
 
-
-        //TODO maak alles hieronder bro
         public void AddSectionCompetence(int id, int employeeId)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
 
-                var sqlCommand = new SqlCommand("SetHours", connection);
+                var sqlCommand = new SqlCommand("AddSectionCompetence", connection);
                 sqlCommand.CommandType = CommandType.StoredProcedure;
                 sqlCommand.Parameters.Add(new SqlParameter("@EmployeeId", employeeId));
                 sqlCommand.Parameters.Add(new SqlParameter("@SectionId", id));
@@ -247,10 +246,10 @@ namespace FHICTDeploymentSystem.DAL.Contexts
             {
                 connection.Open();
 
-                var sqlCommand = new SqlCommand("SetHours", connection);
+                var sqlCommand = new SqlCommand("AddUnitCompetence", connection);
                 sqlCommand.CommandType = CommandType.StoredProcedure;
                 sqlCommand.Parameters.Add(new SqlParameter("@EmployeeId", employeeId));
-                sqlCommand.Parameters.Add(new SqlParameter("@SectionId", id));
+                sqlCommand.Parameters.Add(new SqlParameter("@UnitId", id));
 
                 sqlCommand.ExecuteNonQuery();
 
@@ -264,10 +263,10 @@ namespace FHICTDeploymentSystem.DAL.Contexts
             {
                 connection.Open();
 
-                var sqlCommand = new SqlCommand("SetHours", connection);
+                var sqlCommand = new SqlCommand("AddUnitExecCompetence", connection);
                 sqlCommand.CommandType = CommandType.StoredProcedure;
                 sqlCommand.Parameters.Add(new SqlParameter("@EmployeeId", employeeId));
-                sqlCommand.Parameters.Add(new SqlParameter("@SectionId", id));
+                sqlCommand.Parameters.Add(new SqlParameter("@UnitExecId", id));
 
 
                 sqlCommand.ExecuteNonQuery();
@@ -282,10 +281,10 @@ namespace FHICTDeploymentSystem.DAL.Contexts
             {
                 connection.Open();
 
-                var sqlCommand = new SqlCommand("SetHours", connection);
+                var sqlCommand = new SqlCommand("AddTaskCompetence", connection);
                 sqlCommand.CommandType = CommandType.StoredProcedure;
                 sqlCommand.Parameters.Add(new SqlParameter("@EmployeeId", employeeId));
-                sqlCommand.Parameters.Add(new SqlParameter("@SectionId", id));
+                sqlCommand.Parameters.Add(new SqlParameter("@TaskId", id));
                 sqlCommand.ExecuteNonQuery();
 
                 connection.Close();
@@ -310,5 +309,109 @@ namespace FHICTDeploymentSystem.DAL.Contexts
             }
         }
 
+        //todo from here
+
+        public List<EducationObject> GetSectionsWhereUserIsNotCompetentFor(int employeeId)
+        {
+            var returnValue = new List<EducationObject>();
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                SqlCommand cmd = new SqlCommand("GetSectionsWhereUserIsNotCompetentFor", connection) { CommandType = CommandType.StoredProcedure, };
+                cmd.Parameters.Add(new SqlParameter("@EmployeeId", employeeId));
+                var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    returnValue.Add(new EducationObject
+                    {
+                        Id = (int)reader["Id"],
+                        Name = reader["Name"]?.ToString(),
+                        EducationType = EducationType.Task
+                    });
+                }
+                reader.Close();
+                connection.Close();
+            }
+            return returnValue;
+        }
+
+        public List<EducationObject> GetUnitTermExecsWhereUserIsNotCompetentFor(int employeeId, int id)
+        {
+            var unitTermExecutions = new List<EducationObject>();
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                SqlCommand cmd = new SqlCommand("GetUnitTermExecsWhereUserIsNotCompetentFor", connection) { CommandType = CommandType.StoredProcedure, };
+                cmd.Parameters.Add(new SqlParameter("@UnitId", id));
+                cmd.Parameters.Add(new SqlParameter("@EmployeeId", employeeId));
+                var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    unitTermExecutions.Add(new EducationObject
+                    {
+                        Id = (int)reader["Id"],
+                        Name = reader["Name"]?.ToString(),
+                        EducationType = EducationType.UnitExec
+                    });
+                }
+                connection.Close();
+            }
+
+            return unitTermExecutions;
+        }
+
+        public List<EducationObject> GetUnitWhereUserIsNotCompetentFor(int employeeId, int id)
+        {
+            var returnValue = new List<EducationObject>();
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                SqlCommand cmd = new SqlCommand("GetUnitsWhereUserIsNotCompetentFor", connection) { CommandType = CommandType.StoredProcedure, };
+                cmd.Parameters.Add(new SqlParameter("@SectionId", id));
+                cmd.Parameters.Add(new SqlParameter("@EmployeeId", employeeId));
+                var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    returnValue.Add(new EducationObject
+                    {
+                        Id = (int)reader["Id"],
+                        Name = reader["Name"]?.ToString(),
+                        EducationType = EducationType.Unit
+                    });
+                }
+                reader.Close();
+                connection.Close();
+            }
+            return returnValue;
+        }
+
+        public List<EducationObject> GetTasksWhereUserIsNotCompetentFor(int employeeId, int id)
+        {
+            var returnValue = new List<EducationObject>();
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                SqlCommand cmd = new SqlCommand("GetTasksWhereUserIsNotCompetentFor", connection) { CommandType = CommandType.StoredProcedure, };
+                cmd.Parameters.Add(new SqlParameter("@UnitTermExecId", id));
+                cmd.Parameters.Add(new SqlParameter("@EmployeeId", employeeId));
+                var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    returnValue.Add(new EducationObject
+                    {
+                        Id = (int)reader["Id"],
+                        Name = reader["Name"]?.ToString(),
+                        EducationType = EducationType.Task
+                    });
+                }
+                reader.Close();
+                connection.Close();
+            }
+            return returnValue;
+        }
     }
 }

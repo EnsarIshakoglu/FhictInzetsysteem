@@ -83,5 +83,25 @@ namespace DAL
         {
             _context.AddTasksCompetence(id, employeeId);
         }
+
+        public List<EducationObject> GetSectionsWhereUserIsNotCompetentFor(int employeeId)
+        {
+            return _context.GetSectionsWhereUserIsNotCompetentFor(employeeId);
+        }
+
+        public List<EducationObject> GetTermExecsWhereUserIsNotCompetentFor(int employeeId, int id)
+        {
+            return _context.GetUnitTermExecsWhereUserIsNotCompetentFor(employeeId, id);
+        }
+
+        public List<EducationObject> GetUnitWhereUserIsNotCompetentFor(int employeeId, int id)
+        {
+            return _context.GetUnitWhereUserIsNotCompetentFor(employeeId,id);
+        }
+
+        public List<EducationObject> GetTasksWhereUserIsNotCompetentFor(int employeeId, int id)
+        {
+            return _context.GetTasksWhereUserIsNotCompetentFor(employeeId, id);
+        }
     }
 }
