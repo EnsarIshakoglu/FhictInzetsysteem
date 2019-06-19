@@ -252,7 +252,6 @@ namespace FHICTDeploymentSystem.DAL.Contexts
                 sqlCommand.Parameters.Add(new SqlParameter("@EmployeeId", employeeId));
                 sqlCommand.Parameters.Add(new SqlParameter("@SectionId", id));
 
-
                 sqlCommand.ExecuteNonQuery();
 
                 connection.Close();
@@ -287,8 +286,6 @@ namespace FHICTDeploymentSystem.DAL.Contexts
                 sqlCommand.CommandType = CommandType.StoredProcedure;
                 sqlCommand.Parameters.Add(new SqlParameter("@EmployeeId", employeeId));
                 sqlCommand.Parameters.Add(new SqlParameter("@SectionId", id));
-
-
                 sqlCommand.ExecuteNonQuery();
 
                 connection.Close();
