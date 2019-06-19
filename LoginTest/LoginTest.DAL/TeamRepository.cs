@@ -50,5 +50,43 @@ namespace DAL
         {
             _context.CreateVacancy(user);
         }
+
+        public EducationObject GetTeamMemberHours(int ID)
+        {
+            return _context.GetTeamMemberHours(ID);
+        }
+
+        public void SaveHours(User user, EducationObject hours)
+        {
+            _context.SaveHours(user, hours);
+        }
+
+        public void RemoveCompetence(int id, int employeeId)
+        {
+            _context.RemoveCompetence(id, employeeId);
+        }
+
+        public void AddSectionCompetence(int id, int employeeId)
+        {
+            _context.AddSectionCompetence(id, employeeId);
+        }
+
+
+        public void AddUnitCompetence(int id, int employeeId)
+        {
+            _context.AddUnitCompetence(id, employeeId);
+        }
+
+
+        public void AddUnitExecCompetence(int id, int employeeId)
+        {
+            _context.AddUnitExecCompetence(id, employeeId);
+        }
+
+
+        public void AddTasksCompetence(int id, int employeeId)
+        {
+            _context.AddTasksCompetence(id, employeeId);
+        }
     }
 }

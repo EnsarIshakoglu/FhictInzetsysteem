@@ -22,5 +22,12 @@ namespace DAL.Contexts
         void CreateVacancy(User user);
 
         IEnumerable<User> GetEmployeeCompetences(User _user);
+        EducationObject GetTeamMemberHours(int ID);
+        void SaveHours(User user, EducationObject hours);
+        void AddSectionCompetence(int id, int employeeId);
+        void AddUnitCompetence(int id, int employeeId);
+        void AddUnitExecCompetence(int id, int employeeId);
+        void AddTasksCompetence(int id, int employeeId);
+        void RemoveCompetence(int id, int employeeId);
     }
 }

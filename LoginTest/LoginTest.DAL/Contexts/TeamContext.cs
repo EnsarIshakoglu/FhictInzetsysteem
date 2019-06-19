@@ -139,10 +139,9 @@ namespace FHICTDeploymentSystem.DAL.Contexts
         }
 
 
+        List<EducationObject> userCompetenceList = new List<EducationObject>();
         public IEnumerable<EducationObject> GetTeamMemberCompetences(User user)
-        {
-            var userCompetenceList = new List<EducationObject>();
-
+        {     
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
@@ -158,13 +157,15 @@ namespace FHICTDeploymentSystem.DAL.Contexts
                 {
                     userCompetenceList.Add(new EducationObject
                     {
-
+                        Id = (int)reader["TaskId"],
+                        Name = (string)reader["Code"],
+                        Period = (int)reader["Period"],
+                        Description = (string)reader["Description"]
                     });
                 }
 
                 connection.Close();
             }
-
             return userCompetenceList;
         }
 
@@ -184,6 +185,49 @@ namespace FHICTDeploymentSystem.DAL.Contexts
             }
         }
 
+
+        public EducationObject GetTeamMemberHours(int ID)
+        {
+            var hours = new EducationObject();
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                var sqlCommand = new SqlCommand("GetHours", connection);
+                sqlCommand.CommandType = CommandType.StoredProcedure;
+                sqlCommand.Parameters.Add(new SqlParameter("@EmployeeId", ID));
+
+                var reader = sqlCommand.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    hours.EstimatedHours = (int)reader["HoursPeriod1"];
+                    hours.EstimatedHours2 = (int)reader["HoursPeriod2"];
+                }
+
+                connection.Close();
+            }
+            return hours;
+        }
+
+        public void SaveHours(User user, EducationObject hours)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                var sqlCommand = new SqlCommand("SetHours", connection);
+                sqlCommand.CommandType = CommandType.StoredProcedure;
+                sqlCommand.Parameters.Add(new SqlParameter("@EmployeeId", user.Id));
+                sqlCommand.Parameters.Add(new SqlParameter("@HoursPeriod1", hours.EstimatedHours));
+                sqlCommand.Parameters.Add(new SqlParameter("@HoursPeriod2", hours.EstimatedHours2));
+
+                sqlCommand.ExecuteNonQuery();
+
+                connection.Close();
+            }
+        }
+
         public int Getid(Team team)
         {
             return team.Id;
@@ -194,9 +238,5 @@ namespace FHICTDeploymentSystem.DAL.Contexts
             return team.Name;
         }
 
-        public IEnumerable<User> GetEmployeeCompetences(User _user)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

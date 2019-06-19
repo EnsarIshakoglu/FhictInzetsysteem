@@ -80,7 +80,7 @@ namespace FHICTDeploymentSystem.DAL
                 while (reader.Read())
                 {
                     userId = (int)reader["Id"];
-                    user.TeamId = (int) reader["TeamId"];
+                    user.TeamId = (int)reader["TeamId"];
                 }
                 reader.Close();
                 conn.Close();

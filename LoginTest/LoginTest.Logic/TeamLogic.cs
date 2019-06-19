@@ -47,6 +47,44 @@ namespace FHICTDeploymentSystem.Logic
             return _repo.GetTeamMemberCompetences(_user);
         }
 
+        public EducationObject GetTeamMemberHours(int ID)
+        {
+            return _repo.GetTeamMemberHours(ID);
+        }
+
+        public void SaveHours(User user, EducationObject hours)
+        {
+            _repo.SaveHours(user, hours);
+        }
+
+        public void RemoveCompetence(int id, int employeeId)
+        {
+            _repo.RemoveCompetence(id, employeeId);
+        }
+
+        public void AddSectionCompetence(int id, int employeeId)
+        {
+            _repo.AddSectionCompetence(id, employeeId);
+        }
+
+
+        public void AddUnitCompetence(int id, int employeeId)
+        {
+            _repo.AddUnitCompetence(id, employeeId);
+        }
+
+
+        public void AddUnitExecCompetence(int id, int employeeId)
+        {
+            _repo.AddUnitExecCompetence(id, employeeId);
+        }
+
+
+        public void AddTasksCompetence(int id, int employeeId)
+        {
+            _repo.AddTasksCompetence(id, employeeId);
+        }
+
         public void CreateVacancy(User user)
         {
            _repo.CreateVacancy(user);

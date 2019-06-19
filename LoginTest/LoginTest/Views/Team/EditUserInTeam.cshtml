@@ -1,4 +1,4 @@
-﻿@model FHICTDeploymentSystem.Models.User
+﻿@model TeacherModel
 
 @{
     ViewData["Title"] = "Edit User In Team";
@@ -6,47 +6,262 @@
 
 <h1>Edit User In Team</h1>
 
+
+
 <div style="padding-bottom: 70px; padding-top: 20px">
     <div class="form-style-5">
-        <form>
-            <fieldset>
-                <div class="form-group">
-                    <label asp-for="Name" class="control-label"></label>
-                    <input asp-for="Name" name="Name" placeholder="@Model.Name" readonly class="form-control" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Id" class="control-label"></label>
-                    <input asp-for="Id" name="Name" placeholder="@Model.Id" readonly class="form-control" />
-                    <span asp-validation-for="Id" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="TeamId" class="control-label"></label>
-                    <input asp-for="TeamId" name="Name" placeholder="@Model.TeamId" readonly class="form-control" />
-                    <span asp-validation-for="TeamId" class="text-danger"></span>
-                </div>
-                @*@foreach (var section in Model)
+        @*<fieldset>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" name="Name" placeholder="@Model.Name" readonly class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" name="Name" placeholder="@Model.Id" readonly class="form-control" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TeamId" class="control-label"></label>
+                <input asp-for="TeamId" name="Name" placeholder="@Model.TeamId" readonly class="form-control" />
+                <span asp-validation-for="TeamId" class="text-danger"></span>
+            </div>
+        </fieldset>*@
+        <label>Bekwaamheden:</label>
+
+        @*@foreach (var section in Model.Bewkaamheden)
         {
             var sectionId = section.Id;
             var sectionName = section.Name;
 
             <option value="@sectionId">@sectionName</option>
+            <input type="hidden" value="@sectionId">
+            <label>
+                <input checked="checked" type="checkbox" />
+                <span>@sectionName</span>
+            </label>
         }*@
-                <label>Bekwaamheden:</label>
-                <select id="period" type="text" name="field4">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                </select>
-            </fieldset>
-            <fieldset>
-                <textarea id="description" name="field8" placeholder="Description"></textarea>
-            </fieldset>
-            <input id="addButton" type="submit" value="Save" />
-        </form>
+
+        <ul class="collapsible">
+            <li>
+                <div class="collapsible-header">
+                    <i class="material-icons">arrow_drop_down_circle</i>
+                    Section
+                </div>
+                <div id="competences" class="collapsible-body">
+
+                    @if (Model.Bewkaamheden.Count() > 0)
+                    {
+                        foreach (var section in Model.Bewkaamheden)
+                        {
+                            var sectionId = section.Id;
+                            var sectionName = section.Name;
+                            <label>
+                                <input checked="checked" type="checkbox" value="@sectionId" />
+                                <span>@sectionName</span>
+                            </label>
+                        }
+                    }
+                    else
+                    {
+                        <p>No Competences</p>
+                    }
+                </div>
+            </li>
+            <li>
+                <div class="collapsible-header">
+                    <i class="material-icons">arrow_drop_down_circle</i>
+                    All preferences
+                </div>
+                <div class="collapsible-body">
+                    <p></p>
+                </div>
+            </li>
+
+            <li>
+                <div class="collapsible-header">
+                    <i class="material-icons">arrow_drop_down_circle</i>
+                    Teacher's preferences
+                </div>
+                <div class="collapsible-body">
+                    <ul id="myUL">
+                        <li>
+                            <span class="caret">Section 1</span>
+                            <ul class="nested">
+                                <li>
+                                    <span class="caret">Unit 1</span>
+                                    <ul class="nested">
+                                        <li>
+                                            <span class="caret">UnitExecutive 1</span>
+                                            <ul class="nested">
+                                                <li>Task 1</li>
+                                                <li>Task 2</li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <span class="caret">UnitExecutive 2</span>
+                                            <ul class="nested">
+                                                <li>Task 1</li>
+                                                <li>Task 2</li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <span class="caret">UnitExecutive 3</span>
+                                            <ul class="nested">
+                                                <li>Task 1</li>
+                                                <li>Task 2</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <span class="caret">Unit 2</span>
+                                    <ul class="nested">
+                                        <li>
+                                            <span class="caret">UnitExecutive 1</span>
+                                            <ul class="nested">
+                                                <li>Task 1</li>
+                                                <li>Task 2</li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <span class="caret">UnitExecutive 2</span>
+                                            <ul class="nested">
+                                                <li>Task 1</li>
+                                                <li>Task 2</li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <span class="caret">UnitExecutive 3</span>
+                                            <ul class="nested">
+                                                <li>Task 1</li>
+                                                <li>Task 2</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <span class="caret">Section 2</span>
+                            <ul class="nested">
+                                <li>
+                                    <span class="caret">Unit 1</span>
+                                    <ul class="nested">
+                                        <li>
+                                            <span class="caret">UnitExecutive 1</span>
+                                            <ul class="nested">
+                                                <li>Task 1</li>
+                                                <li>Task 2</li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <span class="caret">UnitExecutive 2</span>
+                                            <ul class="nested">
+                                                <li>Task 1</li>
+                                                <li>Task 2</li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <span class="caret">UnitExecutive 3</span>
+                                            <ul class="nested">
+                                                <li>Task 1</li>
+                                                <li>Task 2</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <span class="caret">Unit 2</span>
+                                    <ul class="nested">
+                                        <li>
+                                            <span class="caret">UnitExecutive 1</span>
+                                            <ul class="nested">
+                                                <li>Task 1</li>
+                                                <li>Task 2</li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <span class="caret">UnitExecutive 2</span>
+                                            <ul class="nested">
+                                                <li>Task 1</li>
+                                                <li>Task 2</li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <span class="caret">UnitExecutive 3</span>
+                                            <ul class="nested">
+                                                <li>Task 1</li>
+                                                <li>Task 2</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+
+        <fieldset>
+            <div class="quantity">
+                <span>Hours period 1</span><br />
+                <input type="text" value="@Model.Uren.EstimatedHours"><br />
+                <span>Hours period 2</span>
+                <input type="text" value="@Model.Uren.EstimatedHours2">
+            </div>
+        </fieldset>
+        <input onclick="SaveSettings()" id="addButton" type="submit" value="Save" />
+        <button class="btn-voorkeur"><a asp-area="" asp-controller="Team" asp-action="AddCompetences">Add</a></button>
     </div>
 </div>
-    <style type="text/css" >
+
+
+<style type="text/css">
+    ul, #myUL {
+        list-style-type: none;
+    }
+
+    #myUL {
+        margin: 0;
+        padding: 0;
+    }
+
+    .caret {
+        cursor: pointer;
+        -webkit-user-select: none; /* Safari 3.1+ */
+        -moz-user-select: none; /* Firefox 2+ */
+        -ms-user-select: none; /* IE 10+ */
+        user-select: none;
+    }
+
+        .caret::before {
+            content: "\25B6";
+            color: black;
+            display: inline-block;
+            margin-right: 6px;
+        }
+
+    .caret-down::before {
+        -ms-transform: rotate(90deg); /* IE 9 */
+        -webkit-transform: rotate(90deg); /* Safari */
+        ' transform: rotate(90deg);
+    }
+
+    .nested {
+        display: none;
+    }
+
+    .active {
+        display: block;
+    }
+
+
+    .period {
+        width: 5.5em;
+    }
+
     .form-style-5 {
         max-width: 500px;
         padding: 10px 20px;
@@ -58,91 +273,137 @@
         font-family: Georgia, "Times New Roman", Times, serif;
     }
 
-    .form-style-5 fieldset {
-        border: none;
-    }
-
-    .form-style-5 legend {
-        font-size: 1.4em;
-        margin-bottom: 10px;
-    }
-
-    .form-style-5 label {
-        display: block;
-        margin-bottom: 8px;
-    }
-
-    .form-style-5 input[type="text"],
-    .form-style-5 input[type="date"],
-    .form-style-5 input[type="datetime"],
-    .form-style-5 input[type="email"],
-    .form-style-5 input[type="number"],
-    .form-style-5 input[type="search"],
-    .form-style-5 input[type="time"],
-    .form-style-5 input[type="url"],
-    .form-style-5 textarea,
-    .form-style-5 select {
-        font-family: Georgia, "Times New Roman", Times, serif;
-        background: rgba(255,255,255,.1);
-        border: none;
-        border-radius: 4px;
-        font-size: 15px;
-        margin: 0;
-        outline: 0;
-        padding: 10px;
-        width: 100%;
-        box-sizing: border-box;
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        background-color: #e8eeef;
-        color: #8a97a0;
-        -webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
-        box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
-        margin-bottom: 30px;
-    }
-
-        .form-style-5 input[type="text"]:focus,
-        .form-style-5 input[type="date"]:focus,
-        .form-style-5 input[type="datetime"]:focus,
-        .form-style-5 input[type="email"]:focus,
-        .form-style-5 input[type="number"]:focus,
-        .form-style-5 input[type="search"]:focus,
-        .form-style-5 input[type="time"]:focus,
-        .form-style-5 input[type="url"]:focus,
-        .form-style-5 textarea:focus,
-        .form-style-5 select:focus {
-            background: #d2d9dd;
+        .form-style-5 fieldset {
+            border: none;
         }
 
-    .form-style-5 select {
-        -webkit-appearance: menulist-button;
-        height: 35px;
-    }
-
-    .form-style-5 input[type="submit"],
-    .form-style-5 input[type="button"] {
-        position: relative;
-        display: block;
-        padding: 19px 39px 18px 39px;
-        color: #FFF;
-        margin: 0 auto;
-        background: #663366;
-        font-size: 18px;
-        text-align: center;
-        font-style: normal;
-        width: 100%;
-        border: 1px solid #663366;
-        border-width: 1px 1px 3px;
-        margin-bottom: 10px;
-    }
-
-        .form-style-5 input[type="submit"]:hover,
-        .form-style-5 input[type="button"]:hover {
-            background: #e40086;
+        .form-style-5 legend {
+            font-size: 1.4em;
+            margin-bottom: 10px;
         }
+
+        .form-style-5 label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .form-style-5 input[type="text"],
+        .form-style-5 input[type="date"],
+        .form-style-5 input[type="datetime"],
+        .form-style-5 input[type="email"],
+        .form-style-5 input[type="number"],
+        .form-style-5 input[type="search"],
+        .form-style-5 input[type="time"],
+        .form-style-5 input[type="url"],
+        .form-style-5 textarea,
+        .form-style-5 select {
+            font-family: Georgia, "Times New Roman", Times, serif;
+            background: rgba(255,255,255,.1);
+            border: none;
+            border-radius: 4px;
+            font-size: 15px;
+            margin: 0;
+            outline: 0;
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            background-color: #e8eeef;
+            color: #8a97a0;
+            -webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+            box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+            margin-bottom: 30px;
+        }
+
+            .form-style-5 input[type="text"]:focus,
+            .form-style-5 input[type="date"]:focus,
+            .form-style-5 input[type="datetime"]:focus,
+            .form-style-5 input[type="email"]:focus,
+            .form-style-5 input[type="number"]:focus,
+            .form-style-5 input[type="search"]:focus,
+            .form-style-5 input[type="time"]:focus,
+            .form-style-5 input[type="url"]:focus,
+            .form-style-5 textarea:focus,
+            .form-style-5 select:focus {
+                background: #d2d9dd;
+            }
+
+        .form-style-5 select {
+            -webkit-appearance: menulist-button;
+            height: 250px;
+        }
+
+        .form-style-5 input[type="submit"],
+        .form-style-5 input[type="button"] {
+            position: relative;
+            display: block;
+            padding: 19px 39px 18px 39px;
+            color: #FFF;
+            margin: 0 auto;
+            background: #663366;
+            font-size: 18px;
+            text-align: center;
+            font-style: normal;
+            width: 100%;
+            border: 1px solid #663366;
+            border-width: 1px 1px 3px;
+            margin-bottom: 10px;
+        }
+
+            .form-style-5 input[type="submit"]:hover,
+            .form-style-5 input[type="button"]:hover {
+                background: #e40086;
+            }
 </style>
+
+
+
+<script>
+    var toggler = document.getElementsByClassName("caret");
+    var i;
+
+    for (i = 0; i < toggler.length; i++) {
+        toggler[i].addEventListener("click", function () {
+            this.parentElement.querySelector(".nested").classList.toggle("active");
+            this.classList.toggle("caret-down");
+        });
+    }
+</script>
 @section Scripts {
 
-  
+    <script>
+        function SaveSettings() {
+            var idsToDelete = [];
+            $('input[type="checkbox"]').each(function() {
+                if (!$(this).is(':checked')) {
+                    idsToDelete.push(($(this).val()));
+                }
+            });
+            console.log(idsToDelete);
+            var q = JSON.stringify(idsToDelete);
+            console.log("En nu q : " + q);
+            if (idsToDelete.length > 0) {
+                $.ajax({
+                    url: '@Url.Action("RemoveCompetence", "Team")',
+                    data: {
+                        jsonding: q, //TODO FIX DEZE
+                        employeeId: @Model.ID
+                    },
+                    type: "GET",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function() {
+                        console.log('Success!');
+                        //TODO reload page vind code idk
+                    },
+                    error: function() {
+                        alert('Unsuccesfull');
+                    }
+                });
+            }
+        };
+    </script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
 }

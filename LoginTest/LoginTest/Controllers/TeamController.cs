@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 using FHICTDeploymentSystem.Logic;
 using FHICTDeploymentSystem.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
+using Newtonsoft.Json;
 
 namespace FHICTDeploymentSystem.Controllers
 {
     public class TeamController : Controller
     {
-        private readonly TeamLogic _teamLogic = new TeamLogic(); 
+        private readonly TeamLogic _teamLogic = new TeamLogic();
+        private readonly PreferenceLogic _preferenceLogic = new PreferenceLogic();
 
         [HttpGet]
         public IActionResult ManageTeam()
@@ -63,8 +66,66 @@ namespace FHICTDeploymentSystem.Controllers
         
         public IActionResult EditUserInTeam(User user)
         {
-            _teamLogic.GetTeamMemberCompetences(user);
-            return View(user);
+            var Model = new TeacherModel();
+            Model.ID = user.Id;
+            Model.Bewkaamheden = _teamLogic.GetTeamMemberCompetences(user);
+            Model.Uren = _teamLogic.GetTeamMemberHours(user.Id);
+            return View(Model);
+        }
+
+        public IActionResult SaveHours([FromBody]User user, EducationObject hours)
+        {
+            user.Id = 1;
+            hours.EstimatedHours = 5;
+            hours.EstimatedHours2 = 5;
+            _teamLogic.SaveHours(user, hours);
+            return View();
+        }
+
+        public IActionResult RemoveCompetence(string jsonding, int employeeId)
+        {
+            int[] idArray = JsonConvert.DeserializeObject<int[]>(jsonding);
+            foreach (int id in idArray)
+            {
+                _teamLogic.RemoveCompetence(id, employeeId);
+            }
+            return new JsonResult(new { message = "Succes"});
+        }
+
+        [HttpPost]
+        public IActionResult AddSectionCompetence(int id, int employeeId)
+        {
+            _teamLogic.AddSectionCompetence(id, employeeId);
+            return new JsonResult(new { message = "Succesfully added all tasks in section to competences" });
+        }
+
+
+        [HttpPost]
+        public IActionResult AddUnitCompetence(int id, int employeeId)
+        {
+            _teamLogic.AddUnitCompetence(id, employeeId);
+            return new JsonResult(new { message = "Succesfully added all tasks in Unit competences" });
+        }
+
+
+        [HttpPost]
+        public IActionResult AddUnitExecCompetence(int id, int employeeId)
+        {
+            _teamLogic.AddUnitExecCompetence(id, employeeId);
+            return new JsonResult(new { message = "Succesfully added all tasks in UnitExec competences" });
+        }
+
+
+        [HttpPost]
+        public IActionResult AddTasksCompetence(int id, int employeeId)
+        {
+            _teamLogic.AddTasksCompetence(id, employeeId);
+            return new JsonResult(new { message = "Succesfully added task to competences" });
+        }
+
+        public IActionResult AddCompetences()
+        {
+            return View(_preferenceLogic.GetAllSections());
         }
 
         public IActionResult CreateVacancy(User user)
