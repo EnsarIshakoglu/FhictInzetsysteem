@@ -63,7 +63,7 @@ namespace FHICTDeploymentSystem.Controllers
         
         public IActionResult EditUserInTeam(User user)
         {
-            _teamLogic.GetEmployeeCompetences(user);
+            _teamLogic.GetTeamMemberCompetences(user);
             return View(user);
         }
 

@@ -42,10 +42,9 @@ namespace FHICTDeploymentSystem.Logic
             return _repo.GetAllUserNoTeam(_user);
         }
 
-        public IEnumerable<User> GetEmployeeCompetences(User _user)
+        public IEnumerable<EducationObject> GetTeamMemberCompetences(User _user)
         {
-            return _repo.GetEmployeeCompetences(_user);
-
+            return _repo.GetTeamMemberCompetences(_user);
         }
 
         public void CreateVacancy(User user)
