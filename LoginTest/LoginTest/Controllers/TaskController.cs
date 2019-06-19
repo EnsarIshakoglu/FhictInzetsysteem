@@ -87,6 +87,14 @@ namespace FHICTDeploymentSystem.Controllers
             return View("ActualEditTask", task);
         }
 
-    
+        [HttpGet]
+        public IActionResult AssignedEmployeeTasks()
+        {
+            var userId = Convert.ToInt32(User.Identity.Name);
+            var assignedTasks = _taskLogic.GetEmployeeAssignedTasks(userId);
+
+            return View(assignedTasks);
+        }
+
     }
 }

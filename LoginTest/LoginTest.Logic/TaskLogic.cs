@@ -34,5 +34,10 @@ namespace Logic
         {
             return _repo.GetTaskById(task);
         }
+
+        public IEnumerable<EducationObject> GetEmployeeAssignedTasks(int empId)
+        {
+            return _repo.GetEmployeeAssignedTasks(empId);
+        }
     }
 }

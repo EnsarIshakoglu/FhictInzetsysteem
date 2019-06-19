@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
@@ -11,7 +12,6 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using System;
 
 namespace Controllers
 {
@@ -51,27 +51,13 @@ namespace Controllers
             return View();
 
         }
-        
-        public IActionResult Profile()
-        {
-            return View();
-        }
-
-        public IActionResult MyTasks()
-        {
-            return View();
-        }
-
-        public IActionResult TeamBeheren()
-        {
-            return View();
-        }
 
         [HttpGet]
-        public IActionResult SetPreference()
+        public IActionResult Profile()
         {
-
-            return RedirectToAction("Index", "Preference");
+            var userId = Convert.ToInt32(User.Identity.Name);
+            var user = _userLogic.GetAllEmployeeData(userId);
+            return View(user);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -96,9 +82,8 @@ namespace Controllers
             foreach (string role in roles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));
-                
             }
-            claims.Add(new Claim(ClaimTypes.Sid, user.TeamId.ToString()));
+
             claims.Add(new Claim(ClaimTypes.Name, userId.ToString()));
 
             ClaimsPrincipal principal = new ClaimsPrincipal(new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme));

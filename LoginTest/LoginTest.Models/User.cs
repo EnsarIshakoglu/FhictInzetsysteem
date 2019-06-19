@@ -15,7 +15,7 @@ namespace Models
         [Required(ErrorMessage = "Username field is required!")]
         public string Username { get; set; }
         public string Name { get; set; }
-        public int Id { get; set; }
+        public string Abbreviation { get; set; }
         public int TeamId { get; set; }
     }
 }

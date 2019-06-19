@@ -29,5 +29,10 @@ namespace DAL
         {
             return _context.GetUserId(user);
         }
+
+        public User GetAllEmployeeData(int userId)
+        {
+            return _context.GetAllEmployeeData(userId);
+        }
     }
 }

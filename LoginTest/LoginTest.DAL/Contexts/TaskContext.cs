@@ -137,5 +137,39 @@ namespace DAL.Contexts
             return returnValue;
         }
 
+        public IEnumerable<EducationObject> GetEmployeeAssignedTasks(int empId)
+        {
+            var assignedTasks = new List<EducationObject>();
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                SqlCommand cmd = new SqlCommand("GetEmployeeAssignedTasks", connection) { CommandType = CommandType.StoredProcedure, };
+
+                cmd.Parameters.Add(new SqlParameter("@EmployeeId", empId));
+
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    assignedTasks.Add(new EducationObject
+                    {
+                        Id = (int)reader["Id"],
+                        Name = reader["Code"]?.ToString(),
+                        Description = reader["Description"]?.ToString(),
+                        EducationType = EducationType.Task,
+                        Factor = (int)reader["Factor"],
+                        EstimatedHours = (int)reader["Hours"],
+                        Period = (int)reader["Period"],
+                        Explanation = reader["Explanation"]?.ToString()
+                    });
+                }
+                reader.Close();
+                connection.Close();
+            }
+
+            return assignedTasks;
+        }
     }
 }

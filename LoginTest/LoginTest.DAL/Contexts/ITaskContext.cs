@@ -10,6 +10,7 @@ namespace DAL.Contexts
         void RemoveTask(EducationObject toRemoveTask);
         void UpdateTask(EducationObject task);
         EducationObject GetTaskById(EducationObject task);
+        IEnumerable<EducationObject> GetEmployeeAssignedTasks(int empId);
 
     }
 }
