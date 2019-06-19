@@ -140,7 +140,7 @@
 
 @section Scripts
     {
-    <script>
+    @*<script>
         $(document).ready(function() {
             $('#period').val('@Model.Period');
         });
@@ -162,20 +162,20 @@
 
             window.location.href = url.replace("__a__", JSON.stringify(taskToEdit));
             return false;
-//            $.ajax({
-//                url: '',
-//                data: JSON.stringify(taskToEdit),
-//                type: "POST",
-//                contentType: "application/json; charset=utf-8",
-//                dataType: "json",
-//                success: function () {
-//                    window.location.reload();
-//                },
-//                error: function() {
-//                    console.log('Error');
-//                }
-//            });
+            $.ajax({
+                url: '',
+                data: JSON.stringify(taskToEdit),
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function () {
+                    window.location.reload();
+                },
+                error: function() {
+                    console.log('Error');
+                }
+            });
         });
-    </script>
+    </script>*@
 
 }

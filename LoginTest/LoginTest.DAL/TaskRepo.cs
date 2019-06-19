@@ -38,5 +38,10 @@ namespace DAL
         {
             return _context.GetTaskById(task);
         }
+
+        public IEnumerable<EducationObject> GetEmployeeAssignedTasks(int empId)
+        {
+            return _context.GetEmployeeAssignedTasks(empId);
+        }
     }
 }

@@ -60,6 +60,7 @@ namespace Controllers
         {
             return View();
         }
+
         [HttpGet]
         public IActionResult SetPreference()
         {
