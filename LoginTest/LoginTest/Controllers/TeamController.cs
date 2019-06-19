@@ -123,9 +123,11 @@ namespace FHICTDeploymentSystem.Controllers
             return new JsonResult(new { message = "Succesfully added task to competences" });
         }
 
-        public IActionResult AddCompetences()
+        public IActionResult AddCompetences(int id)
         {
-            return View(_preferenceLogic.GetAllSections());
+            User user = new User();
+            
+            return View(id);
         }
 
     }
