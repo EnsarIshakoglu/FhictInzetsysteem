@@ -1,4 +1,4 @@
-﻿@model FHICTDeploymentSystem.Models.TeacherModel
+﻿@model TeacherModel
 
 @{
     ViewData["Title"] = "Edit User In Team";
@@ -213,7 +213,7 @@
             </div>
         </fieldset>
         <input onclick="SaveSettings()" id="addButton" type="submit" value="Save" />
-        <button class="btn-voorkeur"><a asp-area="" asp-controller="Team" asp-action="AddCompetences">Add</a></button>
+        <button class="btn-voorkeur"><a asp-area="" asp-controller="Team" asp-action="AddCompetences" asp-route-id="">Add</a></button>
     </div>
 </div>
 
@@ -246,6 +246,7 @@
     .caret-down::before {
         -ms-transform: rotate(90deg); /* IE 9 */
         -webkit-transform: rotate(90deg); /* Safari */
+        -transform: rotate(90deg);
     }
 
     .nested {
