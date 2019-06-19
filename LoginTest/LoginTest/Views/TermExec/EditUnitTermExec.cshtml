@@ -142,14 +142,14 @@
     {
     <script>
         $(document).ready(function() {
-            $('#period').val('@Model.Period');
+            $('#period').val('@Model');
         });
 
         $('#EditButton').click(function () {
             /*alert("Success");*/
             console.log('bbbbbbbbbbbbbbbbb');
             var termExecToEdit = {
-                "Id": @Model.Id,
+                "Id": @Model,
                 "Period": $("#period option:selected").val(),
                 "EstimatedHours": $("#hours").val(),
                 "Explanation": $("#explanation").val(),

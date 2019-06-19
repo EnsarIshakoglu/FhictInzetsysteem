@@ -5,8 +5,10 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using FHICTDeploymentSystem.Logic;
 using FHICTDeploymentSystem.Models;
+using Logic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
+using Models;
 using Newtonsoft.Json;
 
 namespace FHICTDeploymentSystem.Controllers

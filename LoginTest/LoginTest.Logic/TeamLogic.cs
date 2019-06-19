@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using DAL;
 using FHICTDeploymentSystem.DAL;
-using FHICTDeploymentSystem.Models;
+using Models;
 
 namespace FHICTDeploymentSystem.Logic
 {

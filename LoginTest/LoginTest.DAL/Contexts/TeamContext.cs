@@ -4,7 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 using DAL.Contexts;
-using FHICTDeploymentSystem.Models;
+using Models;
 
 namespace FHICTDeploymentSystem.DAL.Contexts
 {
