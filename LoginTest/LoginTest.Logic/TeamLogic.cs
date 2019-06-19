@@ -84,5 +84,25 @@ namespace FHICTDeploymentSystem.Logic
         {
             _repo.AddTasksCompetence(id, employeeId);
         }
+
+        public List<EducationObject> GetSectionsWhereUserIsNotCompetentFor(int employeeId)
+        {
+            return _repo.GetSectionsWhereUserIsNotCompetentFor(employeeId);
+        }
+
+        public List<EducationObject> GetTermExecsWhereUserIsNotCompetentFor(int employeeId, int id)
+        {
+            return _repo.GetTermExecsWhereUserIsNotCompetentFor(employeeId,id);
+        }
+
+        public List<EducationObject> GetUnitWhereUserIsNotCompetentFor(int employeeId,int id)
+        {
+            return _repo.GetUnitWhereUserIsNotCompetentFor(employeeId,id);
+        }
+
+        public List<EducationObject> GetTasksWhereUserIsNotCompetentFor(int employeeId, int id)
+        {
+            return _repo.GetTasksWhereUserIsNotCompetentFor(employeeId,id);
+        }
     }
 }

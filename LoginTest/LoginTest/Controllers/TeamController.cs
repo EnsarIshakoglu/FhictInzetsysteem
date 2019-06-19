@@ -94,7 +94,6 @@ namespace FHICTDeploymentSystem.Controllers
             return new JsonResult(new { message = "Succes"});
         }
 
-        [HttpPost]
         public IActionResult AddSectionCompetence(int id, int employeeId)
         {
             _teamLogic.AddSectionCompetence(id, employeeId);
@@ -102,7 +101,6 @@ namespace FHICTDeploymentSystem.Controllers
         }
 
 
-        [HttpPost]
         public IActionResult AddUnitCompetence(int id, int employeeId)
         {
             _teamLogic.AddUnitCompetence(id, employeeId);
@@ -110,7 +108,6 @@ namespace FHICTDeploymentSystem.Controllers
         }
 
 
-        [HttpPost]
         public IActionResult AddUnitExecCompetence(int id, int employeeId)
         {
             _teamLogic.AddUnitExecCompetence(id, employeeId);
@@ -118,7 +115,6 @@ namespace FHICTDeploymentSystem.Controllers
         }
 
 
-        [HttpPost]
         public IActionResult AddTasksCompetence(int id, int employeeId)
         {
             _teamLogic.AddTasksCompetence(id, employeeId);
@@ -132,5 +128,31 @@ namespace FHICTDeploymentSystem.Controllers
             return View(id);
         }
 
+        public IActionResult GetSectionsWhereUserIsNotCompetentFor(int employeeId)
+        {
+            return Json(_teamLogic.GetSectionsWhereUserIsNotCompetentFor(employeeId));
+        }
+
+        public IActionResult GetTermExecsWhereUserIsNotCompetentFor(int employeeId,int id)
+        {
+            return Json(_teamLogic.GetTermExecsWhereUserIsNotCompetentFor(employeeId,id));
+        }
+
+        public IActionResult GetUnitWhereUserIsNotCompetentFor(int employeeId,int id)
+        {
+            return Json(_teamLogic.GetUnitWhereUserIsNotCompetentFor(employeeId,id));
+        }
+
+        public IActionResult GetTasksWhereUserIsNotCompetentFor(int employeeId, int id)
+        {
+            return Json(_teamLogic.GetTasksWhereUserIsNotCompetentFor(employeeId,id));
+        }
+
+
+        [HttpPost]
+        public IActionResult GetAllSections()
+        {
+            return Json(_preferenceLogic.GetAllSections());
+        }
     }
 }
