@@ -9,5 +9,6 @@ namespace DAL.Contexts
         void DeleteTermExec(EducationObject termExec);
         void EditTermExec(EducationObject termExec);
         IEnumerable<EducationObject> GetAllTermExecs();
+        EducationObject GetUnitTermExecFromId(int unitTermExecId);
     }
 }

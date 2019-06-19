@@ -26,5 +26,9 @@ namespace Logic
         {
             return _repo.GetAllTermExecs();
         }
+        public EducationObject GetUnitTermExecFromId(int unitTermExecId)
+        {
+            return _repo.GetUnitTermExecFromId(unitTermExecId);
+        }
     }
 }

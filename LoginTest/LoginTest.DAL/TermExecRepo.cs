@@ -32,5 +32,10 @@ namespace DAL
         {
             return _context.GetAllTermExecs();
         }
+
+        public EducationObject GetUnitTermExecFromId(int unitTermExecId)
+        {
+            return _context.GetUnitTermExecFromId(unitTermExecId);
+        }
     }
 }
