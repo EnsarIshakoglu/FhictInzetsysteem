@@ -28,5 +28,10 @@ namespace Logic
         {
             return _userRepository.GetUserId(user);
         }
+
+        public User GetAllEmployeeData(int userId)
+        {
+            return _userRepository.GetAllEmployeeData(userId);
+        }
     }
 }

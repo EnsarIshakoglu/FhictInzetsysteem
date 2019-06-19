@@ -15,7 +15,6 @@ namespace Models
         public IEnumerable<EducationObject> Competences { get; set; }
         public int[] OpenHours { get; set; }
         public int[] MaxOvertime { get; set; }
-        public int[] AssignedHours { get; set; }
         public int Points { get; set; } = 0;
         public IEnumerable<EducationObject> AssignedTasks { get; set; }
     }

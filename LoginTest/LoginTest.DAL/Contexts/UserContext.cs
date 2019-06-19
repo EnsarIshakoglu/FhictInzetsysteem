@@ -87,5 +87,33 @@ namespace DAL.Contexts
 
             return userId;
         }
+
+        public User GetAllEmployeeData(int userId)
+        {
+            var user = new User();
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                var command = new SqlCommand("GetAllEmployeeData", conn) { CommandType = CommandType.StoredProcedure };
+
+                command.Parameters.Add(new SqlParameter("@EmployeeId", userId));
+
+                var reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    user.Name = (string)reader["Name"];
+                    user.Abbreviation = (string)reader["Abbreviation"];
+                    user.Username = (string) reader["Username"];
+                    user.TeamId = (int) reader["TeamId"];
+                }
+                reader.Close();
+                conn.Close();
+            }
+
+            return user;
+        }
     }
 }

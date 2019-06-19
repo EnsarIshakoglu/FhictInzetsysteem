@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
@@ -50,22 +51,13 @@ namespace Controllers
             return View();
 
         }
-        
-        public IActionResult Profile()
-        {
-            return View();
-        }
-
-        public IActionResult MyTasks()
-        {
-            return View();
-        }
 
         [HttpGet]
-        public IActionResult SetPreference()
+        public IActionResult Profile()
         {
-
-            return RedirectToAction("Index", "Preference");
+            var userId = Convert.ToInt32(User.Identity.Name);
+            var user = _userLogic.GetAllEmployeeData(userId);
+            return View(user);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

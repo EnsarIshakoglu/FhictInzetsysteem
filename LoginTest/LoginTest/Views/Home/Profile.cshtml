@@ -1,4 +1,7 @@
 ﻿@using Models.Enums
+@using Models
+@model User
+
 @{
     ViewData["Title"] = "Profile";
 }
@@ -68,12 +71,11 @@
                                     </div>
                                     <div class="col s12 m8 l9">
                                         <div class="about-inner-right">
-                                            <h3>Name, Surname</h3>
+                                            <h3>@Model.Abbreviation, @Model.Name</h3>
                                             <div class="personal-information col s12 m12 l6">
                                                 <ul>
-                                                    <li><span>Mobile Number : </span>+31 61254689</li>
-                                                    <li><span>Email : </span>John@gmail.com</li>
-                                                    <li><span>Team : </span>team 1</li>
+                                                    <li><span>Email : </span>@Model.Username</li>
+                                                    <li><span>Team : </span>@Model.TeamId</li>
                                                 </ul>
                                             </div>
                                         </div>
