@@ -149,8 +149,8 @@ namespace FHICTDeploymentSystem.DAL.Contexts
 
                 var sqlCommand = new SqlCommand("GetTeamMemberCompetences", connection);
                 sqlCommand.CommandType = CommandType.StoredProcedure;
-                sqlCommand.Parameters.Add(new SqlParameter("@TeamId", _user.TeamId));
-                sqlCommand.Parameters.Add(new SqlParameter("@UserId", _user.Id));
+                sqlCommand.Parameters.Add(new SqlParameter("@TeamId", user.TeamId));
+                sqlCommand.Parameters.Add(new SqlParameter("@UserId", user.Id));
 
                 var reader = sqlCommand.ExecuteReader();
 
@@ -170,6 +170,7 @@ namespace FHICTDeploymentSystem.DAL.Contexts
 
         public void CreateVacancy(User user)
         {
+            user.Name += "vac_";
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
@@ -177,6 +178,7 @@ namespace FHICTDeploymentSystem.DAL.Contexts
                 var sqlCommand = new SqlCommand("CreateVacancy", connection);
                 sqlCommand.CommandType = CommandType.StoredProcedure;
                 sqlCommand.Parameters.Add(new SqlParameter("@teamid", user.TeamId));
+                sqlCommand.Parameters.Add(new SqlParameter("@name", user.Name));
                 sqlCommand.ExecuteNonQuery();
                 connection.Close();
             }
@@ -192,5 +194,9 @@ namespace FHICTDeploymentSystem.DAL.Contexts
             return team.Name;
         }
 
+        public IEnumerable<User> GetEmployeeCompetences(User _user)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
