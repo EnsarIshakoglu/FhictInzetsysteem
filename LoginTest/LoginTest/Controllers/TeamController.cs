@@ -75,22 +75,20 @@ namespace FHICTDeploymentSystem.Controllers
             return View(Model);
         }
 
-        public IActionResult SaveHours([FromBody]User user, EducationObject hours)
+        public void SaveHours(int employeeId, int hoursP1, int hoursP2)
         {
-            user.Id = 1;
-            hours.EstimatedHours = 5;
-            hours.EstimatedHours2 = 5;
-            _teamLogic.SaveHours(user, hours);
-            return View();
+            _teamLogic.SaveHours(employeeId, hoursP1, hoursP2);
         }
 
-        public IActionResult RemoveCompetence(string jsonding, int employeeId)
+        public IActionResult EditUserInfo(string jsonding, int employeeId)
         {
             int[] idArray = JsonConvert.DeserializeObject<int[]>(jsonding);
             foreach (int id in idArray)
             {
                 _teamLogic.RemoveCompetence(id, employeeId);
             }
+            
+
             return new JsonResult(new { message = "Succes"});
         }
 

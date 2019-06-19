@@ -51,9 +51,9 @@ namespace DAL
             return _context.GetTeamMemberHours(ID);
         }
 
-        public void SaveHours(User user, EducationObject hours)
+        public void SaveHours(int empId, int hoursP1, int hoursP2)
         {
-            _context.SaveHours(user, hours);
+            _context.SaveHours(empId, hoursP1, hoursP2);
         }
 
         public void RemoveCompetence(int id, int employeeId)

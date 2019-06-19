@@ -52,9 +52,9 @@ namespace FHICTDeploymentSystem.Logic
             return _repo.GetTeamMemberHours(ID);
         }
 
-        public void SaveHours(User user, EducationObject hours)
+        public void SaveHours(int empId, int hoursP1, int hoursP2)
         {
-            _repo.SaveHours(user, hours);
+            _repo.SaveHours(empId, hoursP1, hoursP2);
         }
 
         public void RemoveCompetence(int id, int employeeId)

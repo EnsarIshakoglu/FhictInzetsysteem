@@ -122,7 +122,7 @@
         $(document).ready(function() {
             $.post('@Url.Action("GetSectionsWhereUserIsNotCompetentFor", "Team")',
                 {
-                    employeeid: '@Model'
+                    employeeId: '@Model'
                 },
                 function(data) {
                     var selectedExec = $('#sections');
@@ -142,7 +142,7 @@
             $.post('@Url.Action("GetUnitWhereUserIsNotCompetentFor", "Team")',
                 {
                     id: selectedSectionId,
-                    employeeid: @Model
+                    employeeId: @Model
                 },
                 function(data) {
                     var selectedUnit = $('#units');
@@ -161,7 +161,7 @@
             $.post('@Url.Action("GetTermExecsWhereUserIsNotCompetentFor", "Team")',
                 {
                     id: selectedUnitId,
-                    employeeid: @Model
+                    employeeId: @Model
                 },
                 function(data) {
                     var selectedExec = $('#execId');
@@ -174,19 +174,19 @@
         });
 
         $('#execId').click(function() {
-            $('#taskId').empty();
-            var selectedUnitId = $("#units option:selected").val();
+            $('#task').empty();
+            var selectedUnitId = $("#execId option:selected").val();
             $.post('@Url.Action("GetTasksWhereUserIsNotCompetentFor", "Team")',
                 {
                     id: selectedUnitId,
-                    employeeid: @Model
+                    employeeId: @Model
                 },
                 function(data) {
                     var selectedExec = $('#task');
                     data.forEach(function(exec) {
                         selectedExec.append($("<option></option>")
                             .attr("value", exec.id)
-                            .text(exec.name));
+                            .text("Period: " + exec.period + " | " + exec.name + ": " + exec.description));
                     });
                 });
         });

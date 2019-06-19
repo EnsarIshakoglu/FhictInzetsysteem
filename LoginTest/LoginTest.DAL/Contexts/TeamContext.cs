@@ -194,7 +194,7 @@ namespace FHICTDeploymentSystem.DAL.Contexts
             return hours;
         }
 
-        public void SaveHours(User user, EducationObject hours)
+        public void SaveHours(int empId, int hoursP1, int hoursP2)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -202,9 +202,9 @@ namespace FHICTDeploymentSystem.DAL.Contexts
 
                 var sqlCommand = new SqlCommand("SetHours", connection);
                 sqlCommand.CommandType = CommandType.StoredProcedure;
-                sqlCommand.Parameters.Add(new SqlParameter("@EmployeeId", user.Id));
-                sqlCommand.Parameters.Add(new SqlParameter("@HoursPeriod1", hours.EstimatedHours));
-                sqlCommand.Parameters.Add(new SqlParameter("@HoursPeriod2", hours.EstimatedHours2));
+                sqlCommand.Parameters.Add(new SqlParameter("@EmployeeId", empId));
+                sqlCommand.Parameters.Add(new SqlParameter("@HoursPeriod1", hoursP1));
+                sqlCommand.Parameters.Add(new SqlParameter("@HoursPeriod2", hoursP2));
 
                 sqlCommand.ExecuteNonQuery();
 
@@ -300,7 +300,7 @@ namespace FHICTDeploymentSystem.DAL.Contexts
                 var sqlCommand = new SqlCommand("DeleteCompetence", connection);
                 sqlCommand.CommandType = CommandType.StoredProcedure;
                 sqlCommand.Parameters.Add(new SqlParameter("@EmployeeId", employeeId));
-                sqlCommand.Parameters.Add(new SqlParameter("@SectionId", id));
+                sqlCommand.Parameters.Add(new SqlParameter("@TaskId", id));
 
 
                 sqlCommand.ExecuteNonQuery();
@@ -405,6 +405,8 @@ namespace FHICTDeploymentSystem.DAL.Contexts
                     {
                         Id = (int)reader["Id"],
                         Name = reader["Name"]?.ToString(),
+                        Description = reader["Description"]?.ToString(),
+                        Period = (int)reader["Period"],
                         EducationType = EducationType.Task
                     });
                 }
