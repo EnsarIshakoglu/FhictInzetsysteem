@@ -228,6 +228,7 @@ namespace DAL.Contexts
                         Id = (int)reader["TaskId"],
                         Name = (string)reader["Code"],
                         Period = (int)reader["Period"],
+                        Description = reader["Description"]?.ToString(),
                         EstimatedHours = (int)reader["EstimatedHours"],
                         Factor = (int)reader["LeftOverCount"]
                     });
