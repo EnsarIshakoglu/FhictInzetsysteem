@@ -107,7 +107,7 @@ namespace DAL.Contexts
                     user.Name = (string)reader["Name"];
                     user.Abbreviation = (string)reader["Abbreviation"];
                     user.Username = (string) reader["Username"];
-                    user.TeamId = (int) reader["TeamId"];
+                    user.TeamId = (reader["TeamId"] as int?).GetValueOrDefault();
                 }
                 reader.Close();
                 conn.Close();
