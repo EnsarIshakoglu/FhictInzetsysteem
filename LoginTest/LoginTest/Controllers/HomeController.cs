@@ -29,7 +29,11 @@ namespace Controllers
         [AllowAnonymous]
         public IActionResult Index()
         {
-            return User.Identity.IsAuthenticated ? View("Profile") : View();
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Profile");
+            }
+            return View();
         }
 
         [HttpPost]
@@ -45,7 +49,7 @@ namespace Controllers
             if (_userLogic.Login(user))
             {
                 InitUser(user, _userLogic.GetUserId(user));
-                return RedirectToAction("Profile", "Home");   //De cookies worden pas nadat je naar een nieuwe controller bent gegaan gerefreshed, hierdoor doe ik redirecten naar de index pag van homecontroller
+                return RedirectToAction("Profile");   //De cookies worden pas nadat je naar een nieuwe controller bent gegaan gerefreshed, hierdoor doe ik redirecten naar de index pag van homecontroller
             }
 
             return View();
@@ -56,7 +60,7 @@ namespace Controllers
         public IActionResult Profile()
         {
             var userId = Convert.ToInt32(User.Identity.Name);
-            var user = _userLogic.GetAllEmployeeData(userId);
+            var user = _userLogic.GetAllUserData(userId);
             return View(user);
         }
 

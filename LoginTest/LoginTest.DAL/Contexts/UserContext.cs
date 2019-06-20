@@ -88,7 +88,7 @@ namespace DAL.Contexts
             return userId;
         }
 
-        public User GetAllEmployeeData(int userId)
+        public User GetAllUserData(int userId)
         {
             var user = new User();
 

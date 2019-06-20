@@ -10,6 +10,6 @@ namespace DAL.Contexts
         bool Login(User user);
         IEnumerable<string> GetUserRoles(User user);
         int GetUserId(User user);
-        User GetAllEmployeeData(int userId);
+        User GetAllUserData(int userId);
     }
 }
