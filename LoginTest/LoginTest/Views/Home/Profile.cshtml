@@ -1,6 +1,6 @@
 ﻿@using Models.Enums
 @using Models
-@model User
+@model FHICTDeploymentSystem.Models.ProfileViewModel
 
 @{
     ViewData["Title"] = "Profile";
@@ -50,14 +50,51 @@
                                     </div>
                                     <div class="col s12 m8 l9">
                                         <div class="about-inner-right">
-                                            <h3>@Model.Abbreviation, @Model.Name</h3>
+                                            <h3>@Model.User.Abbreviation, @Model.User.Name</h3>
                                             <div class="personal-information col s12 m12 l6">
                                                 <ul>
-                                                    <li><span>Email : </span>@Model.Username</li>
-                                                    <li><span>Team : </span>@Model.TeamId</li>
+                                                    <li><span>Email : </span>@Model.User.Username</li>
+                                                    <li><span>Team : </span>@Model.User.TeamId</li>
+                                                    <li>
+                                                        @if (User.IsInRole(Roles.Teacher.ToString()))
+                                                        {
+                                                            <ul class="collapsible">
+                                                                <li>
+                                                                    <div class="collapsible-header">
+                                                                        Click to show competences
+                                                                    </div>
+                                                                    <div id="competences" class="collapsible-body">
+                                                                        <ul>
+                                                                            @if (Model.Competences.Count() > 0)
+                                                                            {
+                                                                                foreach (var section in Model.Competences)
+                                                                                {
+                                                                                    var sectionId = section.Id;
+                                                                                    var sectionName = section.Name;
+                                                                                    var description = section.Description;
+                                                                                    var period = section.Period;
+                                                                                    <li>
+                                                                                        <label>
+                                                                                            <input checked="checked" type="checkbox" value="@sectionId" />
+                                                                                            <span style="white-space: pre-line">Period: @period | @sectionName : @description</span>
+                                                                                        </label>
+                                                                                    </li>
+                                                                                }
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <p>No Competences</p>
+                                                                            }
+                                                                        </ul>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        }
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -67,27 +104,27 @@
             </section>
             <!-- Start Experience -->
             @*<section id="experience">
-                <div class="container">
-                    <div class="experience-inner">
+                    <div class="container">
+                        <div class="experience-inner">
+                        </div>
                     </div>
-                </div>
-            </section>*@
+                </section>*@
             <!-- Start Footer -->
             @*<footer id="footer" role="contentinfo">
-                <!-- Start Footer Bottom -->
-                <div class="footer-bottom">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col s12">
-                                <div class="footer-inner">
-                                    <!-- Bottom to Up Btn -->
-                                    
+                    <!-- Start Footer Bottom -->
+                    <div class="footer-bottom">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col s12">
+                                    <div class="footer-inner">
+                                        <!-- Bottom to Up Btn -->
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </footer>*@
+                </footer>*@
         </main>
     </div>
     <!-- jQuery Library -->

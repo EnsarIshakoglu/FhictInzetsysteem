@@ -80,7 +80,7 @@ namespace DAL.Contexts
                 while (reader.Read())
                 {
                     userId = (int)reader["Id"];
-                    user.TeamId = (int)reader["TeamId"];
+                    user.TeamId = (reader["TeamId"] as int?).GetValueOrDefault();
                 }
                 reader.Close();
                 conn.Close();

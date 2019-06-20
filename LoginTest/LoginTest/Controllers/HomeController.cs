@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Security.Claims;
+using FHICTDeploymentSystem.Logic;
 using FHICTDeploymentSystem.Models;
 using Logic;
 using Models;
@@ -18,13 +19,9 @@ namespace Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        private readonly UserLogic _userLogic;
-
-        public HomeController()
-        {
-            _userLogic = new UserLogic();
-        }
-
+        private readonly UserLogic _userLogic = new UserLogic();
+        private readonly TeamLogic _teamLogic = new TeamLogic();
+        
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Index()
@@ -56,8 +53,15 @@ namespace Controllers
         public IActionResult Profile()
         {
             var userId = Convert.ToInt32(User.Identity.Name);
+            var competences = _teamLogic.GetTeamMemberCompetences(new User{Id=userId});
             var user = _userLogic.GetAllEmployeeData(userId);
-            return View(user);
+
+            var profileModel = new ProfileViewModel
+            {
+                User = user,
+                Competences = competences
+            };
+            return View(profileModel);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
