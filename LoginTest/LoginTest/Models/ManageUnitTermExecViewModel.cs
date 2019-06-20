@@ -6,9 +6,10 @@ using Models;
 
 namespace FHICTDeploymentSystem.Models
 {
-    public class AddUnitTermExecViewModel
+    public class ManageUnitTermExecViewModel
     {
         public IEnumerable<EducationObject> Sections { get; set; }
         public IEnumerable<EducationObject> TermExecs { get; set; }
+        public IEnumerable<EducationObject> Units { get; set; }
     }
 }

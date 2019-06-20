@@ -54,7 +54,7 @@
                             }
                             @if (User.IsInRole(Roles.TeamLeader.ToString()))
                             {
-                                <li><a asp-area="" asp-controller="Home" asp-action="Index">Manage team</a></li>
+                                <li><a asp-area="" asp-controller="Team" asp-action="ManageTeam">Manage team</a></li>
                                 <li><a asp-area="" asp-controller="Home" asp-action="Index">Teachers</a></li>
                             }
                             @if (User.IsInRole(Roles.UnitOwner.ToString()) || User.IsInRole(Roles.InstituteMember.ToString()))
@@ -73,8 +73,8 @@
                                 <li class="nav-item dropdown">
                                     <a class="nav-link text-dark dropButton">Term Execution</a>
                                     <div class="dropdown-content">
-                                        <a asp-area="" asp-controller="TermExec" asp-action="AddTermExec">Add term execution</a>
-                                        <a asp-area="" asp-controller="TermExec" asp-action="AddTermExec">Edit term execution</a>
+                                        <a asp-area="" asp-controller="TermExec" asp-action="AddUnitTermExec">Add term execution</a>
+                                        <a asp-area="" asp-controller="TermExec" asp-action="UnitTermExecSelectorForEdit">Edit term execution</a>
                                     </div>
                                 </li>
                             }

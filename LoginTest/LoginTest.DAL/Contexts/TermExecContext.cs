@@ -25,6 +25,8 @@ namespace DAL.Contexts
                 cmd.Parameters.Add(new SqlParameter("@UnitId", termExec.UnitId));
                 cmd.Parameters.Add(new SqlParameter("@EstimatedClasses", termExec.Factor));
                 cmd.Parameters.Add(new SqlParameter("@TermExecutionId", termExec.Id));
+                cmd.Parameters.Add(termExec.TeamId > 0 ? new SqlParameter("@TeamId", termExec.TeamId) : new SqlParameter("@TeamId", DBNull.Value));
+
                 cmd.ExecuteNonQuery();
 
                 connection.Close();
@@ -39,7 +41,7 @@ namespace DAL.Contexts
 
                 var cmd = new SqlCommand("RemoveTermExec", connection) { CommandType = CommandType.StoredProcedure };
 
-                cmd.Parameters.Add(new SqlParameter("@TermExecutionId", termExec.Id));
+                cmd.Parameters.Add(new SqlParameter("@UnitTermExecId", termExec.Id));
                 cmd.ExecuteNonQuery();
 
                 connection.Close();
@@ -52,14 +54,12 @@ namespace DAL.Contexts
             {
                 connection.Open();
 
-                var cmd = new SqlCommand("AddTermExec", connection) { CommandType = CommandType.StoredProcedure };
+                var cmd = new SqlCommand("ChangeTermExec", connection) { CommandType = CommandType.StoredProcedure };
 
-                cmd.Parameters.Add(new SqlParameter("@TermExecutionId", termExec.Id));
+                cmd.Parameters.Add(new SqlParameter("@Id", termExec.UnitExecId));
                 cmd.Parameters.Add(new SqlParameter("@Name", termExec.Name));
-                cmd.Parameters.Add(new SqlParameter("@UnitId", termExec.UnitId));
                 cmd.Parameters.Add(new SqlParameter("@EstimatedClasses", termExec.Factor));
-                cmd.Parameters.Add(new SqlParameter("@TermExecutionId", termExec.Id));
-                cmd.Parameters.Add(new SqlParameter("@TeamId", termExec.TeamId));
+                cmd.Parameters.Add(termExec.TeamId > 0 ? new SqlParameter("@TeamId", termExec.TeamId) : new SqlParameter("@TeamId", DBNull.Value));
                 cmd.ExecuteNonQuery();
 
                 connection.Close();
@@ -93,6 +93,36 @@ namespace DAL.Contexts
             }
 
             return termExecs;
+        }
+
+        public EducationObject GetUnitTermExecFromId(int unitTermExecId)
+        {
+            var unitTermExec = new EducationObject();
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                SqlCommand cmd = new SqlCommand("GetUnitTermExecFromId", connection) { CommandType = CommandType.StoredProcedure, };
+                cmd.Parameters.Add(new SqlParameter("@UnitTermExecId", unitTermExecId));
+
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    unitTermExec = new EducationObject
+                    {
+                        Name = reader["Name"]?.ToString(),
+                        Factor = (int)reader["EstimatedClasses"],
+                        TeamId = (reader["TeamId"] as int?).GetValueOrDefault(),
+                        UnitExecId = (int)reader["Id"]
+                    };
+                }
+
+                connection.Close();
+            }
+
+            return unitTermExec;
         }
     }
 }

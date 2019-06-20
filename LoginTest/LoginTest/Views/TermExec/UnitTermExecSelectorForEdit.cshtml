@@ -1,7 +1,7 @@
 ﻿@model ManageUnitTermExecViewModel
 @using FHICTDeploymentSystem.Models
 @{
-    ViewData["Title"] = "AddTermExec";
+    ViewData["Title"] = "UnitTermExecSelectorForEdit";
 }
 
 <style type="text/css">
@@ -127,15 +127,14 @@
                     }
                 </select>
                 <label>Unit:</label>
-                <select id="units" type="text" name="field2"></select>
-                <label>Code:</label>
-                <input id="code" type="text" name="field5" placeholder="Code">
-                <label>Estimated Classes:</label>
-                <input id="estimatedClasses" type="number" name="field9" placeholder="1">
-                <label>Team Id:</label>
-                <input id="teamId" type="number" name="field10" placeholder="0">
+                <select id="units" type="text" name="field1">
+                </select>
+                <label>Unit term executions:</label>
+                <select id="unitTermExecs" type="text" name="field1">
+                </select>
             </fieldset>
-            <input id="addButton" type="submit" value="Add" />
+            <input id="deleteButton" type="button" value="Remove" />
+            <input id="editButton" type="button" value="Edit" />
         </form>
     </div>
 </div>
@@ -143,9 +142,10 @@
 @section Scripts
     {
     <script>
-        $('#sections').change(function() {
+
+        $('#sections').click(function() {
             $('#units').empty();
-            $('#execId').empty();
+            $('#unitTermExecs').empty();
             var selectedSectionId = $("#sections option:selected").val();
             var selectedUnit = $('#units');
             selectedUnit.append($("<option></option>")
@@ -164,28 +164,60 @@
                 });
         });
 
-        $('#addButton').on('click', (function () {
+        $('#units').change(function() {
+            $('#unitTermExecs').empty();
+            var selectedUnitId = $("#units option:selected").val();
+            var selectedExec = $('#unitTermExecs');
+            selectedExec.append($("<option></option>")
+                .attr("value", "test")
+                .text("-Select-"));
+
+            $.post('@Url.Action("GetUnitTermExecutions", "Task")',
+                {
+                    unitId: selectedUnitId
+                },
+                function(data) {
+                    data.forEach(function(exec) {
+                        selectedExec.append($("<option></option>")
+                            .attr("value", exec.id)
+                            .text(exec.name));
+                    });
+                });
+        });
+
+        $('#deleteButton').on('click', (function () {
             var termExecToAdd = {
-                "Name": $("#code").val(),
-                "UnitId": $("#units option:selected").val(),
-                "Factor": $("#estimatedClasses").val(),
-                "Id": $("#termExec option:selected").val(),
-                "TeamId": $("#teamId option:selected").val()
+                "Id": $("#unitTermExecs option:selected").val()
             };
 
             $.ajax({
-                url: '@Url.Action("AddUnitTermExec", "TermExec")',
+                url: '@Url.Action("DeleteTermExec", "TermExec")',
                 data: JSON.stringify(termExecToAdd),
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function() {
                     console.log('Success!');
+                    window.location = '@Url.Action("UnitTermExecSelectorForEdit", "TermExec")';
                 },
                 error: function() {
                     console.log('Error');
+                    window.location = '@Url.Action("UnitTermExecSelectorForEdit", "TermExec")';
                 }
             });
+        }));
+
+        $('#editButton').on('click', (function () {
+            var termExecToAdd = {
+                "Id": $("#unitTermExecs option:selected").val()
+            };
+            var unitTermExecId = $("#unitTermExecs option:selected").val();
+            console.log(termExecToAdd);
+            var url = '@Url.Action("EditUnitTermExec", "TermExec", new{unitTermExecId = "__a__"})';
+            window.location.href = "";
+            console.log(url.replace("__a__", unitTermExecId));
+
+            window.location = url.replace("__a__", unitTermExecId);
         }));
     </script>
 

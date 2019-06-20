@@ -1,4 +1,4 @@
-﻿@model AddUnitTermExecViewModel
+﻿@model EducationObject
 @using System.Security.Cryptography.X509Certificates
 @using FHICTDeploymentSystem.Models
 @{
@@ -105,34 +105,14 @@
         <form>
             <fieldset>
                 <legend style="text-align: center">Add term execution</legend>
-                <label>Term execution:</label>
-                <select id="termExec" type="text" name="field1">
-                    @foreach (var termExec in Model.TermExecs)
-                    {
-                        var termExecId = termExec.Id;
-                        var termExecName = termExec.Name;
-                        var termExecYear = termExec.Year;
-                        var termExecSeason = termExec.Period;
-
-                        <option value="@termExecId">@termExecName @termExecYear Season: @termExecSeason</option>
-                    }
-                </select>
-                <label>Section:</label>
-                <select id="sections" type="text" name="field1">
-                    @foreach (var section in Model.Sections)
-                    {
-                        var sectionId = section.Id;
-                        var sectionName = section.Name;
-
-                        <option value="@sectionId">@sectionName</option>
-                    }
-                </select>
-                <label>Unit:</label>
-                <select id="units" type="text" name="field2"></select>
-                <input id="code" type="text" name="field5" placeholder="Code">
-                <input id="estimatedClasses" type="number" name="field9" placeholder="Estimated Classes">
+                <label>Code:</label>
+                <input id="code" type="text" name="field5" placeholder="Code" value="@Model.Name">
+                <label>Estimated Classes:</label>
+                <input id="estimatedClasses" type="number" name="field9" placeholder="1" value="@Model.Factor">
+                <label>Team Id:</label>
+                <input id="teamId" type="number" name="field10" placeholder="0" value="@Model.TeamId">
             </fieldset>
-            <input id="EditButton" type="submit" value="Edit" />
+            <input id="submitButton" type="button" value="Edit" />
 
         </form>
     </div>
@@ -140,42 +120,31 @@
 
 @section Scripts
     {
-    @*<script>
-        $(document).ready(function() {
-            $('#period').val('@Model.Period');
-        });
+    <script>
 
-        $('#EditButton').click(function () {
-            /*alert("Success");*/
+        $('#submitButton').click(function () {
             console.log('bbbbbbbbbbbbbbbbb');
             var termExecToEdit = {
-                "Id": @Model.Id,
-                "Period": $("#period option:selected").val(),
-                "EstimatedHours": $("#hours").val(),
-                "Explanation": $("#explanation").val(),
+                "UnitExecId": @Model.UnitExecId,
                 "Name": $("#code").val(),
-                "Description": $("#description").val(),
-                "Factor" : $("#factor").val()
+                "TeamId": $("#teamId").val(),
+                "Factor": $("#estimatedClasses").val()
             };
-            var url = '@Url.Action("UpdateTask", "Task", new{jsonObject = "__a__"})';
-            console.log(url.replace("__a__", JSON.stringify(taskToEdit)));
-
-            window.location.href = url.replace("__a__", JSON.stringify(taskToEdit));
-            return false;
+            console.log(termExecToEdit);
             $.ajax({
-                url: '',
-                data: JSON.stringify(taskToEdit),
+                url: '@Url.Action("EditTermExec", "TermExec")',
+                data: JSON.stringify(termExecToEdit),
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                success: function () {
-                    window.location.reload();
+                success: function() {
+                    window.location = '@Url.Action("UnitTermExecSelectorForEdit", "TermExec")';
                 },
                 error: function() {
-                    console.log('Error');
+                    window.location = '@Url.Action("UnitTermExecSelectorForEdit", "TermExec")';
                 }
             });
         });
-    </script>*@
+    </script>
 
 }

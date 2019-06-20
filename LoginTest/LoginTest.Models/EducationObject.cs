@@ -11,6 +11,7 @@ namespace Models
         public int Id { get; set; }
         public int Period { get; set; }
         public int EstimatedHours { get; set; }
+        public int EstimatedHours2 { get; set; }
         public int Factor { get; set; }
         public string Description { get; set; }
         public string Explanation { get; set; }
