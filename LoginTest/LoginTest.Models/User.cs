@@ -17,5 +17,6 @@ namespace Models
         public string Name { get; set; }
         public string Abbreviation { get; set; }
         public int TeamId { get; set; }
+        public int Id { get; set; }
     }
 }
