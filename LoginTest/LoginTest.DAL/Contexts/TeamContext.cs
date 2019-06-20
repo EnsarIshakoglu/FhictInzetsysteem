@@ -415,5 +415,20 @@ namespace FHICTDeploymentSystem.DAL.Contexts
             }
             return returnValue;
         }
+        public void CreateVacancy(User user)
+        {
+            user.Name += "vac_";
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                var sqlCommand = new SqlCommand("CreateVacancy", connection);
+                sqlCommand.CommandType = CommandType.StoredProcedure;
+                sqlCommand.Parameters.Add(new SqlParameter("@teamid", user.TeamId));
+                sqlCommand.Parameters.Add(new SqlParameter("@name", user.Name));
+                sqlCommand.ExecuteNonQuery();
+                connection.Close();
+            }
+        }
     }
 }

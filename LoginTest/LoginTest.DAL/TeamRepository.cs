@@ -103,5 +103,9 @@ namespace DAL
         {
             return _context.GetTasksWhereUserIsNotCompetentFor(employeeId, id);
         }
+        public void CreateVacancy(User user)
+        {
+            _context.CreateVacancy(user);
+        }
     }
 }

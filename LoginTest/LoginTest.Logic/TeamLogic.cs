@@ -104,5 +104,9 @@ namespace FHICTDeploymentSystem.Logic
         {
             return _repo.GetTasksWhereUserIsNotCompetentFor(employeeId,id);
         }
+        public void CreateVacancy(User user)
+        {
+            _repo.CreateVacancy(user);
+        }
     }
 }

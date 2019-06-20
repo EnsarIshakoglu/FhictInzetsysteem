@@ -88,6 +88,7 @@ namespace Controllers
                 claims.Add(new Claim(ClaimTypes.Role, role));
             }
 
+            claims.Add(new Claim(ClaimTypes.Sid, user.TeamId.ToString()));
             claims.Add(new Claim(ClaimTypes.Name, userId.ToString()));
 
             ClaimsPrincipal principal = new ClaimsPrincipal(new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme));

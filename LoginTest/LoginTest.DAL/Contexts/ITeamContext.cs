@@ -26,6 +26,7 @@ namespace DAL.Contexts
         void AddUnitExecCompetence(int id, int employeeId);
         void AddTasksCompetence(int id, int employeeId);
         void RemoveCompetence(int id, int employeeId);
+        void CreateVacancy(User user);
         List<EducationObject> GetSectionsWhereUserIsNotCompetentFor(int employeeId);
         List<EducationObject> GetUnitTermExecsWhereUserIsNotCompetentFor(int employeeId, int id);
         List<EducationObject> GetUnitWhereUserIsNotCompetentFor(int employeeId, int id);
