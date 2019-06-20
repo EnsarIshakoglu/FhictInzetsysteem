@@ -17,7 +17,8 @@ namespace Controllers
         public IActionResult SectionPreference()
         {
             var preferences = new List<Preference>();
-            var sections = _preferenceLogic.GetAllSections();
+            var userId = Convert.ToInt32(User.Identity.Name);
+            var sections = _preferenceLogic.GetAllSectionsWhereUserIsCompetentFor(userId);
 
             foreach (var section in sections)
             {
@@ -50,7 +51,8 @@ namespace Controllers
         public IActionResult UnitPreference(int sectionId)
         {
             var preferences = new List<Preference>();
-            var units = _preferenceLogic.GetAllUnits(sectionId);
+            var userId = Convert.ToInt32(User.Identity.Name);
+            var units = _preferenceLogic.GetAllUnitsWhereUserIsCompetentFor(userId, sectionId);
 
             foreach (var unit in units)
             {
@@ -77,10 +79,11 @@ namespace Controllers
             _preferenceLogic.SaveUnitPreferences(savePreferences, Convert.ToInt32(User.Identity.Name));
         }
         [HttpGet]
-        public IActionResult UnitExecutionPreference(int unitExecId)
+        public IActionResult UnitExecutionPreference(int unitId)
         {
             var preferences = new List<Preference>();
-            var unitExecs = _taskLogic.GetUnitTermExecutions(unitExecId);
+            var userId = Convert.ToInt32(User.Identity.Name);
+            var unitExecs = _preferenceLogic.GetAllUnitTermExecutionsWhereUserIsCompetentFor(userId, unitId);
 
             foreach (var unitExec in unitExecs)
             {
@@ -111,7 +114,8 @@ namespace Controllers
         public IActionResult TaskPreference(int unitExecId)
         {
             var preferences = new List<Preference>();
-            var tasks = _preferenceLogic.GetAllTasks(unitExecId);
+            var userId = Convert.ToInt32(User.Identity.Name);
+            var tasks = _preferenceLogic.GetAllTasksWhereUserIsCompetentFor(userId, unitExecId);
 
             foreach (var task in tasks)
             {

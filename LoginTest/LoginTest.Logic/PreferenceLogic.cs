@@ -145,5 +145,22 @@ namespace Logic
         {
             return _repo.GetTasksFromUnit(unitId);
         }
+
+        public IEnumerable<EducationObject> GetAllSectionsWhereUserIsCompetentFor(int empId)
+        {
+            return _repo.GetAllSectionsWhereUserIsCompetentFor(empId);
+        }
+        public IEnumerable<EducationObject> GetAllUnitsWhereUserIsCompetentFor(int empId, int sectionId)
+        {
+            return _repo.GetAllUnitsWhereUserIsCompetentFor(empId, sectionId);
+        }
+        public IEnumerable<EducationObject> GetAllUnitTermExecutionsWhereUserIsCompetentFor(int empId, int unitId)
+        {
+            return _repo.GetAllUnitTermExecutionsWhereUserIsCompetentFor(empId, unitId);
+        }
+        public IEnumerable<EducationObject> GetAllTasksWhereUserIsCompetentFor(int empId, int unitTermExecId)
+        {
+            return _repo.GetAllTasksWhereUserIsCompetentFor(empId, unitTermExecId);
+        }
     }
 }

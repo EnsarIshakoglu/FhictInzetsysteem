@@ -251,5 +251,136 @@ namespace DAL.Contexts
                 connection.Close();
             }
         }
+        public IEnumerable<EducationObject> GetAllSectionsWhereUserIsCompetentFor(int empId)
+        {
+            var sections = new List<EducationObject>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                SqlCommand cmd = new SqlCommand("GetAllSectionsWhereUserIsCompetentFor", connection);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add(new SqlParameter("@EmployeeId", empId));
+
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    sections.Add(new EducationObject
+                    {
+                        Id = (int)reader["Id"],
+                        Name = reader["Name"]?.ToString(),
+                        EducationType = EducationType.Section
+                    });
+                }
+
+                connection.Close();
+            }
+
+            return sections;
+        }
+        public IEnumerable<EducationObject> GetAllUnitsWhereUserIsCompetentFor(int empId,int sectionId)
+        {
+            var units = new List<EducationObject>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                SqlCommand cmd = new SqlCommand("GetAllUnitsWhereUserIsCompetentFor", connection);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add(new SqlParameter("@EmployeeId", empId));
+                cmd.Parameters.Add(new SqlParameter("@SectionId", sectionId));
+
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    units.Add(new EducationObject
+                    {
+                        Id = (int)reader["Id"],
+                        Name = reader["Name"]?.ToString(),
+                        EducationType = EducationType.Unit
+                    });
+                }
+
+                connection.Close();
+            }
+
+            return units;
+        }
+        public IEnumerable<EducationObject> GetAllUnitTermExecutionsWhereUserIsCompetentFor(int empId, int unitId)
+        {
+            var units = new List<EducationObject>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                SqlCommand cmd = new SqlCommand("GetAllUnitTermExecutionsWhereUserIsCompetentFor", connection);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add(new SqlParameter("@EmployeeId", empId));
+                cmd.Parameters.Add(new SqlParameter("@UnitId", unitId));
+
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    units.Add(new EducationObject
+                    {
+                        Id = (int)reader["Id"],
+                        Name = reader["Name"]?.ToString(),
+                        EducationType = EducationType.UnitExec
+                    });
+                }
+
+                connection.Close();
+            }
+
+            return units;
+        }
+        public IEnumerable<EducationObject> GetAllTasksWhereUserIsCompetentFor(int empId, int unitTermExecId)
+        {
+            var units = new List<EducationObject>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                SqlCommand cmd = new SqlCommand("GetAllTasksWhereUserIsCompetentFor", connection);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add(new SqlParameter("@EmployeeId", empId));
+                cmd.Parameters.Add(new SqlParameter("@UnitTermExecId", unitTermExecId));
+
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    units.Add(new EducationObject
+                    {
+                        Id = (int)reader["Id"],
+                        Name = reader["Name"]?.ToString(),
+                        Description = reader["Description"]?.ToString(),
+                        Explanation = reader["Explanation"]?.ToString(),
+                        Period = (int)reader["Period"],
+                        EstimatedHours = (int)reader["Hours"],
+                        EducationType = EducationType.Task
+                    });
+                }
+
+                connection.Close();
+            }
+
+            return units;
+        }
     }
 }

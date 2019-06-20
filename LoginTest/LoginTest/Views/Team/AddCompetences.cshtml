@@ -137,7 +137,7 @@
         $('#sections').click(function() {
             $('#units').empty();
             $('#execId').empty();
-            $('#taskId').empty();
+            $('#task').empty();
             var selectedSectionId = $("#sections option:selected").val();
             $.post('@Url.Action("GetUnitWhereUserIsNotCompetentFor", "Team")',
                 {
@@ -156,7 +156,7 @@
 
         $('#units').click(function() {
             $('#execId').empty();
-            $('#taskId').empty();
+            $('#task').empty();
             var selectedUnitId = $("#units option:selected").val();
             $.post('@Url.Action("GetTermExecsWhereUserIsNotCompetentFor", "Team")',
                 {

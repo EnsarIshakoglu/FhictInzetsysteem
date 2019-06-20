@@ -15,5 +15,9 @@ namespace DAL.Contexts
 
         IEnumerable<EducationObject> GetTasksFromUnit(int unitId);
         IEnumerable<EducationObject> GetTasksFromUnitExecution(int unitExecutionId);
+        IEnumerable<EducationObject> GetAllTasksWhereUserIsCompetentFor(int empId, int unitTermExecId);
+        IEnumerable<EducationObject> GetAllUnitTermExecutionsWhereUserIsCompetentFor(int empId, int unitId);
+        IEnumerable<EducationObject> GetAllUnitsWhereUserIsCompetentFor(int empId, int sectionId);
+        IEnumerable<EducationObject> GetAllSectionsWhereUserIsCompetentFor(int empId);
     }
 }

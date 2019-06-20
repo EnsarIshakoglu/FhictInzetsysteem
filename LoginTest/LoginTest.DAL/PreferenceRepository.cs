@@ -58,5 +58,22 @@ namespace DAL
         {
             return _context.GetTasksFromUnitExecution(unitExecutionId);
         }
+
+        public IEnumerable<EducationObject> GetAllSectionsWhereUserIsCompetentFor(int empId)
+        {
+            return _context.GetAllSectionsWhereUserIsCompetentFor(empId);
+        }
+        public IEnumerable<EducationObject> GetAllUnitsWhereUserIsCompetentFor(int empId, int sectionId)
+        {
+            return _context.GetAllUnitsWhereUserIsCompetentFor(empId, sectionId);
+        }
+        public IEnumerable<EducationObject> GetAllUnitTermExecutionsWhereUserIsCompetentFor(int empId, int unitId)
+        {
+            return _context.GetAllUnitTermExecutionsWhereUserIsCompetentFor(empId, unitId);
+        }
+        public IEnumerable<EducationObject> GetAllTasksWhereUserIsCompetentFor(int empId, int unitTermExecId)
+        {
+            return _context.GetAllTasksWhereUserIsCompetentFor(empId, unitTermExecId);
+        }
     }
 }
