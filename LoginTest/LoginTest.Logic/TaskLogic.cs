@@ -35,6 +35,35 @@ namespace Logic
             return _repo.GetTaskById(task);
         }
 
+        public IEnumerable<User> GetAllEmployeesWithCompetenceForTask(int taskId)
+        {
+            return _repo.GetAllEmployeesWithCompetenceForTask(taskId);
+        }
+        public void FixateTask(int taskId, int empId)
+        {
+            _repo.FixateTask(taskId, empId);
+        }
+
+        public IEnumerable<EducationObject> GetAllLeftOverUnitTermExecsFromUnit(int unitId)
+        {
+            return _repo.GetAllLeftOverUnitTermExecsFromUnit(unitId);
+        }
+
+        public IEnumerable<EducationObject> GetAllLeftOverSections()
+        {
+            return _repo.GetAllLeftOverSections();
+        }
+
+        public IEnumerable<EducationObject> GetAllLeftOverTasksFromUnitExecId(int unitExecId)
+        {
+            return _repo.GetAllLeftOverTasksFromUnitExecId(unitExecId);
+        }
+
+        public IEnumerable<EducationObject> GetAllLeftOverUnitsFromSection(int sectionId)
+        {
+            return _repo.GetAllLeftOverUnitsFromSection(sectionId);
+        }
+
         public IEnumerable<EducationObject> GetEmployeeAssignedTasks(int empId)
         {
             return _repo.GetEmployeeAssignedTasks(empId);

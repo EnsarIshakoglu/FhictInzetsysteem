@@ -28,10 +28,39 @@ namespace DAL
         {
             return _context.GetUnitTermExecutions(unitId);
         }
+        public IEnumerable<EducationObject> GetAllLeftOverUnitTermExecsFromUnit(int unitId)
+        {
+            return _context.GetAllLeftOverUnitTermExecsFromUnit(unitId);
+        }
+
+        public IEnumerable<EducationObject> GetAllLeftOverSections()
+        {
+            return _context.GetAllLeftOverSections();
+        }
+
+        public IEnumerable<EducationObject> GetAllLeftOverTasksFromUnitExecId(int unitExecId)
+        {
+            return _context.GetAllLeftOverTasksFromUnitExecId(unitExecId);
+        }
+
+        public IEnumerable<EducationObject> GetAllLeftOverUnitsFromSection(int sectionId)
+        {
+            return _context.GetAllLeftOverUnitsFromSection(sectionId);
+        }
 
         public void UpdateTask(EducationObject task)
         {
             _context.UpdateTask(task);
+        }
+
+        public void FixateTask(int taskId, int empId)
+        {
+            _context.FixateTask(taskId, empId);
+        }
+
+        public IEnumerable<User> GetAllEmployeesWithCompetenceForTask(int taskId)
+        {
+            return _context.GetAllEmployeesWithCompetenceForTask(taskId);
         }
 
         public EducationObject GetTaskById(EducationObject task)

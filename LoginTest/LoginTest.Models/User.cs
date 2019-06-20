@@ -18,5 +18,6 @@ namespace Models
         public string Abbreviation { get; set; }
         public int TeamId { get; set; }
         public int Id { get; set; }
+        public bool IsCompetentForTask { get; set; }
     }
 }

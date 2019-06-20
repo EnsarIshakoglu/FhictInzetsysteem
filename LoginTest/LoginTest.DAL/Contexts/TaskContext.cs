@@ -171,5 +171,171 @@ namespace DAL.Contexts
 
             return assignedTasks;
         }
+
+        public IEnumerable<User> GetAllEmployeesWithCompetenceForTask(int taskId)
+        {
+            var users = new List<User>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                SqlCommand cmd = new SqlCommand("GetAllEmployeesWithCompetenceForTask", connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add(new SqlParameter("@TaskId", taskId));
+
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    users.Add(new User
+                    {
+                        Id = (int)reader["Id"],
+                        Name = (string)reader["Abbreviation"],
+                        IsCompetentForTask = (int)reader["Competency"] != 0
+                    });
+                }
+
+                connection.Close();
+            }
+
+            return users;
+        }
+
+        public void FixateTask(int taskId, int empId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                var cmd = new SqlCommand("FixateTask", connection) { CommandType = CommandType.StoredProcedure };
+
+                cmd.Parameters.Add(new SqlParameter("@TaskId", taskId));
+                cmd.Parameters.Add(new SqlParameter("@EmployeeId", empId));
+
+                cmd.ExecuteNonQuery();
+
+                connection.Close();
+            }
+        }
+
+        public IEnumerable<EducationObject> GetAllLeftOverTasksFromUnitExecId(int unitExecId)
+        {
+            var tasks = new List<EducationObject>();
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                SqlCommand cmd = new SqlCommand("GetAllLeftOverTasksFromUnitExecId", connection) { CommandType = CommandType.StoredProcedure, };
+
+                cmd.Parameters.Add(new SqlParameter("@UnitExecId", unitExecId));
+
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    tasks.Add(new EducationObject
+                    {
+                        Id = (int)reader["Id"],
+                        Name = reader["Name"]?.ToString(),
+                        Period = (int)reader["Period"],
+                        Description = reader["Description"]?.ToString(),
+                        EducationType = EducationType.UnitExec
+                    });
+                }
+
+                connection.Close();
+            }
+
+            return tasks;
+        }
+        public IEnumerable<EducationObject> GetAllLeftOverUnitsFromSection(int sectionId)
+        {
+            var units = new List<EducationObject>();
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                SqlCommand cmd = new SqlCommand("GetAllLeftOverUnitsFromSection", connection) { CommandType = CommandType.StoredProcedure, };
+
+                cmd.Parameters.Add(new SqlParameter("@SectionId", sectionId));
+
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    units.Add(new EducationObject
+                    {
+                        Id = (int)reader["Id"],
+                        Name = reader["Name"]?.ToString(),
+                        EducationType = EducationType.Unit
+                    });
+                }
+
+                connection.Close();
+            }
+
+            return units;
+        }
+
+        public IEnumerable<EducationObject> GetAllLeftOverUnitTermExecsFromUnit(int unitId)
+        {
+            var units = new List<EducationObject>();
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                SqlCommand cmd = new SqlCommand("GetAllLeftOverUnitTermExecsFromUnit", connection) { CommandType = CommandType.StoredProcedure, };
+
+                cmd.Parameters.Add(new SqlParameter("@UnitId", unitId));
+
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    units.Add(new EducationObject
+                    {
+                        Id = (int)reader["Id"],
+                        Name = reader["Name"]?.ToString(),
+                        EducationType = EducationType.UnitExec
+                    });
+                }
+
+                connection.Close();
+            }
+
+            return units;
+        }
+        public IEnumerable<EducationObject> GetAllLeftOverSections()
+        {
+            var units = new List<EducationObject>();
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                SqlCommand cmd = new SqlCommand("GetAllLeftOverSections", connection) { CommandType = CommandType.StoredProcedure, };
+
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    units.Add(new EducationObject
+                    {
+                        Id = (int)reader["Id"],
+                        Name = reader["Name"]?.ToString(),
+                        EducationType = EducationType.Section
+                    });
+                }
+
+                connection.Close();
+            }
+
+            return units;
+        }
     }
 }

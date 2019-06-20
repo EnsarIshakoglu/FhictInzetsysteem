@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using FHICTDeploymentSystem.Models;
 using Logic;
 using Microsoft.AspNetCore.Mvc;
 using Models;
@@ -94,6 +95,40 @@ namespace FHICTDeploymentSystem.Controllers
             var assignedTasks = _taskLogic.GetEmployeeAssignedTasks(userId);
 
             return View(assignedTasks);
+        }
+
+        public IActionResult FixateTaskView()
+        {
+            return View("FixateTask", _taskLogic.GetAllLeftOverSections());
+        }
+
+        [HttpPost]
+        public IActionResult GetAllEmployeesWithCompetenceForTask(int taskId)
+        {
+            return Json(_taskLogic.GetAllEmployeesWithCompetenceForTask(taskId));
+        }
+
+        public void FixateTask(int taskId, int empId)
+        {
+            _taskLogic.FixateTask(taskId, empId);
+        }
+
+        [HttpPost]
+        public IActionResult GetAvailableUnits(int sectionId)
+        {
+            return Json(_taskLogic.GetAllLeftOverUnitsFromSection(sectionId));
+        }
+
+        [HttpPost]
+        public IActionResult GetAvailableUnitTermExecs(int unitId)
+        {
+            return Json(_taskLogic.GetAllLeftOverUnitTermExecsFromUnit(unitId));
+        }
+
+        [HttpPost]
+        public IActionResult GetAvailableTasks(int unitTermExecId)
+        {
+            return Json(_taskLogic.GetAllLeftOverTasksFromUnitExecId(unitTermExecId));
         }
 
     }
